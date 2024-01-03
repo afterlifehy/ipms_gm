@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_ffe8f0ef"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_deep_top_bg" />
+
+    <include
+        android:id="@+id/layout_toolbar"
+        layout="@layout/layout_comment_toolbar" />
+
+    <com.aries.ui.view.radius.RadiusFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layout_toolbar"
+        android:layout_marginStart="@dimen/dp_13"
+        android:layout_marginTop="@dimen/dp_6"
+        android:layout_marginEnd="@dimen/dp_13"
+        android:layout_marginBottom="@dimen/dp_17"
+        android:padding="@dimen/dp_14"
+        app:rv_radius="@dimen/dp_10">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_pic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_noPic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp_70"
+            android:drawableTop="@mipmap/ic_no_data"
+            android:gravity="center"
+            android:text="@string/无车辆图片"
+            android:textColor="@color/color_ff999999"
+            android:textSize="@dimen/sp_19" />
+    </com.aries.ui.view.radius.RadiusFrameLayout>
+</RelativeLayout>

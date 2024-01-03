@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RadiusTextView">
+        <attr name="rv_backgroundColor" />
+        <attr name="rv_backgroundPressedColor" />
+        <attr name="rv_backgroundDisabledColor" />
+        <attr name="rv_backgroundSelectedColor" />
+        <attr name="rv_backgroundCheckedColor" />
+        <attr name="rv_backgroundPressedAlpha" />
+
+        <attr name="rv_strokeColor" />
+        <attr name="rv_strokePressedColor" />
+        <attr name="rv_strokeDisabledColor" />
+        <attr name="rv_strokeSelectedColor" />
+        <attr name="rv_strokeCheckedColor" />
+        <attr name="rv_strokePressedAlpha" />
+
+        <attr name="rv_strokeWidth" />
+        <attr name="rv_strokeDashWidth" />
+        <attr name="rv_strokeDashGap" />
+        <attr name="rv_radiusHalfHeightEnable" />
+        <attr name="rv_widthHeightEqualEnable" />
+        <attr name="rv_radius" />
+        <attr name="rv_topLeftRadius" />
+        <attr name="rv_topRightRadius" />
+        <attr name="rv_bottomLeftRadius" />
+        <attr name="rv_bottomRightRadius" />
+        <attr name="rv_rippleColor" />
+        <attr name="rv_rippleEnable" />
+        <attr name="rv_selected" />
+        <attr name="rv_enterFadeDuration" />
+        <attr name="rv_exitFadeDuration" />
+
+        <attr name="rv_textColor" />
+        <attr name="rv_textPressedColor" />
+        <attr name="rv_textDisabledColor" />
+        <attr name="rv_textSelectedColor" />
+        <attr name="rv_textCheckedColor" />
+
+        <attr name="rv_leftDrawableSystemEnable" />
+        <attr name="rv_leftDrawableColorRadius" />
+        <attr name="rv_leftDrawableColorCircleEnable" />
+        <attr name="rv_leftDrawableWidth" />
+        <attr name="rv_leftDrawableHeight" />
+        <attr name="rv_leftDrawable" />
+        <attr name="rv_leftPressedDrawable" />
+        <attr name="rv_leftDisabledDrawable" />
+        <attr name="rv_leftSelectedDrawable" />
+        <attr name="rv_leftCheckedDrawable" />
+
+        <attr name="rv_topDrawableSystemEnable" />
+        <attr name="rv_topDrawableColorRadius" />
+        <attr name="rv_topDrawableColorCircleEnable" />
+        <attr name="rv_topDrawableWidth" />
+        <attr name="rv_topDrawableHeight" />
+        <attr name="rv_topDrawable" />
+        <attr name="rv_topPressedDrawable" />
+        <attr name="rv_topDisabledDrawable" />
+        <attr name="rv_topSelectedDrawable" />
+        <attr name="rv_topCheckedDrawable" />
+
+        <attr name="rv_rightDrawableSystemEnable" />
+        <attr name="rv_rightDrawableColorRadius" />
+        <attr name="rv_rightDrawableColorCircleEnable" />
+        <attr name="rv_rightDrawableWidth" />
+        <attr name="rv_rightDrawableHeight" />
+        <attr name="rv_rightDrawable" />
+        <attr name="rv_rightPressedDrawable" />
+        <attr name="rv_rightDisabledDrawable" />
+        <attr name="rv_rightSelectedDrawable" />
+        <attr name="rv_rightCheckedDrawable" />
+
+        <attr name="rv_bottomDrawableSystemEnable" />
+        <attr name="rv_bottomDrawableColorRadius" />
+        <attr name="rv_bottomDrawableColorCircleEnable" />
+        <attr name="rv_bottomDrawableWidth" />
+        <attr name="rv_bottomDrawableHeight" />
+        <attr name="rv_bottomDrawable" />
+        <attr name="rv_bottomPressedDrawable" />
+        <attr name="rv_bottomDisabledDrawable" />
+        <attr name="rv_bottomSelectedDrawable" />
+        <attr name="rv_bottomCheckedDrawable" />
+    </declare-styleable>
+    <declare-styleable name="RadiusRelativeLayout">
+        <attr name="rv_backgroundColor" />
+        <attr name="rv_backgroundPressedColor" />
+        <attr name="rv_backgroundDisabledColor" />
+        <attr name="rv_backgroundSelectedColor" />
+        <attr name="rv_backgroundCheckedColor" />
+        <attr name="rv_backgroundPressedAlpha" />
+
+        <attr name="rv_strokeColor" />
+        <attr name="rv_strokePressedColor" />
+        <attr name="rv_strokeDisabledColor" />
+        <attr name="rv_strokeSelectedColor" />
+        <attr name="rv_strokeCheckedColor" />
+        <attr name="rv_strokePressedAlpha" />
+
+        <attr name="rv_strokeWidth" />
+        <attr name="rv_strokeDashWidth" />
+        <attr name="rv_strokeDashGap" />
+        <attr name="rv_radiusHalfHeightEnable" />
+        <attr name="rv_widthHeightEqualEnable" />
+        <attr name="rv_radius" />
+        <attr name="rv_topLeftRadius" />
+        <attr name="rv_topRightRadius" />
+        <attr name="rv_bottomLeftRadius" />
+        <attr name="rv_bottomRightRadius" />
+        <attr name="rv_rippleColor" />
+        <attr name="rv_rippleEnable" />
+        <attr name="rv_selected" />
+        <attr name="rv_enterFadeDuration" />
+        <attr name="rv_exitFadeDuration" />
+    </declare-styleable>
+    <declare-styleable name="RadiusLinearLayout">
+        <attr name="rv_backgroundColor" />
+        <attr name="rv_backgroundPressedColor" />
+        <attr name="rv_backgroundDisabledColor" />
+        <attr name="rv_backgroundSelectedColor" />
+        <attr name="rv_backgroundCheckedColor" />
+        <attr name="rv_backgroundPressedAlpha" />
+
+        <attr name="rv_strokeColor" />
+        <attr name="rv_strokePressedColor" />
+        <attr name="rv_strokeDisabledColor" />
+        <attr name="rv_strokeSelectedColor" />
+        <attr name="rv_strokeCheckedColor" />
+        <attr name="rv_strokePressedAlpha" />
+
+        <attr name="rv_strokeWidth" />
+        <attr name="rv_strokeDashWidth" />
+        <attr name="rv_strokeDashGap" />
+        <attr name="rv_radiusHalfHeightEnable" />
+        <attr name="rv_widthHeightEqualEnable" />
+        <attr name="rv_radius" />
+        <attr name="rv_topLeftRadius" />
+        <attr name="rv_topRightRadius" />
+        <attr name="rv_bottomLeftRadius" />
+        <attr name="rv_bottomRightRadius" />
+        <attr name="rv_rippleColor" />
+        <attr name="rv_rippleEnable" />
+        <attr name="rv_selected" />
+        <attr name="rv_enterFadeDuration" />
+        <attr name="rv_exitFadeDuration" />
+
+    </declare-styleable>
+    <declare-styleable name="RadiusFrameLayout">
+        <attr name="rv_backgroundColor" />
+        <attr name="rv_backgroundPressedColor" />
+        <attr name="rv_backgroundDisabledColor" />
+        <attr name="rv_backgroundSelectedColor" />
+        <attr name="rv_backgroundCheckedColor" />
+        <attr name="rv_backgroundPressedAlpha" />
+
+        <attr name="rv_strokeColor" />
+        <attr name="rv_strokePressedColor" />
+        <attr name="rv_strokeDisabledColor" />
+        <attr name="rv_strokeSelectedColor" />
+        <attr name="rv_strokeCheckedColor" />
+        <attr name="rv_strokePressedAlpha" />
+
+        <attr name="rv_strokeWidth" />
+        <attr name="rv_strokeDashWidth" />
+        <attr name="rv_strokeDashGap" />
+        <attr name="rv_radiusHalfHeightEnable" />
+        <attr name="rv_widthHeightEqualEnable" />
+        <attr name="rv_radius" />
+        <attr name="rv_topLeftRadius" />
+        <attr name="rv_topRightRadius" />
+        <attr name="rv_bottomLeftRadius" />
+        <attr name="rv_bottomRightRadius" />
+        <attr name="rv_rippleColor" />
+        <attr name="rv_rippleEnable" />
+        <attr name="rv_selected" />
+        <attr name="rv_enterFadeDuration" />
+        <attr name="rv_exitFadeDuration" />
+    </declare-styleable>
+    <declare-styleable name="RoundedImageView">
+        <attr name="riv_corner_radius" format="dimension" />
+        <attr name="riv_corner_radius_top_left" format="dimension" />
+        <attr name="riv_corner_radius_top_right" format="dimension" />
+        <attr name="riv_corner_radius_bottom_left" format="dimension" />
+        <attr name="riv_corner_radius_bottom_right" format="dimension" />
+        <attr name="riv_border_width" format="dimension" />
+        <attr name="riv_border_color" format="color" />
+        <attr name="riv_mutate_background" format="boolean" />
+        <attr name="riv_oval" format="boolean" />
+        <attr name="android:scaleType" />
+        <attr name="riv_tile_mode">
+            <enum name="clamp" value="0" />
+            <enum name="repeat" value="1" />
+            <enum name="mirror" value="2" />
+        </attr>
+        <attr name="riv_tile_mode_x">
+            <enum name="clamp" value="0" />
+            <enum name="repeat" value="1" />
+            <enum name="mirror" value="2" />
+        </attr>
+        <attr name="riv_tile_mode_y">
+            <enum name="clamp" value="0" />
+            <enum name="repeat" value="1" />
+            <enum name="mirror" value="2" />
+        </attr>
+    </declare-styleable>
+</resources>

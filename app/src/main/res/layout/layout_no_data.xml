@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/iv_noData"
+        android:layout_width="@dimen/dp_196"
+        android:layout_height="@dimen/dp_110"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_no_data" />
+
+    <TextView
+        android:id="@+id/tv_noDataTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="@string/无内容"
+        android:textColor="@color/color_ff999999"
+        android:textSize="@dimen/sp_19"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_noDataContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_5"
+        android:textColor="@color/color_ff999999"
+        android:textSize="@dimen/sp_16"
+        android:visibility="gone"
+        tools:text="通过车牌号查询欠费订单" />
+</LinearLayout>

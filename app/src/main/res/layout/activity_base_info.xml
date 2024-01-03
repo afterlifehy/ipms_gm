@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_ff04a091"
+    android:orientation="vertical">
+
+    <com.aries.ui.view.radius.RadiusLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/iv_mineBg"
+        android:layout_marginStart="@dimen/dp_13"
+        android:layout_marginTop="@dimen/dp_n40"
+        android:layout_marginEnd="@dimen/dp_13"
+        android:layout_marginBottom="@dimen/dp_25"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/dp_13"
+        android:paddingTop="@dimen/dp_60"
+        android:paddingEnd="@dimen/dp_13"
+        app:rv_backgroundColor="@color/white"
+        app:rv_bottomLeftRadius="@dimen/dp_10"
+        app:rv_bottomRightRadius="@dimen/dp_10">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_72">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/姓名"
+                android:textColor="@color/color_ff666666"
+                android:textSize="@dimen/sp_19" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
+                android:textColor="@color/color_ff1a1a1a"
+                android:textSize="@dimen/sp_19"
+                tools:text="吴军" />
+        </FrameLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:background="@color/color_ffcccccc" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_72">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/账户名"
+                android:textColor="@color/color_ff666666"
+                android:textSize="@dimen/sp_19" />
+
+            <TextView
+                android:id="@+id/tv_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
+                android:textColor="@color/color_ff1a1a1a"
+                android:textSize="@dimen/sp_19"
+                tools:text="15955977781" />
+        </FrameLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:background="@color/color_ffcccccc" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_72">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/手机号"
+                android:textColor="@color/color_ff666666"
+                android:textSize="@dimen/sp_19" />
+
+            <TextView
+                android:id="@+id/tv_phoneNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
+                android:textColor="@color/color_ff1a1a1a"
+                android:textSize="@dimen/sp_19"
+                tools:text="15955977781" />
+        </FrameLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:background="@color/color_ffcccccc" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/dp_72">
+
+            <TextView
+                android:id="@+id/tv_streetTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_28"
+                android:text="@string/路段名"
+                android:textColor="@color/color_ff666666"
+                android:textSize="@dimen/sp_19" />
+
+            <LinearLayout
+                android:id="@+id/ll_street"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_13"
+                android:layout_marginTop="@dimen/dp_28"
+                android:layout_toEndOf="@+id/tv_streetTitle"
+                android:orientation="vertical" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:background="@color/color_ffcccccc" />
+    </com.aries.ui.view.radius.RadiusLinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_mineBg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_my_bg" />
+
+    <include
+        android:id="@+id/layout_toolbar"
+        layout="@layout/layout_comment_toolbar" />
+
+    <com.aries.ui.view.radius.RadiusFrameLayout
+        android:layout_width="@dimen/dp_67"
+        android:layout_height="@dimen/dp_67"
+        android:layout_below="@+id/iv_mineBg"
+        android:layout_marginStart="@dimen/dp_33"
+        android:layout_marginTop="@dimen/dp_n60"
+        app:rv_backgroundColor="@color/color_ffe1faf8"
+        app:rv_radius="@dimen/dp_7">
+
+        <ImageView
+            android:layout_width="@dimen/dp_53"
+            android:layout_height="@dimen/dp_53"
+            android:layout_gravity="center"
+            android:src="@mipmap/ic_guan_logo" />
+    </com.aries.ui.view.radius.RadiusFrameLayout>
+</RelativeLayout>

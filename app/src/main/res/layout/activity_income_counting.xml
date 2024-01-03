@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_ffe8eef6">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_light_top_bg" />
+
+    <include
+        android:id="@+id/layout_toolbar"
+        layout="@layout/layout_comment_toolbar" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layout_toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/dp_90">
+
+            <com.aries.ui.view.radius.RadiusLinearLayout
+                android:id="@+id/rll_todaySummary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_13"
+                android:layout_marginTop="@dimen/dp_6"
+                android:layout_marginEnd="@dimen/dp_13"
+                android:orientation="vertical"
+                app:rv_backgroundColor="@color/white"
+                app:rv_radius="@dimen/dp_10">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_47"
+                    android:background="@mipmap/ic_income_bg_1"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/dp_13"
+                    android:text="@string/今日汇总"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_19" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/dp_13"
+                    android:paddingTop="@dimen/dp_16"
+                    android:paddingEnd="@dimen/dp_13"
+                    android:paddingBottom="@dimen/dp_16">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_totalIncomeTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:drawableEnd="@mipmap/ic_question"
+                        android:drawablePadding="@dimen/dp_11"
+                        android:text="总收费"
+                        android:textColor="@color/color_ff04a091"
+                        android:textSize="@dimen/sp_19" />
+
+                    <TextView
+                        android:id="@+id/tv_totalIncome"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        tools:text="555.00元" />
+                </FrameLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_1"
+                    android:background="@color/color_ffcccccc" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_79"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="@dimen/dp_0"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:paddingStart="@dimen/dp_13"
+                        android:paddingTop="@dimen/dp_13"
+                        android:paddingEnd="@dimen/dp_13">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/已下单"
+                            android:textColor="@color/color_ff999999"
+                            android:textSize="@dimen/sp_19" />
+
+                        <TextView
+                            android:id="@+id/tv_orderPlacedNum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="40笔" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="@dimen/dp_1"
+                        android:layout_height="match_parent"
+                        android:background="@color/color_ffcccccc" />
+
+                    <LinearLayout
+                        android:layout_width="@dimen/dp_0"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:orientation="vertical"
+                        android:paddingStart="@dimen/dp_13"
+                        android:paddingTop="@dimen/dp_13"
+                        android:paddingEnd="@dimen/dp_13">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/拒付费"
+                            android:textColor="@color/color_ff999999"
+                            android:textSize="@dimen/sp_19" />
+
+                        <TextView
+                            android:id="@+id/tv_refusePayNum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="40笔" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_1"
+                    android:background="@color/color_ffcccccc" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_79"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="@dimen/dp_0"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:paddingStart="@dimen/dp_13"
+                        android:paddingTop="@dimen/dp_13"
+                        android:paddingEnd="@dimen/dp_13">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/部分付费"
+                            android:textColor="@color/color_ff999999"
+                            android:textSize="@dimen/sp_19" />
+
+                        <TextView
+                            android:id="@+id/tv_partPaidNum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="40笔" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="@dimen/dp_1"
+                        android:layout_height="match_parent"
+                        android:background="@color/color_ffcccccc" />
+
+                    <LinearLayout
+                        android:layout_width="@dimen/dp_0"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:orientation="vertical"
+                        android:paddingStart="@dimen/dp_13"
+                        android:paddingTop="@dimen/dp_13"
+                        android:paddingEnd="@dimen/dp_13">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/已追缴"
+                            android:textColor="@color/color_ff999999"
+                            android:textSize="@dimen/sp_19" />
+
+                        <TextView
+                            android:id="@+id/tv_recoverNum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="40笔" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_1"
+                    android:background="@color/color_ffcccccc" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/dp_13"
+                    android:paddingTop="@dimen/dp_16"
+                    android:paddingEnd="@dimen/dp_13"
+                    android:paddingBottom="@dimen/dp_16">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/被追缴"
+                        android:textColor="@color/color_ff666666"
+                        android:textSize="@dimen/sp_19" />
+
+                    <TextView
+                        android:id="@+id/tv_recoverAmount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end|center_vertical"
+                        tools:text="0.00元" />
+                </FrameLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_1"
+                    android:background="@color/color_ffcccccc" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/dp_13"
+                    android:paddingTop="@dimen/dp_16"
+                    android:paddingEnd="@dimen/dp_13"
+                    android:paddingBottom="@dimen/dp_16">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/追缴他人"
+                        android:textColor="@color/color_ff666666"
+                        android:textSize="@dimen/sp_19" />
+
+                    <TextView
+                        android:id="@+id/tv_chasingOthersAmount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end|center_vertical"
+                        tools:text="0.00元" />
+                </FrameLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_1"
+                    android:background="@color/color_ffcccccc" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/dp_13"
+                    android:paddingTop="@dimen/dp_16"
+                    android:paddingEnd="@dimen/dp_13"
+                    android:paddingBottom="@dimen/dp_16">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/自主缴费"
+                        android:textColor="@color/color_ff666666"
+                        android:textSize="@dimen/sp_19" />
+
+                    <TextView
+                        android:id="@+id/tv_payIndependentlyAmount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end|center_vertical"
+                        tools:text="0.00元" />
+                </FrameLayout>
+            </com.aries.ui.view.radius.RadiusLinearLayout>
+
+            <com.aries.ui.view.radius.RadiusLinearLayout
+                android:id="@+id/rll_month"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_13"
+                android:layout_marginTop="@dimen/dp_20"
+                android:layout_marginEnd="@dimen/dp_13"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:rv_backgroundColor="@color/white"
+                app:rv_radius="@dimen/dp_10">
+
+                <TextView
+                    android:id="@+id/rtv_dateRange"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_47"
+                    android:background="@mipmap/ic_income_bg_2"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/dp_13"
+                    android:text="@string/本月累计"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_19" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/dp_13"
+                    android:paddingTop="@dimen/dp_16"
+                    android:paddingEnd="@dimen/dp_13"
+                    android:paddingBottom="@dimen/dp_11">
+
+                    <TextView
+                        android:id="@+id/tv_monthTotalIncomeTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/总收入"
+                        android:textColor="@color/color_ff1a1a1a"
+                        android:textSize="@dimen/sp_19" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:text="@string/已下单"
+                        android:textColor="@color/color_ff1a1a1a"
+                        android:textSize="@dimen/sp_19" />
+
+                    <TextView
+                        android:id="@+id/tv_monthTotalIncome"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_monthTotalIncomeTitle"
+                        android:layout_marginTop="@dimen/dp_5"
+                        tools:text="21,560.00元" />
+
+                    <TextView
+                        android:id="@+id/tv_monthOrderPlacedNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_monthTotalIncomeTitle"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="@dimen/dp_5"
+                        tools:text="21,560.00元" />
+                </RelativeLayout>
+            </com.aries.ui.view.radius.RadiusLinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <com.aries.ui.view.radius.RadiusTextView
+        android:id="@+id/rtv_print"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_47"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="@dimen/dp_13"
+        android:layout_marginEnd="@dimen/dp_13"
+        android:layout_marginBottom="@dimen/dp_13"
+        android:gravity="center"
+        android:text="@string/打印"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_19"
+        app:rv_backgroundColor="@color/color_ff04a091"
+        app:rv_radius="@dimen/dp_7" />
+</RelativeLayout>

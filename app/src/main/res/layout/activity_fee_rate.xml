@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_ffe8eef6">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_deep_top_bg" />
+
+    <include
+        android:id="@+id/layout_toolbar"
+        layout="@layout/layout_comment_toolbar" />
+
+    <RelativeLayout
+        android:id="@+id/rl_tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_toolbar"
+        android:paddingStart="@dimen/dp_13"
+        android:paddingEnd="@dimen/dp_13">
+
+        <ImageView
+            android:id="@+id/iv_arrowLeft"
+            android:layout_width="@dimen/dp_23"
+            android:layout_height="@dimen/dp_23"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/ic_fee_arrow_left"
+            android:visibility="invisible" />
+
+        <com.rt.common.view.flycotablayout.SlidingTabLayout2
+            android:id="@+id/stl_street"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_60"
+            android:layout_gravity="center_horizontal"
+            android:layout_toStartOf="@+id/iv_arrowRight"
+            android:layout_toEndOf="@+id/iv_arrowLeft"
+            app:tl_indicator_height="0dp"
+            app:tl_tab_padding="@dimen/dp_12"
+            app:tl_textBold="BOTH"
+            app:tl_textSelectColor="@color/white"
+            app:tl_textSelectSize="@dimen/sp_23"
+            app:tl_textSize="@dimen/sp_23"
+            app:tl_textUnselectColor="@color/white" />
+
+        <ImageView
+            android:id="@+id/iv_arrowRight"
+            android:layout_width="@dimen/dp_23"
+            android:layout_height="@dimen/dp_23"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/ic_fee_arrow_right" />
+    </RelativeLayout>
+
+    <com.aries.ui.view.radius.RadiusFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rl_tab"
+        android:layout_marginTop="@dimen/dp_13"
+        app:rv_topLeftRadius="@dimen/dp_20"
+        app:rv_topRightRadius="@dimen/dp_20">
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/vp_feeRate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.aries.ui.view.radius.RadiusFrameLayout>
+</RelativeLayout>

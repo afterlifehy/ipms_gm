@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/transparent"
+    android:paddingBottom="@dimen/dp_13">
+
+    <com.aries.ui.view.radius.RadiusLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/dp_13"
+        android:paddingTop="@dimen/dp_17"
+        android:paddingEnd="@dimen/dp_13"
+        app:rv_backgroundColor="@color/white"
+        app:rv_radius="@dimen/dp_7">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_orderNo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@mipmap/ic_order_no"
+            android:drawablePadding="@dimen/dp_11"
+            android:textColor="@color/color_ff1a1a1a"
+            android:textSize="@dimen/sp_19"
+            tools:text="20230625CN00700075601" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_15"
+            android:drawableStart="@mipmap/ic_transaction_amount"
+            android:drawablePadding="@dimen/dp_11"
+            android:textColor="@color/color_ff1a1a1a"
+            android:textSize="@dimen/sp_19"
+            tools:text="15.00元" />
+
+        <com.aries.ui.view.radius.RadiusLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_73"
+            android:layout_marginTop="@dimen/dp_13"
+            android:orientation="horizontal"
+            app:rv_backgroundColor="@color/color_1a999999"
+            app:rv_radius="@dimen/dp_7">
+
+            <com.aries.ui.view.radius.RadiusTextView
+                android:layout_width="@dimen/dp_53"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingStart="@dimen/dp_8"
+                android:paddingEnd="@dimen/dp_8"
+                android:text="@string/付费时段"
+                android:textColor="@color/color_ff1a1a1a"
+                android:textSize="@dimen/sp_17"
+                app:rv_backgroundColor="@color/color_ffe6e6e6"
+                app:rv_radius="@dimen/dp_7" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_startTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_36"
+                    android:drawableStart="@mipmap/ic_start"
+                    android:drawablePadding="@dimen/dp_8"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:textColor="@color/color_ff1a1a1a"
+                    android:textSize="@dimen/sp_19"
+                    tools:text="2023-06-25 08:01:43" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_endTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_36"
+                    android:drawableStart="@mipmap/ic_end"
+                    android:drawablePadding="@dimen/dp_8"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:textColor="@color/color_ff1a1a1a"
+                    android:textSize="@dimen/sp_19"
+                    tools:text="2023-06-25 08:01:43" />
+            </LinearLayout>
+        </com.aries.ui.view.radius.RadiusLinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:layout_marginTop="@dimen/dp_14"
+            android:background="@color/color_ffd9d9d9" />
+
+        <FrameLayout
+            android:id="@+id/fl_notification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_44"
+                android:layout_gravity="center_horizontal"
+                android:drawableStart="@mipmap/ic_print"
+                android:drawablePadding="@dimen/dp_10"
+                android:gravity="center"
+                android:text="@string/告知书"
+                android:textColor="@color/color_ffef7000"
+                android:textSize="@dimen/sp_19" />
+        </FrameLayout>
+    </com.aries.ui.view.radius.RadiusLinearLayout>
+</FrameLayout>

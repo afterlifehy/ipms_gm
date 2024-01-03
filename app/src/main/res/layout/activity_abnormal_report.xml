@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_ffe8f0ef">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_light_top_bg" />
+
+    <LinearLayout
+        android:id="@+id/ll_berthAbnormal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/rfl_report"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/layout_toolbar"
+            layout="@layout/layout_comment_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/ll_berthAbnormal2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/dp_13"
+                android:paddingEnd="@dimen/dp_13">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_6"
+                    android:text="@string/场库名称"
+                    android:textColor="@color/color_ff1a1a1a"
+                    android:textSize="@dimen/sp_19" />
+
+                <com.aries.ui.view.radius.RadiusFrameLayout
+                    android:id="@+id/rfl_lotName"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_47"
+                    android:layout_marginTop="@dimen/dp_13"
+                    android:paddingStart="@dimen/dp_13"
+                    android:paddingEnd="@dimen/dp_13"
+                    app:rv_backgroundColor="@color/white"
+                    app:rv_radius="@dimen/dp_7">
+
+                    <TextView
+                        android:id="@+id/tv_lotName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:textColor="@color/color_ff1a1a1a"
+                        android:textSize="@dimen/sp_19"
+                        tools:text="定西路(愚园路～安化路)西侧" />
+
+                    <CheckBox
+                        android:id="@+id/cb_lotName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end|center_vertical"
+                        android:background="@color/transparent"
+                        android:button="@drawable/selector_lot_arrow"
+                        android:checked="false" />
+                </com.aries.ui.view.radius.RadiusFrameLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_47"
+                    android:layout_marginTop="@dimen/dp_13"
+                    android:orientation="horizontal">
+
+                    <com.aries.ui.view.radius.RadiusTextView
+                        android:id="@+id/rtv_streetNo"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="@dimen/dp_6"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/dp_13"
+                        android:paddingEnd="@dimen/dp_13"
+                        android:textColor="@color/color_ff666666"
+                        android:textSize="@dimen/sp_19"
+                        app:rv_backgroundColor="@color/white"
+                        app:rv_radius="@dimen/dp_7"
+                        tools:text="CN007" />
+
+                    <com.aries.ui.view.radius.RadiusEditText
+                        android:id="@+id/ret_parkingNo"
+                        android:layout_width="@dimen/dp_0"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/dp_6"
+                        android:layout_weight="1.24"
+                        android:gravity="center_vertical"
+                        android:hint="@string/填写泊位号"
+                        android:inputType="number"
+                        android:paddingStart="@dimen/dp_13"
+                        android:paddingEnd="@dimen/dp_13"
+                        android:textColor="@color/color_ff1a1a1a"
+                        android:textColorHint="@color/color_ff999999"
+                        android:textCursorDrawable="@drawable/shape_cursor"
+                        android:textSize="@dimen/sp_19"
+                        app:rv_backgroundColor="@color/white"
+                        app:rv_radius="@dimen/dp_7" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_1"
+                    android:layout_marginTop="@dimen/dp_16"
+                    android:background="@color/color_ffadb3b2" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_17"
+                    android:text="@string/异常分类"
+                    android:textColor="@color/color_ff1a1a1a"
+                    android:textSize="@dimen/sp_19" />
+
+                <com.aries.ui.view.radius.RadiusFrameLayout
+                    android:id="@+id/rfl_abnormalClassification"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_47"
+                    android:layout_marginTop="@dimen/dp_13"
+                    android:paddingStart="@dimen/dp_13"
+                    android:paddingEnd="@dimen/dp_13"
+                    app:rv_backgroundColor="@color/white"
+                    app:rv_radius="@dimen/dp_7">
+
+                    <TextView
+                        android:id="@+id/tv_abnormalClassification"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:textColor="@color/color_ff1a1a1a"
+                        android:textSize="@dimen/sp_19"
+                        tools:text="在停车牌与POS不一致" />
+
+                    <CheckBox
+                        android:id="@+id/cb_abnormalClassification"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end|center_vertical"
+                        android:background="@color/transparent"
+                        android:button="@drawable/selector_lot_arrow"
+                        android:checked="false" />
+                </com.aries.ui.view.radius.RadiusFrameLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_plate"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_47"
+                    android:layout_marginTop="@dimen/dp_13"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <com.aries.ui.view.radius.RadiusLinearLayout
+                        android:layout_width="@dimen/dp_0"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="@dimen/dp_6"
+                        android:layout_weight="2"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/dp_13"
+                        android:paddingEnd="@dimen/dp_13"
+                        app:rv_backgroundColor="@color/white"
+                        app:rv_radius="@dimen/dp_7">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/ic_plate" />
+
+                        <EditText
+                            android:id="@+id/et_plate"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="@dimen/dp_10"
+                            android:background="@null"
+                            android:textColor="@color/color_ff1a1a1a"
+                            android:textCursorDrawable="@drawable/shape_cursor"
+                            android:textSize="@dimen/sp_19"
+                            tools:text="沪ABS1331" />
+                    </com.aries.ui.view.radius.RadiusLinearLayout>
+
+                    <com.aries.ui.view.radius.RadiusFrameLayout
+                        android:id="@+id/rfl_recognize"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/dp_6"
+                        android:layout_weight="1"
+                        app:rv_backgroundColor="@color/white"
+                        app:rv_radius="@dimen/dp_7"
+                        app:rv_strokeColor="@color/color_ff04a091"
+                        app:rv_strokeWidth="@dimen/dp_1">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_recognize"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:drawableStart="@mipmap/ic_camera"
+                            android:drawablePadding="@dimen/dp_10"
+                            android:gravity="center"
+                            android:text="@string/识别"
+                            android:textColor="@color/color_ff04a091"
+                            android:textSize="@dimen/sp_19" />
+                    </com.aries.ui.view.radius.RadiusFrameLayout>
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_plateColor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_18"
+                    android:visibility="gone" />
+
+                <com.aries.ui.view.radius.RadiusEditText
+                    android:id="@+id/ret_remarks"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_22"
+                    android:hint="@string/请输入备注"
+                    android:maxLength="120"
+                    android:maxLines="8"
+                    android:minLines="2"
+                    android:padding="@dimen/dp_13"
+                    android:textColor="@color/color_ff1a1a1a"
+                    android:textColorHint="@color/color_ff666666"
+                    android:textCursorDrawable="@drawable/shape_cursor"
+                    android:textSize="@dimen/sp_19"
+                    app:rv_backgroundColor="@color/white"
+                    app:rv_radius="@dimen/dp_7" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
+
+    <com.aries.ui.view.radius.RadiusFrameLayout
+        android:id="@+id/rfl_report"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_47"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="@dimen/dp_13"
+        android:layout_marginEnd="@dimen/dp_13"
+        android:layout_marginBottom="@dimen/dp_13"
+        app:rv_backgroundColor="@color/color_ff04a091"
+        app:rv_radius="@dimen/dp_7">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawableStart="@mipmap/ic_report"
+            android:drawablePadding="@dimen/dp_14"
+            android:gravity="center"
+            android:text="@string/上报"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_19"
+            android:textStyle="bold" />
+    </com.aries.ui.view.radius.RadiusFrameLayout>
+
+    <com.rt.common.view.keyboard.MyKeyboardView
+        android:id="@+id/kv_keyBoard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/shape_keyboard_bg"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:keyBackground="@drawable/selector_key_bg"
+        android:keyTextColor="@color/color_ff1a1a1a"
+        android:keyTextSize="@dimen/sp_21"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingEnd="@dimen/dp_13"
+        android:paddingBottom="@dimen/dp_10"
+        android:shadowColor="@color/white"
+        android:shadowRadius="0.0"
+        android:visibility="gone" />
+</RelativeLayout>

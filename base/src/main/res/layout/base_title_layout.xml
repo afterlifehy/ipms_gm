@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_line_bottom"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/view_title_top"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_toolbar_height"
+        android:minHeight="@dimen/common_toolbar_height"
+        android:title="@null"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp"
+        app:navigationIcon="@mipmap/ic_launcher"
+        app:title="@null">
+
+        <TextView
+            android:id="@+id/tv_base_title"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/common_toolbar_height"
+            android:layout_gravity="center"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:textColor="#ff2D2E32"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="@dimen/dp_8"
+            android:layout_height="match_parent"
+            android:layout_gravity="end" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:paddingStart="@dimen/dp_8"
+            android:paddingEnd="@dimen/dp_8"
+            android:scaleType="centerInside"
+            android:transitionName="searchIcon"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/seller_collection_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_18"
+            android:transitionName="searchIcon"
+            android:visibility="visible" />
+
+    </androidx.appcompat.widget.Toolbar>
+</LinearLayout>

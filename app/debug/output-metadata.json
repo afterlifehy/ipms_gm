@@ -1,0 +1,20 @@
+{
+  "version": 3,
+  "artifactType": {
+    "type": "APK",
+    "kind": "Directory"
+  },
+  "applicationId": "com.rt.ipms_gm",
+  "variantName": "debug",
+  "elements": [
+    {
+      "type": "SINGLE",
+      "filters": [],
+      "attributes": [],
+      "versionCode": 30000,
+      "versionName": "3.0.1",
+      "outputFile": "inspector_3.0.1_2024-01-02_debug_true.apk"
+    }
+  ],
+  "elementType": "File"
+}

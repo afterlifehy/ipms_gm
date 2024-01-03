@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Keyboard android:keyWidth="9%p" android:keyHeight="8%"
+    android:horizontalGap="2%p" android:verticalGap="0.0px"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <Row android:verticalGap="1%p">
+        <Key
+            android:codes="27818"
+            android:keyLabel="沪"
+            android:horizontalGap="1%p"
+            android:keyWidth="18%p"
+            />
+
+        <Key
+            android:codes="33487"
+            android:keyLabel="苏"
+            android:keyWidth="18%p"
+            />
+
+        <Key
+            android:codes="27993"
+            android:keyLabel="浙"
+            android:keyWidth="18%p"
+            />
+        <Key
+            android:codes="-4"
+            android:keyLabel="↲"
+            android:keyWidth="18%p"
+            />
+
+        <Key
+            android:codes="-2"
+            android:keyLabel="其他"
+            android:keyWidth="18%p"
+            />
+    </Row>
+
+    <Row android:verticalGap="1%p">
+        <Key
+            android:codes="65" android:keyLabel="A"
+            android:horizontalGap="1%p"
+            android:keyWidth="18%p"
+            />
+
+        <Key
+            android:codes="66" android:keyLabel="B"
+            android:keyWidth="18%p"
+            />
+
+        <Key
+            android:codes="67" android:keyLabel="C"
+            android:keyWidth="18%p"
+            />
+        <Key
+            android:codes="68" android:keyLabel="D"
+            android:keyWidth="18%p"
+            />
+
+        <Key
+            android:codes="69" android:keyLabel="E"
+            android:keyWidth="18%p"
+            />
+    </Row>
+
+    <Row android:verticalGap="1%p">
+        <Key
+            android:codes="70"  android:keyLabel="F"
+            android:horizontalGap="1%p"
+            android:keyWidth="18%p"
+            />
+
+        <Key
+            android:codes="71" android:keyLabel="G"
+            android:keyWidth="18%p"
+            />
+
+        <Key
+            android:codes="72"  android:keyLabel="H"
+            android:keyWidth="18%p"
+            />
+        <Key
+            android:codes="74" android:keyLabel="J"
+            android:keyWidth="18%p"
+            />
+
+        <Key
+            android:codes="75" android:keyLabel="K"
+            android:keyWidth="18%p"
+            />
+    </Row>
+
+    <Row android:verticalGap="1%p">
+        <Key
+            android:codes="76"  android:keyLabel="L"
+            android:horizontalGap="1%p"
+            android:keyWidth="18%p"
+            />
+
+        <Key
+            android:codes="77" android:keyLabel="M"
+            android:keyWidth="18%p"
+            />
+
+        <Key
+            android:codes="78" android:keyLabel="N"
+            android:keyWidth="18%p"
+            />
+        <Key
+            android:codes="80" android:keyLabel="P"
+            android:keyWidth="18%p"
+            />
+
+        <Key
+            android:codes="81" android:keyLabel="Q"
+            android:keyWidth="18%p"
+            />
+    </Row>
+
+    <Row android:verticalGap="1%p">
+        <Key
+            android:codes="82" android:keyLabel="R"
+            android:horizontalGap="1%p"
+            android:keyWidth="18%p"
+            />
+
+        <Key
+            android:codes="83" android:keyLabel="S"
+            android:keyWidth="18%p"
+            />
+
+        <Key
+            android:codes="84" android:keyLabel="T"
+            android:keyWidth="18%p"
+            />
+        <Key
+            android:codes="85" android:keyLabel="U"
+            android:keyWidth="18%p"
+            />
+
+        <Key
+            android:codes="86" android:keyLabel="V"
+            android:keyWidth="18%p"
+            />
+    </Row>
+
+    <Row android:verticalGap="1%p">
+        <Key
+            android:codes="87" android:keyLabel="W"
+            android:horizontalGap="1%p"
+            android:keyWidth="18%p"
+            />
+
+        <Key
+            android:codes="88" android:keyLabel="X"
+            android:keyWidth="18%p"
+            />
+
+        <Key
+            android:codes="89" android:keyLabel="Y"
+            android:keyWidth="18%p"
+            />
+        <Key
+            android:codes="90" android:keyLabel="Z"
+            android:keyWidth="18%p"
+            />
+
+        <Key
+            android:codes="48" android:keyLabel="0"
+            android:keyWidth="18%p"
+            />
+    </Row>
+
+    <Row android:verticalGap="1%p">
+        <Key
+            android:codes="49" android:keyLabel="1"
+            android:horizontalGap="1%p"
+            android:keyWidth="18%p"
+            />
+
+        <Key
+            android:codes="50" android:keyLabel="2"
+            android:keyWidth="18%p"
+            />
+
+        <Key
+            android:codes="51" android:keyLabel="3"
+            android:keyWidth="18%p"
+            />
+        <Key
+            android:codes="52" android:keyLabel="4"
+            android:keyWidth="18%p"
+            />
+
+        <Key
+            android:codes="53" android:keyLabel="5"
+            android:keyWidth="18%p"
+            />
+    </Row>
+
+    <Row android:verticalGap="1%p">
+        <Key
+            android:codes="54" android:keyLabel="6"
+            android:horizontalGap="1%p"
+            android:keyWidth="18%p"
+            />
+
+        <Key
+            android:codes="55" android:keyLabel="7"
+            android:keyWidth="18%p"
+            />
+
+        <Key
+            android:codes="56" android:keyLabel="8"
+            android:keyWidth="18%p"
+            />
+        <Key
+            android:codes="57" android:keyLabel="9"
+            android:keyWidth="18%p"
+            />
+
+        <Key
+            android:codes="-3" android:keyLabel="X"
+            android:keyWidth="18%p"
+            />
+    </Row>
+
+</Keyboard>

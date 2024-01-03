@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_ffe8f0ef"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_deep_top_bg" />
+
+    <include
+        android:id="@+id/layout_toolbar"
+        layout="@layout/layout_comment_toolbar" />
+
+    <com.aries.ui.view.radius.RadiusFrameLayout
+        android:id="@+id/rfl_plate"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_54"
+        android:layout_below="@+id/layout_toolbar"
+        android:layout_marginStart="@dimen/dp_13"
+        android:layout_marginTop="@dimen/dp_6"
+        android:layout_marginEnd="@dimen/dp_13"
+        app:rv_backgroundColor="@color/white"
+        app:rv_radius="@dimen/dp_7">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_plate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/dp_13"
+            android:drawableStart="@mipmap/ic_plate"
+            android:drawablePadding="@dimen/dp_13"
+            android:textColor="@color/color_ff1a1a1a"
+            android:textSize="@dimen/sp_24"
+            android:textStyle="bold"
+            tools:text="沪A36N81" />
+    </com.aries.ui.view.radius.RadiusFrameLayout>
+
+    <com.aries.ui.view.radius.RadiusLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rfl_plate"
+        android:layout_marginStart="@dimen/dp_13"
+        android:layout_marginTop="@dimen/dp_3"
+        android:layout_marginEnd="@dimen/dp_13"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/dp_13"
+        android:paddingTop="@dimen/dp_12"
+        android:paddingEnd="@dimen/dp_13"
+        android:paddingBottom="@dimen/dp_20"
+        app:rv_backgroundColor="@color/white"
+        app:rv_radius="@dimen/dp_7">
+
+        <TextView
+            android:id="@+id/tv_startTime"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_43"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            tools:text="开始时间：2023-06-25 10:12:24" />
+
+        <TextView
+            android:id="@+id/tv_prepayAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_43"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            tools:text="预付金额：15.00元" />
+
+        <TextView
+            android:id="@+id/tv_timeoutDuration"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_43"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            tools:text="超时时长：10小时20分钟04秒" />
+
+        <TextView
+            android:id="@+id/tv_pendingFee"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_43"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            tools:text="待缴费用：15.00元" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/历史欠费"
+                android:textColor="@color/color_ff666666"
+                android:textSize="@dimen/sp_19" />
+
+            <com.aries.ui.view.radius.RadiusRelativeLayout
+                android:id="@+id/rrl_arrears"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_47"
+                android:layout_marginStart="@dimen/dp_13"
+                android:paddingStart="@dimen/dp_10"
+                android:paddingEnd="@dimen/dp_10"
+                app:rv_backgroundColor="@color/color_fff0f0f0"
+                app:rv_radius="@dimen/dp_5">
+
+                <TextView
+                    android:id="@+id/tv_arrearsNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/color_fff71c1c"
+                    android:textSize="@dimen/sp_19"
+                    tools:text="1笔" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_arrearsAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/tv_arrearsNum"
+                    android:drawableEnd="@mipmap/ic_arrow_right_small"
+                    android:drawablePadding="@dimen/dp_11"
+                    android:ellipsize="end"
+                    android:gravity="center|end"
+                    android:maxLines="1"
+                    android:textColor="@color/color_fff71c1c"
+                    android:textSize="@dimen/sp_19"
+                    tools:text="15.00元" />
+            </com.aries.ui.view.radius.RadiusRelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_16"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/离场方式"
+                android:textColor="@color/color_ff666666"
+                android:textSize="@dimen/sp_19" />
+
+            <com.aries.ui.view.radius.RadiusFrameLayout
+                android:id="@+id/rrl_exitMethod"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_47"
+                android:layout_marginStart="@dimen/dp_13"
+                android:paddingStart="@dimen/dp_10"
+                android:paddingEnd="@dimen/dp_10"
+                app:rv_backgroundColor="@color/color_fff0f0f0"
+                app:rv_radius="@dimen/dp_5">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_exitMethod"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_gravity="center_vertical|end"
+                    android:layout_toEndOf="@+id/tv_arrearsNum"
+                    android:drawableEnd="@mipmap/ic_arrow_right_small"
+                    android:drawablePadding="@dimen/dp_11"
+                    android:ellipsize="end"
+                    android:gravity="center|end"
+                    android:maxLines="1"
+                    android:textColor="@color/color_ff1a1a1a"
+                    android:textSize="@dimen/sp_19"
+                    tools:text="15.00000000000000000元" />
+            </com.aries.ui.view.radius.RadiusFrameLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_camera"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_47"
+            android:layout_marginTop="@dimen/dp_10"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/在场图片"
+                android:textColor="@color/color_ff666666"
+                android:textSize="@dimen/sp_19" />
+
+            <ImageView
+                android:id="@+id/iv_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/dp_13"
+                android:src="@mipmap/ic_arrow_right_small" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/iv_arrow"
+                android:paddingEnd="@dimen/dp_10"
+                android:src="@mipmap/ic_camera" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_47"
+            android:layout_marginTop="@dimen/dp_10"
+            android:orientation="horizontal">
+
+            <com.aries.ui.view.radius.RadiusFrameLayout
+                android:id="@+id/rfl_notification"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="@dimen/dp_6"
+                android:layout_weight="1"
+                app:rv_backgroundColor="@color/color_ffeefaf9"
+                app:rv_radius="@dimen/dp_7"
+                app:rv_strokeColor="@color/color_ff04a091"
+                app:rv_strokeWidth="@dimen/dp_1">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:drawableStart="@mipmap/ic_notification_logo"
+                    android:drawablePadding="@dimen/dp_10"
+                    android:gravity="center"
+                    android:text="@string/告知书"
+                    android:textColor="@color/color_ff04a091"
+                    android:textSize="@dimen/sp_19" />
+            </com.aries.ui.view.radius.RadiusFrameLayout>
+
+            <com.aries.ui.view.radius.RadiusFrameLayout
+                android:id="@+id/rfl_report"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/dp_6"
+                android:layout_weight="1"
+                app:rv_backgroundColor="@color/color_ffeefaf9"
+                app:rv_radius="@dimen/dp_7"
+                app:rv_strokeColor="@color/color_ff04a091"
+                app:rv_strokeWidth="@dimen/dp_1">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:drawableStart="@mipmap/ic_report_logo"
+                    android:drawablePadding="@dimen/dp_10"
+                    android:gravity="center"
+                    android:text="@string/上报"
+                    android:textColor="@color/color_ff04a091"
+                    android:textSize="@dimen/sp_19" />
+            </com.aries.ui.view.radius.RadiusFrameLayout>
+        </LinearLayout>
+    </com.aries.ui.view.radius.RadiusLinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_47"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="@dimen/dp_13"
+        android:layout_marginEnd="@dimen/dp_13"
+        android:layout_marginBottom="@dimen/dp_13"
+        android:orientation="horizontal">
+
+        <com.aries.ui.view.radius.RadiusFrameLayout
+            android:id="@+id/rfl_renewal"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/dp_6"
+            android:layout_weight="1"
+            app:rv_backgroundColor="@color/color_ff04a091"
+            app:rv_radius="@dimen/dp_7">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:drawableStart="@mipmap/ic_renewal"
+                android:drawablePadding="@dimen/dp_10"
+                android:gravity="center"
+                android:text="@string/续费"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_19" />
+        </com.aries.ui.view.radius.RadiusFrameLayout>
+
+        <com.aries.ui.view.radius.RadiusFrameLayout
+            android:id="@+id/rfl_finish"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/dp_6"
+            android:layout_weight="1"
+            app:rv_backgroundColor="@color/color_ffdb1f1f"
+            app:rv_radius="@dimen/dp_7">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:drawableStart="@mipmap/ic_finish"
+                android:drawablePadding="@dimen/dp_12"
+                android:gravity="center"
+                android:text="@string/结束"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_19" />
+        </com.aries.ui.view.radius.RadiusFrameLayout>
+    </LinearLayout>
+
+</RelativeLayout>

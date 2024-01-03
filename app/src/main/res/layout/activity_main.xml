@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_ff04a091"
+    tools:ignore="NestedWeights">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|top"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_home_top_bg" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|bottom"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_home_bottom_bg" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/dp_13"
+        android:paddingTop="@dimen/dp_23"
+        android:paddingEnd="@dimen/dp_13"
+        android:paddingBottom="@dimen/dp_33">
+
+        <RelativeLayout
+            android:id="@+id/rl_homeTop"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/iv_head"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:src="@mipmap/ic_home_head_logo" />
+
+            <ImageView
+                android:id="@+id/iv_g2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_guan" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dp_20"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2.82"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/ll_parkingLot"
+                        android:layout_width="@dimen/dp_0"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="@dimen/dp_6"
+                        android:layout_marginBottom="@dimen/dp_13"
+                        android:layout_weight="1"
+                        android:background="@mipmap/ic_parking_lot_bg"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableTop="@mipmap/ic_parking_lot_logo"
+                            android:drawablePadding="@dimen/dp_24"
+                            android:gravity="center"
+                            android:text="@string/停车场"
+                            android:textColor="@color/color_ff1a1a1a"
+                            android:textSize="@dimen/sp_20"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp_10"
+                            android:src="@mipmap/ic_parking_lot_line" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/dp_6"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <FrameLayout
+                            android:id="@+id/fl_incomeCounting"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_marginBottom="@dimen/dp_6"
+                            android:layout_weight="1"
+                            android:background="@mipmap/ic_income_counting_bg">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:drawableTop="@mipmap/ic_income_counting_logo"
+                                android:drawablePadding="@dimen/dp_10"
+                                android:gravity="center"
+                                android:text="@string/营收盘点"
+                                android:textColor="@color/color_ff1a1a1a"
+                                android:textSize="@dimen/sp_20"
+                                android:textStyle="bold" />
+
+                        </FrameLayout>
+
+                        <FrameLayout
+                            android:id="@+id/fl_order"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_marginTop="@dimen/dp_6"
+                            android:layout_marginBottom="@dimen/dp_13"
+                            android:layout_weight="1"
+                            android:background="@mipmap/ic_order_bg">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:drawableTop="@mipmap/ic_order_logo"
+                                android:drawablePadding="@dimen/dp_10"
+                                android:gravity="center"
+                                android:text="@string/订单"
+                                android:textColor="@color/color_ff1a1a1a"
+                                android:textSize="@dimen/sp_20"
+                                android:textStyle="bold" />
+
+                        </FrameLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_0"
+                android:layout_weight="1.49"
+                android:orientation="horizontal">
+
+                <FrameLayout
+                    android:id="@+id/fl_stayTuned"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/dp_6"
+                    android:layout_weight="1"
+                    android:background="@mipmap/ic_stay_tuned_bg">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:drawableTop="@mipmap/ic_stay_tuned_logo"
+                        android:drawablePadding="@dimen/dp_15"
+                        android:gravity="center"
+                        android:text="@string/敬请期待"
+                        android:textColor="@color/color_ff1a1a1a"
+                        android:textSize="@dimen/sp_20"
+                        android:textStyle="bold" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/fl_berthAbnormal"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/dp_6"
+                    android:layout_weight="1"
+                    android:background="@mipmap/ic_parking_abnormal_bg">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:drawableTop="@mipmap/ic_parking_abnormal_logo"
+                        android:drawablePadding="@dimen/dp_15"
+                        android:gravity="center"
+                        android:text="@string/泊位异常"
+                        android:textColor="@color/color_ff1a1a1a"
+                        android:textSize="@dimen/sp_20"
+                        android:textStyle="bold" />
+                </FrameLayout>
+            </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/fl_logout"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/dp_13"
+                android:layout_weight="1"
+                android:background="@mipmap/ic_logout_bg">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:drawableStart="@mipmap/ic_logoout_logo"
+                    android:drawablePadding="@dimen/dp_13"
+                    android:gravity="center"
+                    android:text="@string/签退"
+                    android:textColor="@color/color_ff1a1a1a"
+                    android:textSize="@dimen/sp_20"
+                    android:textStyle="bold" />
+
+            </FrameLayout>
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

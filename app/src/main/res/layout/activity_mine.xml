@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_ff04a091"
+    android:orientation="vertical">
+
+    <com.aries.ui.view.radius.RadiusRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/iv_mineBg"
+        android:layout_marginStart="@dimen/dp_13"
+        android:layout_marginTop="@dimen/dp_n40"
+        android:layout_marginEnd="@dimen/dp_13"
+        android:layout_marginBottom="@dimen/dp_25"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/dp_13"
+        android:paddingTop="@dimen/dp_60"
+        android:paddingEnd="@dimen/dp_13"
+        app:rv_backgroundColor="@color/white"
+        app:rv_bottomLeftRadius="@dimen/dp_10"
+        app:rv_bottomRightRadius="@dimen/dp_10">
+
+        <FrameLayout
+            android:id="@+id/fl_baseInfo"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_72">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:drawableStart="@mipmap/ic_base_info"
+                android:drawablePadding="@dimen/dp_13"
+                android:text="@string/基本信息"
+                android:textColor="@color/color_ff1a1a1a"
+                android:textSize="@dimen/sp_19" />
+
+            <ImageView
+                android:layout_width="@dimen/dp_7"
+                android:layout_height="@dimen/dp_12"
+                android:layout_gravity="end|center_vertical"
+                android:src="@mipmap/ic_arrow_right_small" />
+        </FrameLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:layout_below="@+id/fl_baseInfo"
+            android:background="@color/color_ffcccccc" />
+
+        <RelativeLayout
+            android:id="@+id/fl_version"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_72"
+            android:layout_below="@+id/fl_baseInfo">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:drawableStart="@mipmap/ic_version"
+                android:drawablePadding="@dimen/dp_13"
+                android:text="@string/版本更新"
+                android:textColor="@color/color_ff1a1a1a"
+                android:textSize="@dimen/sp_19" />
+
+            <TextView
+                android:id="@+id/tv_version"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:layout_toStartOf="@+id/iv_arrow"
+                android:textColor="@color/color_ff1a1a1a"
+                android:textSize="@dimen/sp_19"
+                tools:text="1.0.1" />
+
+            <ImageView
+                android:id="@+id/iv_arrow"
+                android:layout_width="@dimen/dp_7"
+                android:layout_height="@dimen/dp_12"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="end|center_vertical"
+                android:src="@mipmap/ic_arrow_right_small" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:layout_below="@+id/fl_version"
+            android:background="@color/color_ffcccccc" />
+
+        <RelativeLayout
+            android:id="@+id/fl_feeRate"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_72"
+            android:layout_below="@+id/fl_version">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:drawableStart="@mipmap/ic_fee_rate"
+                android:drawablePadding="@dimen/dp_13"
+                android:text="@string/费率信息"
+                android:textColor="@color/color_ff1a1a1a"
+                android:textSize="@dimen/sp_19" />
+
+            <ImageView
+                android:layout_width="@dimen/dp_7"
+                android:layout_height="@dimen/dp_12"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="end|center_vertical"
+                android:src="@mipmap/ic_arrow_right_small" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:layout_below="@+id/fl_feeRate"
+            android:background="@color/color_ffcccccc" />
+
+        <RelativeLayout
+            android:id="@+id/fl_blueToothPrint"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_72"
+            android:layout_below="@+id/fl_feeRate">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:drawableStart="@mipmap/ic_bluetooth_print"
+                android:drawablePadding="@dimen/dp_13"
+                android:gravity="center"
+                android:text="@string/打印管理"
+                android:textColor="@color/color_ff1a1a1a"
+                android:textSize="@dimen/sp_19" />
+
+            <TextView
+                android:id="@+id/tv_deviceName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:layout_toStartOf="@+id/iv_arrow2"
+                android:textColor="@color/color_ff1a1a1a"
+                android:textSize="@dimen/sp_19"
+                tools:text="1.0.1" />
+
+            <ImageView
+                android:id="@+id/iv_arrow2"
+                android:layout_width="@dimen/dp_7"
+                android:layout_height="@dimen/dp_12"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="end|center_vertical"
+                android:src="@mipmap/ic_arrow_right_small" />
+        </RelativeLayout>
+
+        <com.aries.ui.view.radius.RadiusTextView
+            android:id="@+id/rtv_logout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_47"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/dp_12"
+            android:gravity="center"
+            android:text="@string/重新登录"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_17"
+            app:rv_backgroundColor="@color/color_ff04a091"
+            app:rv_radius="@dimen/dp_7" />
+    </com.aries.ui.view.radius.RadiusRelativeLayout>
+
+    <ImageView
+        android:id="@+id/iv_mineBg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_my_bg" />
+
+    <include
+        android:id="@+id/layout_toolbar"
+        layout="@layout/layout_comment_toolbar" />
+
+    <com.aries.ui.view.radius.RadiusFrameLayout
+        android:layout_width="@dimen/dp_67"
+        android:layout_height="@dimen/dp_67"
+        android:layout_below="@+id/iv_mineBg"
+        android:layout_marginStart="@dimen/dp_33"
+        android:layout_marginTop="@dimen/dp_n60"
+        app:rv_backgroundColor="@color/color_ffe1faf8"
+        app:rv_radius="@dimen/dp_7">
+
+        <ImageView
+            android:layout_width="@dimen/dp_53"
+            android:layout_height="@dimen/dp_53"
+            android:layout_gravity="center"
+            android:src="@mipmap/ic_guan_logo" />
+    </com.aries.ui.view.radius.RadiusFrameLayout>
+</RelativeLayout>

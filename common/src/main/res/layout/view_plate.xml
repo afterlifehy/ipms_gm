@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/tv_plate1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@mipmap/ic_plate_blue_bg_start"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_27"
+        android:textStyle="bold"
+        tools:text="沪" />
+
+    <TextView
+        android:id="@+id/tv_plate2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@mipmap/ic_plate_blue_bg_middle"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_27"
+        android:textStyle="bold"
+        tools:text="沪" />
+
+    <TextView
+        android:id="@+id/tv_plate3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_n1"
+        android:layout_weight="1"
+        android:background="@mipmap/ic_plate_blue_bg_middle"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_27"
+        android:textStyle="bold"
+        tools:text="沪" />
+
+    <TextView
+        android:id="@+id/tv_plate4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_n1"
+        android:layout_weight="1"
+        android:background="@mipmap/ic_plate_blue_bg_middle"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_27"
+        android:textStyle="bold"
+        tools:text="沪" />
+
+    <TextView
+        android:id="@+id/tv_plate5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_n1"
+        android:layout_weight="1"
+        android:background="@mipmap/ic_plate_blue_bg_middle"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_27"
+        android:textStyle="bold"
+        tools:text="沪" />
+
+    <TextView
+        android:id="@+id/tv_plate6"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_n1"
+        android:layout_weight="1"
+        android:background="@mipmap/ic_plate_blue_bg_middle"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_27"
+        android:textStyle="bold"
+        tools:text="沪" />
+
+    <TextView
+        android:id="@+id/tv_plate7"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_n1"
+        android:layout_weight="1"
+        android:background="@mipmap/ic_plate_blue_bg_middle"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_27"
+        android:textStyle="bold"
+        tools:text="沪" />
+
+    <TextView
+        android:id="@+id/tv_plate8"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@mipmap/ic_plate_blue_bg_end"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_27"
+        android:textStyle="bold"
+        tools:text="沪" />
+</LinearLayout>

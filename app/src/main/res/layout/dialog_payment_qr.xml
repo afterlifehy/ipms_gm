@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/transparent"
+    android:paddingStart="@dimen/dp_13"
+    android:paddingEnd="@dimen/dp_13"
+    android:paddingBottom="@dimen/dp_47">
+
+    <ImageView
+        android:id="@+id/iv_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:src="@mipmap/ic_round_close" />
+
+    <com.aries.ui.view.radius.RadiusLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/iv_close"
+        android:layout_marginBottom="@dimen/dp_16"
+        android:orientation="vertical"
+        app:rv_backgroundColor="@color/white"
+        app:rv_radius="@dimen/dp_7">
+
+        <com.aries.ui.view.radius.RadiusLinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_44"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:rv_topLeftRadius="@dimen/dp_7"
+            app:rv_topRightRadius="@dimen/dp_7">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_10"
+                android:drawableStart="@mipmap/ic_wx"
+                android:drawablePadding="@dimen/dp_6"
+                android:gravity="center"
+                android:text="@string/微信"
+                android:textColor="@color/color_ff1a1a1a"
+                android:textSize="@dimen/sp_14" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_11"
+                android:drawableStart="@mipmap/ic_ali"
+                android:drawablePadding="@dimen/dp_6"
+                android:gravity="center"
+                android:text="@string/支付宝"
+                android:textColor="@color/color_ff1a1a1a"
+                android:textSize="@dimen/sp_14" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_11"
+                android:drawableStart="@mipmap/ic_cloud_pay"
+                android:drawablePadding="@dimen/dp_6"
+                android:gravity="center"
+                android:text="@string/云闪付"
+                android:textColor="@color/color_ff1a1a1a"
+                android:textSize="@dimen/sp_14" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_11"
+                android:drawableStart="@mipmap/ic_digital_rmb"
+                android:drawablePadding="@dimen/dp_6"
+                android:gravity="center"
+                android:text="@string/数字人民币"
+                android:textColor="@color/color_ff1a1a1a"
+                android:textSize="@dimen/sp_14" />
+        </com.aries.ui.view.radius.RadiusLinearLayout>
+
+        <com.aries.ui.view.radius.RadiusLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/dp_20"
+            android:paddingBottom="@dimen/dp_17"
+            app:rv_backgroundColor="@color/color_ff04a091"
+            app:rv_bottomLeftRadius="@dimen/dp_7"
+            app:rv_bottomRightRadius="@dimen/dp_7">
+
+            <TextView
+                android:id="@+id/tv_payAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal" />
+
+            <com.aries.ui.view.radius.RadiusFrameLayout
+                android:layout_width="@dimen/dp_184"
+                android:layout_height="@dimen/dp_184"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_20"
+                app:rv_backgroundColor="@color/white"
+                app:rv_radius="@dimen/dp_7">
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/riv_qr"
+                    android:layout_width="@dimen/dp_153"
+                    android:layout_height="@dimen/dp_153"
+                    android:layout_gravity="center"
+                    android:scaleType="fitXY" />
+            </com.aries.ui.view.radius.RadiusFrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_14"
+                android:text="@string/扫描二维码向上海公共支付平台交纳停车费"
+                android:textColor="@color/color_ff85d6ce"
+                android:textSize="@dimen/sp_15" />
+        </com.aries.ui.view.radius.RadiusLinearLayout>
+    </com.aries.ui.view.radius.RadiusLinearLayout>
+</RelativeLayout>

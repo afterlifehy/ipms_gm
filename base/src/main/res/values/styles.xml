@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ios_dialog_style">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+    <style name="alertdialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.6</item>
+    </style>
+
+    <style name="DarkAnimation">
+        <item name="android:windowEnterAnimation">@anim/dark_fade_in</item>
+        <item name="android:windowExitAnimation">@anim/dark_fade_out</item>
+    </style>
+
+    <style name="CommonBottomDialogStyle" parent="@android:style/Theme.Dialog">
+        <item name="colorPrimary">@color/white_bg</item>
+        <item name="colorPrimaryDark">@color/white_bg</item>
+        <item name="colorAccent">@color/black</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowAnimationStyle">@style/CommonBottomDialogAnim</item>
+        <item name="android:windowSoftInputMode">stateVisible|adjustPan</item>
+    </style>
+
+    <style name="CommonBottomDialogAnim" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/slide_in_from_bottom</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_to_bottom</item>
+    </style>
+
+    <style name="main_activity_style" parent="AppTheme">
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowDisablePreview">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <!--        <item name="android:windowBackground">@drawable/layerlist_start_bg</item>-->
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:background">@null</item>
+    </style>
+
+    <!-- loading 动画-->
+    <style name="progressbar_style">
+        <item name="android:maxWidth">50.0dip</item>
+        <item name="android:maxHeight">50.0dip</item>
+        <item name="android:indeterminateDrawable">@anim/anim_loading</item>
+        <item name="android:minWidth">50.0dip</item>
+        <item name="android:minHeight">50.0dip</item>
+    </style>
+</resources>

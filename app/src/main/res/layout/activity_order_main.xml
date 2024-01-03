@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_ffe8eef6">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_deep_top_bg" />
+
+    <include
+        android:id="@+id/layout_toolbar"
+        layout="@layout/layout_comment_toolbar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_toolbar"
+        android:orientation="vertical"
+        android:padding="@dimen/dp_13">
+
+        <com.aries.ui.view.radius.RadiusFrameLayout
+            android:id="@+id/rfl_transactionQuery"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_100"
+            android:paddingStart="@dimen/dp_15"
+            android:paddingEnd="@dimen/dp_17"
+            app:rv_radius="@dimen/dp_7">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|start"
+                android:drawableStart="@mipmap/ic_transaction_query_logo"
+                android:drawableEnd="@mipmap/ic_double_arrow_right"
+                android:drawablePadding="@dimen/dp_12"
+                android:gravity="center|start"
+                android:text="@string/交易查询"
+                android:textColor="@color/color_ff1a1a1a"
+                android:textSize="@dimen/sp_23" />
+        </com.aries.ui.view.radius.RadiusFrameLayout>
+
+        <com.aries.ui.view.radius.RadiusFrameLayout
+            android:id="@+id/rfl_debtCollect"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_100"
+            android:layout_marginTop="@dimen/dp_13"
+            android:paddingStart="@dimen/dp_15"
+            android:paddingEnd="@dimen/dp_17"
+            app:rv_radius="@dimen/dp_7">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|start"
+                android:drawableStart="@mipmap/ic_debt_collect"
+                android:drawableEnd="@mipmap/ic_double_arrow_right"
+                android:drawablePadding="@dimen/dp_12"
+                android:gravity="center|start"
+                android:text="@string/欠费追缴"
+                android:textColor="@color/color_ff1a1a1a"
+                android:textSize="@dimen/sp_23" />
+        </com.aries.ui.view.radius.RadiusFrameLayout>
+
+        <com.aries.ui.view.radius.RadiusFrameLayout
+            android:id="@+id/rfl_orderInquiry"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_100"
+            android:layout_marginTop="@dimen/dp_13"
+            android:paddingStart="@dimen/dp_15"
+            android:paddingEnd="@dimen/dp_17"
+            app:rv_radius="@dimen/dp_7">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|start"
+                android:drawableStart="@mipmap/ic_order_inquiry"
+                android:drawableEnd="@mipmap/ic_double_arrow_right"
+                android:drawablePadding="@dimen/dp_12"
+                android:gravity="center|start"
+                android:text="@string/订单查询"
+                android:textColor="@color/color_ff1a1a1a"
+                android:textSize="@dimen/sp_23" />
+        </com.aries.ui.view.radius.RadiusFrameLayout>
+    </LinearLayout>
+
+</RelativeLayout>

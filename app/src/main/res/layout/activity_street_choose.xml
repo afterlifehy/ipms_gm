@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_ffe8f0ef"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_light_top_bg" />
+
+    <include
+        android:id="@+id/layout_toolbar"
+        layout="@layout/layout_comment_toolbar" />
+
+    <TextView
+        android:id="@+id/tv_chooseStreetTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_toolbar"
+        android:layout_marginStart="@dimen/dp_13"
+        android:layout_marginTop="@dimen/dp_17"
+        android:text="@string/请选择工作路段"
+        android:textColor="@color/color_ff1a1a1a"
+        android:textSize="@dimen/sp_19" />
+
+    <com.aries.ui.view.radius.RadiusFrameLayout
+        android:id="@+id/rfl_addStreet"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_47"
+        android:layout_below="@+id/tv_chooseStreetTitle"
+        android:layout_marginStart="@dimen/dp_13"
+        android:layout_marginTop="@dimen/dp_13"
+        android:layout_marginEnd="@dimen/dp_13"
+        app:rv_radius="@dimen/dp_7"
+        app:rv_strokeColor="@color/color_ff04a091"
+        app:rv_strokeWidth="@dimen/dp_1">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawableStart="@mipmap/ic_add_street"
+            android:drawablePadding="@dimen/dp_14"
+            android:gravity="center"
+            android:text="@string/添加工作路段"
+            android:textColor="@color/color_ff04a091"
+            android:textSize="@dimen/sp_19" />
+    </com.aries.ui.view.radius.RadiusFrameLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_street"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/rtv_enterWorkBench"
+        android:layout_below="@+id/rfl_addStreet"
+        android:layout_marginStart="@dimen/dp_13"
+        android:layout_marginTop="@dimen/dp_13"
+        android:layout_marginEnd="@dimen/dp_13" />
+
+    <com.aries.ui.view.radius.RadiusTextView
+        android:id="@+id/rtv_enterWorkBench"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_47"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="@dimen/dp_13"
+        android:layout_marginEnd="@dimen/dp_13"
+        android:layout_marginBottom="@dimen/dp_17"
+        android:gravity="center"
+        android:text="@string/进入工作台"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_19"
+        android:textStyle="bold"
+        app:rv_backgroundColor="@color/color_ff04a091"
+        app:rv_radius="@dimen/dp_7" />
+</RelativeLayout>
