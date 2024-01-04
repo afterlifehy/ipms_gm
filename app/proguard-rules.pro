@@ -34,14 +34,14 @@ public void *(android.webkit.WebView, java.lang.String);
 }
 
 #---------------------------------1.实体类---------------------------------
--keep class com.rt.ipms_gm.bean.**{*;}
--keep class com.rt.ipms_gm.event.**{*;}
+-keep class com.rt.ipms_mg.bean.**{*;}
+-keep class com.rt.ipms_mg.event.**{*;}
 -keep class com.rt.base.bean.**{*;}
 -keep class com.rt.base.event.**{*;}
 -keep class com.rt.common.bean.**{*;}
 -keep class com.rt.common.event.**{*;}
 #--数据库实体类不被混淆
-#-keep class com.rt.ipms_gm.roomdao.**{*;}
+#-keep class com.rt.ipms_mg.roomdao.**{*;}
 #-------------------------------------------------------------------------
 
 #---------------------------------2.第三方包-------------------------------
@@ -161,7 +161,7 @@ public void *(android.webkit.WebView, java.lang.String);
 -keep class com.google.protobuf.** {*;}
 
 #---------------------------------自定义view-----------------------
--keep class com.rt.ipms_gm.view.**{*;}
+-keep class com.rt.ipms_mg.view.**{*;}
 -keep class com.rt.common.view.**{*;}
 -keep class com.rt.common.widget.**{*;}
 -keep class com.rt.base.view.**{*;}

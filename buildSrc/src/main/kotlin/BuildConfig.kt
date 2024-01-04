@@ -1,5 +1,5 @@
 object BuildConfig {
-    const val applicationId = "com.rt.ipms_gm"
+    const val applicationId = "com.rt.ipms_mg"
 
     const val compileSdk = 33
     const val minSdk = 23

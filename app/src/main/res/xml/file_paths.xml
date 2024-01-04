@@ -26,7 +26,7 @@
         path="Android/data/" />
     <external-path
         name="files_root"
-        path="Android/data/com.rt.ipms_gm/" />
+        path="Android/data/com.rt.ipms_mg/" />
     <external-path
         name="external_storage_root"
         path="." />
