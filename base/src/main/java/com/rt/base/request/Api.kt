@@ -138,6 +138,12 @@ interface Api {
     suspend fun inquiryTransactionByOrderNo(@Body param: @JvmSuppressWildcards Map<String, Any?>): HttpWrapper<TicketPrintResultBean>
 
     /**
+     * 根据泊位号查询orderNo
+     */
+    @POST("S_G0_22")
+    suspend fun inquiryOrderNoByParkingNo(@Body param: @JvmSuppressWildcards Map<String, Any?>): HttpWrapper<OrderNoBean>
+
+    /**
      * 离场支付二维码
      */
     @POST("S_OR_0112")

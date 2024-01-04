@@ -46,7 +46,7 @@
     <string name="当面拒绝驶离">当面拒绝驶离</string>
     <string name="强制关单">强制关单</string>
     <string name="线上支付">线上支付</string>
-    <string name="其他">其他</string>
+    <string name="其它">其它</string>
     <string name="车辆图片">车辆图片</string>
     <string name="无车辆图片">无车辆图片</string>
     <string name="保存图片">保存图片</string>
@@ -183,4 +183,6 @@
     <string name="上传失败">上传失败</string>
     <string name="请上传车牌照">请上传车牌照</string>
     <string name="请上传全景照">请上传全景照</string>
+    <string name="正常关单">正常关单</string>
+    <string name="当前车辆没有欠费记录">当前车辆没有欠费记录</string>
 </resources>

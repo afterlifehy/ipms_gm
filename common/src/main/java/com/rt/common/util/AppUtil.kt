@@ -200,6 +200,16 @@ object AppUtil {
         }
     }
 
+    fun fillZero2(value: String): String {
+        if (value.length == 1) {
+            return "00" + value
+        } else if (value.length == 2) {
+            return "0" + value
+        } else {
+            return value
+        }
+    }
+
     //textview不同字体大小，颜色
     fun getSpan(strings: Array<String>, sizes: IntArray, colors: IntArray): Spannable? {
         val builder: Spans.Builder = Spans.builder()

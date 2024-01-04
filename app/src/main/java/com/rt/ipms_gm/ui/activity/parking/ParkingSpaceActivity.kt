@@ -74,7 +74,6 @@ class ParkingSpaceActivity : VbBaseActivity<ParkingSpaceViewModel, ActivityParki
 
     var orderNo = ""
     var carLicense = ""
-    var parkingNo = ""
     var parkingSpaceBean: ParkingSpaceBean? = null
 
     var picBase64 = ""
@@ -100,12 +99,9 @@ class ParkingSpaceActivity : VbBaseActivity<ParkingSpaceViewModel, ActivityParki
     override fun initView() {
         orderNo = intent.getStringExtra(ARouterMap.ORDER_NO).toString()
         carLicense = intent.getStringExtra(ARouterMap.CAR_LICENSE).toString()
-        parkingNo = intent.getStringExtra(ARouterMap.PARKING_NO).toString()
-        binding.layoutToolbar.tvTitle.text = parkingNo
         binding.tvPlate.text = carLicense
 
         GlideUtils.instance?.loadImage(binding.layoutToolbar.ivBack, com.rt.common.R.mipmap.ic_back_white)
-        binding.layoutToolbar.tvTitle.text = parkingNo
         binding.layoutToolbar.tvTitle.setTextColor(ContextCompat.getColor(BaseApplication.instance(), com.rt.base.R.color.white))
         GlideUtils.instance?.loadImage(binding.layoutToolbar.ivRight, com.rt.common.R.mipmap.ic_pic)
         binding.layoutToolbar.ivRight.show()
@@ -127,10 +123,13 @@ class ParkingSpaceActivity : VbBaseActivity<ParkingSpaceViewModel, ActivityParki
         exitMethodList.add(ExitMethodBean("2", i18N(com.rt.base.R.string.收费员不在场欠费驶离)))
         exitMethodList.add(ExitMethodBean("1", i18N(com.rt.base.R.string.正常缴费驶离)))
         exitMethodList.add(ExitMethodBean("3", i18N(com.rt.base.R.string.当面拒绝驶离)))
+        exitMethodList.add(ExitMethodBean("0", i18N(com.rt.base.R.string.正常关单)))
         exitMethodList.add(ExitMethodBean("4", i18N(com.rt.base.R.string.强制关单)))
         exitMethodList.add(ExitMethodBean("5", i18N(com.rt.base.R.string.线上支付)))
-        exitMethodList.add(ExitMethodBean("9", i18N(com.rt.base.R.string.其他)))
+        exitMethodList.add(ExitMethodBean("9", i18N(com.rt.base.R.string.其它)))
 
+        currentMethod = exitMethodList[3]
+        binding.tvExitMethod.text = currentMethod?.name
         runBlocking {
             simId = PreferencesDataStore(BaseApplication.instance()).getString(PreferencesKeys.simId)
             parkingSpaceRequest()
@@ -165,6 +164,8 @@ class ParkingSpaceActivity : VbBaseActivity<ParkingSpaceViewModel, ActivityParki
                     startArouter(ARouterMap.DEBT_COLLECTION, data = Bundle().apply {
                         putString(ARouterMap.DEBT_CAR_LICENSE, carLicense)
                     })
+                } else {
+                    ToastUtil.showMiddleToast(i18N(com.rt.base.R.string.当前车辆没有欠费记录))
                 }
             }
 
@@ -209,7 +210,6 @@ class ParkingSpaceActivity : VbBaseActivity<ParkingSpaceViewModel, ActivityParki
             R.id.rfl_report -> {
                 startArouter(ARouterMap.ABNORMAL_REPORT, data = Bundle().apply {
                     putString(ARouterMap.ABNORMAL_PARKING_NO, parkingSpaceBean?.parkingNo)
-                    putString(ARouterMap.ABNORMAL_ORDER_NO, orderNo)
                     putString(ARouterMap.ABNORMAL_CARLICENSE, parkingSpaceBean?.carLicense)
                 })
             }
@@ -256,7 +256,7 @@ class ParkingSpaceActivity : VbBaseActivity<ParkingSpaceViewModel, ActivityParki
                             val jsonobject = JSONObject()
                             jsonobject["carLicense"] = carLicense
                             jsonobject["orderNo"] = orderNo
-                            jsonobject["parkingNo"] = parkingNo
+                            jsonobject["parkingNo"] = parkingSpaceBean?.parkingNo
                             jsonobject["leftType"] = type
                             jsonobject["simId"] = simId
                             param["attr"] = jsonobject
@@ -273,7 +273,7 @@ class ParkingSpaceActivity : VbBaseActivity<ParkingSpaceViewModel, ActivityParki
         val photoFile: File? = createImageFile()
         val photoURI: Uri = FileProvider.getUriForFile(
             this,
-            "com.rt.ipms_gm.fileprovider",
+            "com.rt.bxapp.fileprovider",
             photoFile!!
         )
         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
@@ -292,7 +292,7 @@ class ParkingSpaceActivity : VbBaseActivity<ParkingSpaceViewModel, ActivityParki
             )
             imageBitmap = ImageUtils.addTextWatermark(
                 imageBitmap,
-                parkingNo + "   " + carLicense,
+                parkingSpaceBean?.parkingNo + "   " + carLicense,
                 16, Color.RED, 6f, 19f
             )
             ImageUtils.save(imageBitmap, imageFile, Bitmap.CompressFormat.JPEG)
@@ -350,6 +350,7 @@ class ParkingSpaceActivity : VbBaseActivity<ParkingSpaceViewModel, ActivityParki
             parkingSpaceLiveData.observe(this@ParkingSpaceActivity) {
                 dismissProgressDialog()
                 parkingSpaceBean = it
+                binding.layoutToolbar.tvTitle.text = parkingSpaceBean?.parkingNo
                 binding.tvPlate.text = parkingSpaceBean?.carLicense
 
                 val strings = arrayOf(i18N(com.rt.base.R.string.开始时间), parkingSpaceBean?.startTime.toString())

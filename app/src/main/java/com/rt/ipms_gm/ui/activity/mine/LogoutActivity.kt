@@ -158,9 +158,9 @@ class LogoutActivity : VbBaseActivity<LogoutViewModel, ActivityLogOutBinding>(),
                                             val param = HashMap<String, Any>()
                                             val jsonobject = JSONObject()
                                             jsonobject["simId"] = simId
-                                            jsonobject["loginName"] = loginName
-                                            jsonobject["longitude"] = lon
-                                            jsonobject["latitude"] = lat
+//                                            jsonobject["loginName"] = loginName
+//                                            jsonobject["longitude"] = lon
+//                                            jsonobject["latitude"] = lat
                                             param["attr"] = jsonobject
                                             mViewModel.logout(param)
                                         }

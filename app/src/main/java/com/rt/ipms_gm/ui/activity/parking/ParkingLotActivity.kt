@@ -165,7 +165,6 @@ class ParkingLotActivity : VbBaseActivity<ParkingLotViewModel, ActivityParkingLo
                     startArouter(ARouterMap.PARKING_SPACE, data = Bundle().apply {
                         putString(ARouterMap.ORDER_NO, parkingLotBean.orderNo)
                         putString(ARouterMap.CAR_LICENSE, parkingLotBean.carLicense)
-                        putString(ARouterMap.PARKING_NO, parkingLotBean.parkingNo)
                     })
                 }
             }

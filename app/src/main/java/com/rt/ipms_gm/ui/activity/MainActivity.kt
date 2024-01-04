@@ -18,6 +18,9 @@ import androidx.core.content.ContextCompat
 import androidx.viewbinding.ViewBinding
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.blankj.utilcode.util.AppUtils
+import com.blankj.utilcode.util.FileUtils
+import com.blankj.utilcode.util.PathUtils
+import com.blankj.utilcode.util.TimeUtils
 import com.hyperai.hyperlpr3.HyperLPR3
 import com.hyperai.hyperlpr3.bean.HyperLPRParameter
 import com.rt.base.BaseApplication
@@ -56,7 +59,21 @@ class MainActivity : VbBaseActivity<MainViewModel, ActivityMainBinding>(), OnCli
     }
 
     override fun initView() {
+        delete7DayPic()
         initHyperLPR()
+    }
+
+    fun delete7DayPic() {
+        val path = PathUtils.getExternalAppPicturesPath()
+        if (FileUtils.createOrExistsDir(path)) {
+            val list = FileUtils.listFilesInDir(path)
+            for (i in list) {
+                val createTime = TimeUtils.string2Millis(i.name.split("_")[1] + i.name.split("_")[2], "yyyyMMddHHmmss")
+                if (System.currentTimeMillis() - createTime > 7 * 24 * 60 * 60 * 1000) {
+                    i.delete()
+                }
+            }
+        }
     }
 
     override fun initListener() {

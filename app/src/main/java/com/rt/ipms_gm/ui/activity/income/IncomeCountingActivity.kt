@@ -20,7 +20,6 @@ import com.rt.base.ext.i18N
 import com.rt.base.ext.i18n
 import com.rt.base.util.ToastUtil
 import com.rt.base.viewbase.VbBaseActivity
-import com.rt.common.realm.RealmUtil
 import com.rt.common.util.BluePrint
 import com.rt.ipms_gm.R
 import com.rt.ipms_gm.databinding.ActivityIncomeCountingBinding
@@ -165,21 +164,6 @@ class IncomeCountingActivity : VbBaseActivity<IncomeCountingViewModel, ActivityI
                     val todayIncomeBean = incomeCountingBean?.list1!![0]
                     val strings = arrayOf(todayIncomeBean.payMoney, "元")
                     binding.tvTotalIncome.text = AppUtil.getSpan(strings, sizes, colors, styles)
-                    val strings1 = arrayOf(todayIncomeBean.orderCount.toString(), "笔")
-                    binding.tvOrderPlacedNum.text = AppUtil.getSpan(strings1, sizes2, colors2)
-                    val strings2 = arrayOf(todayIncomeBean.refusePayCount.toString(), "笔")
-                    binding.tvRefusePayNum.text = AppUtil.getSpan(strings2, sizes2, colors2)
-                    val strings3 = arrayOf(todayIncomeBean.partPayCount.toString(), "笔")
-                    binding.tvPartPaidNum.text = AppUtil.getSpan(strings3, sizes2, colors2)
-                    val strings4 = arrayOf(todayIncomeBean.oweCount.toString(), "笔")
-                    binding.tvRecoverNum.text = AppUtil.getSpan(strings4, sizes2, colors2)
-                    val strings5 = arrayOf(todayIncomeBean.passMoney, "元")
-                    binding.tvRecoverAmount.text = AppUtil.getSpan(strings5, sizes2, colors2)
-                    val strings6 = arrayOf(todayIncomeBean.oweMoney, "元")
-                    binding.tvChasingOthersAmount.text = AppUtil.getSpan(strings6, sizes2, colors2)
-                    val strings7 = arrayOf(todayIncomeBean.onlineMoney, "元")
-                    binding.tvPayIndependentlyAmount.text = AppUtil.getSpan(strings7, sizes2, colors2)
-
                 }
                 if (searchRange == "1") {
                     binding.rllMonth.show()

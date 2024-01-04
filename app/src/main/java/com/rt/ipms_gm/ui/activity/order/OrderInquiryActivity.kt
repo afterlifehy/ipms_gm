@@ -208,11 +208,13 @@ class OrderInquiryActivity : VbBaseActivity<OrderInquiryViewModel, ActivityOrder
                 val tempList = it.result
                 if (pageIndex == 1) {
                     if (tempList.isEmpty()) {
+                        binding.rflUpload.gone()
                         orderInquiryAdapter?.setNewInstance(null)
                         binding.rvOrders.gone()
                         binding.layoutNoData.root.show()
                         binding.srlOrder.finishRefresh()
                     } else {
+                        binding.rflUpload.show()
                         orderList.clear()
                         orderList.addAll(tempList)
                         orderInquiryAdapter?.setList(orderList)
