@@ -16,8 +16,6 @@
         android:id="@+id/ll_berthAbnormal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/rfl_report"
-        android:layout_marginBottom="@dimen/dp_20"
         android:orientation="vertical">
 
         <include
@@ -35,6 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
+                android:paddingBottom="@dimen/dp_100"
                 android:paddingStart="@dimen/dp_13"
                 android:paddingEnd="@dimen/dp_13">
 
