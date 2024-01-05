@@ -25,9 +25,6 @@ import com.rt.ipms_mg.adapter.ParkingLotAdapter
 import com.rt.ipms_mg.databinding.ActivityParkingLotBinding
 import com.rt.ipms_mg.mvvm.viewmodel.ParkingLotViewModel
 import com.rt.ipms_mg.pop.StreetPop
-import com.rt.common.event.RefreshParkingLotEvent
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 
 class ParkingLotActivity : VbBaseActivity<ParkingLotViewModel, ActivityParkingLotBinding>(), OnClickListener {
     var parkingLotAdapter: ParkingLotAdapter? = null
@@ -38,11 +35,6 @@ class ParkingLotActivity : VbBaseActivity<ParkingLotViewModel, ActivityParkingLo
 
     var streetPop: StreetPop? = null
     var streetList: MutableList<Street> = ArrayList()
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEvent(refreshParkingLotEvent: RefreshParkingLotEvent) {
-        getParkingLotList()
-    }
 
     override fun initView() {
         GlideUtils.instance?.loadImage(binding.ivBack, com.rt.common.R.mipmap.ic_back_white)

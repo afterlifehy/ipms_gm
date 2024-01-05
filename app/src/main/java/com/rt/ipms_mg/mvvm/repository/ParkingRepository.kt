@@ -1,18 +1,13 @@
 package com.rt.ipms_mg.mvvm.repository
 
 import com.rt.base.base.mvvm.BaseRepository
+import com.rt.base.bean.DebtUploadBean
 import com.rt.base.bean.HttpWrapper
 import com.rt.base.bean.ParkingLotResultBean
 import com.rt.base.bean.ParkingSpaceBean
 import com.rt.base.bean.PlaceOederResultBean
 import com.rt.base.bean.TicketPrintBean
 import com.rt.base.bean.TicketPrintResultBean
-
-//import com.rt.base.bean.ParkingLotResultBean
-//import com.rt.base.bean.ParkingSpaceBean
-//import com.rt.base.bean.PayResultBean
-//import com.rt.base.bean.QRPayBean
-
 class ParkingRepository : BaseRepository() {
 
     /**
@@ -63,10 +58,11 @@ class ParkingRepository : BaseRepository() {
     suspend fun inquiryTransactionByOrderNo(param: @JvmSuppressWildcards Map<String, Any?>): HttpWrapper<TicketPrintResultBean> {
         return mServer.inquiryTransactionByOrderNo(param)
     }
-//    /**
-//     *  支付结果
-//     */
-//    suspend fun payResult(param: @JvmSuppressWildcards Map<String, Any?>): HttpWrapper<PayResultBean> {
-//        return mServer.payResult(param)
-//    }
+
+    /**
+     * 欠费上传
+     */
+    suspend fun debtUpload(param: @JvmSuppressWildcards Map<String, Any?>): HttpWrapper<DebtUploadBean> {
+        return mServer.debtUpload(param)
+    }
 }

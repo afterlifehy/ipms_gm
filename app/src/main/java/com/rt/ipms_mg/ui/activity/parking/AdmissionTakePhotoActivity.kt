@@ -46,7 +46,6 @@ import com.rt.ipms_mg.databinding.ActivityAdmissionTakePhotoBinding
 import com.rt.ipms_mg.dialog.PromptDialog
 import com.rt.ipms_mg.mvvm.viewmodel.AdmissionTakePhotoViewModel
 import com.rt.ipms_mg.pop.MultipleSeatsPop
-import com.rt.common.event.RefreshParkingLotEvent
 import com.rt.common.realm.RealmUtil
 import com.rt.common.util.AppUtil
 import com.rt.common.util.Constant
@@ -54,7 +53,6 @@ import com.rt.common.util.FileUtil
 import com.rt.common.util.GlideUtils
 import com.rt.common.view.keyboard.KeyboardUtil
 import kotlinx.coroutines.runBlocking
-import org.greenrobot.eventbus.EventBus
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -357,12 +355,10 @@ class AdmissionTakePhotoActivity : VbBaseActivity<AdmissionTakePhotoViewModel, A
                     i18N(com.rt.base.R.string.确定),
                     object : PromptDialog.PromptCallBack {
                         override fun leftClick() {
-                            EventBus.getDefault().post(RefreshParkingLotEvent())
                             onBackPressedSupport()
                         }
 
                         override fun rightClick() {
-                            EventBus.getDefault().post(RefreshParkingLotEvent())
                             startArouter(ARouterMap.PREPAID, data = Bundle().apply {
                                 putDouble(ARouterMap.PREPAID_MIN_AMOUNT, 1.0)
                                 putString(ARouterMap.PREPAID_CARLICENSE, binding.pvPlate.getPvTxt())
@@ -399,6 +395,7 @@ class AdmissionTakePhotoActivity : VbBaseActivity<AdmissionTakePhotoViewModel, A
             photoFile!!
         )
         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+        takePictureIntent.putExtra("android.intent.extra.quickCapture",true)
         takePictureLauncher.launch(takePictureIntent)
     }
 

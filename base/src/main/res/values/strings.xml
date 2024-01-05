@@ -185,4 +185,5 @@
     <string name="请上传全景照">请上传全景照</string>
     <string name="正常关单">正常关单</string>
     <string name="当前车辆没有欠费记录">当前车辆没有欠费记录</string>
+    <string name="请先拍摄在场照片">请先拍摄在场照片</string>
 </resources>

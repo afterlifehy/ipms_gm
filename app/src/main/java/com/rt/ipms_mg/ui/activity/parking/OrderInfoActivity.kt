@@ -54,6 +54,7 @@ class OrderInfoActivity : VbBaseActivity<OrderInfoViewModel, ActivityOrderInfoBi
     var count = 0
     var handler = Handler(Looper.getMainLooper())
     var tradeNo = ""
+    var orderList: MutableList<String> = ArrayList()
 
     override fun initView() {
         binding.layoutToolbar.tvTitle.text = i18N(com.rt.base.R.string.订单信息)
@@ -61,6 +62,7 @@ class OrderInfoActivity : VbBaseActivity<OrderInfoViewModel, ActivityOrderInfoBi
         binding.layoutToolbar.tvTitle.setTextColor(ContextCompat.getColor(BaseApplication.instance(), com.rt.base.R.color.white))
 
         orderNo = intent.getStringExtra(ARouterMap.ORDER_INFO_ORDER_NO).toString()
+        orderList.add(orderNo)
     }
 
     override fun initListener() {
@@ -89,13 +91,11 @@ class OrderInfoActivity : VbBaseActivity<OrderInfoViewModel, ActivityOrderInfoBi
             }
 
             R.id.rfl_appPay -> {
-                EventBus.getDefault().post(EndOrderEvent())
-                onBackPressedSupport()
+                upload()
             }
 
             R.id.rfl_refusePay -> {
-                EventBus.getDefault().post(EndOrderEvent())
-                onBackPressedSupport()
+                upload()
             }
 
             R.id.rfl_scanPay -> {
@@ -112,6 +112,15 @@ class OrderInfoActivity : VbBaseActivity<OrderInfoViewModel, ActivityOrderInfoBi
         }
     }
 
+    fun upload() {
+        showProgressDialog(20000)
+        val param = HashMap<String, Any>()
+        val jsonobject = JSONObject()
+        jsonobject["orderNoList"] = orderList.joinToString(separator = ",") { it }
+        param["attr"] = jsonobject
+        mViewModel.debtUpload(param)
+    }
+
     @SuppressLint("CheckResult")
     override fun startObserve() {
         super.startObserve()
@@ -125,6 +134,11 @@ class OrderInfoActivity : VbBaseActivity<OrderInfoViewModel, ActivityOrderInfoBi
                 binding.tvOrderAmount.text = AppUtil.getSpan(strings, sizes, colors, styles)
                 binding.tvPaidAmount.text = endOrderBean?.havePayMoney
                 binding.rtvPayableAmount.text = endOrderBean?.realtimeMoney
+            }
+            debtUploadLiveData.observe(this@OrderInfoActivity) {
+                dismissProgressDialog()
+                EventBus.getDefault().post(EndOrderEvent())
+                onBackPressedSupport()
             }
             endOrderQRLiveData.observe(this@OrderInfoActivity) {
                 dismissProgressDialog()

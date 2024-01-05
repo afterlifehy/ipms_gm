@@ -3,6 +3,7 @@ package com.rt.ipms_mg.mvvm.viewmodel
 import androidx.lifecycle.MutableLiveData
 import com.rt.base.base.mvvm.BaseViewModel
 import com.rt.base.base.mvvm.ErrorMessage
+import com.rt.base.bean.DebtUploadBean
 import com.rt.base.bean.ParkingSpaceBean
 import com.rt.base.bean.TicketPrintResultBean
 import com.rt.ipms_mg.mvvm.repository.ParkingRepository
@@ -18,6 +19,7 @@ class ParkingSpaceViewModel : BaseViewModel() {
     val endOrderLiveData = MutableLiveData<Any>()
     val picUploadLiveData = MutableLiveData<Any>()
     val inquiryTransactionByOrderNoLiveData = MutableLiveData<TicketPrintResultBean>()
+    val debtUploadLiveData = MutableLiveData<DebtUploadBean>()
 
     fun parkingSpace(param: Map<String, Any?>) {
         launch {
@@ -65,6 +67,19 @@ class ParkingSpaceViewModel : BaseViewModel() {
             }
             executeResponse(response, {
                 inquiryTransactionByOrderNoLiveData.value = response.attr
+            }, {
+                traverseErrorMsg(ErrorMessage(msg = response.msg, code = response.status))
+            })
+        }
+    }
+
+    fun debtUpload(param: Map<String, Any?>) {
+        launch {
+            val response = withContext(Dispatchers.IO) {
+                mParkingRepository.debtUpload(param)
+            }
+            executeResponse(response, {
+                debtUploadLiveData.value = response.attr
             }, {
                 traverseErrorMsg(ErrorMessage(msg = response.msg, code = response.status))
             })
