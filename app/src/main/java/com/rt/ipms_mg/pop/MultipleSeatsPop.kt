@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.PopupWindow
 import androidx.annotation.RequiresApi
 import com.rt.base.ext.gone
+import com.rt.common.util.AppUtil
 import com.rt.ipms_mg.R
 import com.rt.ipms_mg.databinding.PopMultipleSeatsBinding
 import com.rt.common.util.GlideUtils
@@ -36,8 +37,8 @@ class MultipleSeatsPop(
     private fun initView() {
         binding = PopMultipleSeatsBinding.inflate(LayoutInflater.from(context))
 
-        frontSeat = (currentParkingNo.toInt() - 1).toString()
-        behindSeat = (currentParkingNo.toInt() + 1).toString()
+        frontSeat = AppUtil.fillZero2((currentParkingNo.toInt() - 1).toString())
+        behindSeat = AppUtil.fillZero2((currentParkingNo.toInt() + 1).toString())
         if (currentParkingNo.toInt() == 1) {
             binding.rrlParkingNo.gone()
             binding.viewLiner.gone()

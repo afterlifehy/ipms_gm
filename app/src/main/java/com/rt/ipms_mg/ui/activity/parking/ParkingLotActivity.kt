@@ -127,6 +127,7 @@ class ParkingLotActivity : VbBaseActivity<ParkingLotViewModel, ActivityParkingLo
                             binding.tvTitle.text =
                                 street.streetNo + street.streetName.substring(0, street.streetName.indexOf("("))
                         }
+                        getParkingLotList()
                     }
                 })
                 streetPop?.showAsDropDown((v.parent) as Toolbar)

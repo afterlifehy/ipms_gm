@@ -77,9 +77,9 @@ class AdmissionTakePhotoActivity : VbBaseActivity<AdmissionTakePhotoViewModel, A
     var plateBase64 = ""
     var panoramaBase64 = ""
     var plateImageBitmap: Bitmap? = null
+    var panoramaImageBitmap: Bitmap? = null
     var plateFileName = ""
     var panoramaFileName = ""
-    var panoramaImageBitmap: Bitmap? = null
 
     var promptDialog: PromptDialog? = null
     var simId = ""
@@ -93,7 +93,7 @@ class AdmissionTakePhotoActivity : VbBaseActivity<AdmissionTakePhotoViewModel, A
         binding.layoutToolbar.tvTitle.setTextColor(ContextCompat.getColor(BaseApplication.instance(), com.rt.base.R.color.white))
 
         parkingNo = intent.getStringExtra(ARouterMap.ADMISSION_TAKE_PHOTO_PARKING_NO).toString()
-        parkingAmount =intent.getIntExtra(ARouterMap.ADMISSION_TAKE_PHOTO_PARKING_AMOUNT,0)
+        parkingAmount = intent.getIntExtra(ARouterMap.ADMISSION_TAKE_PHOTO_PARKING_AMOUNT, 0)
         collectioPlateColorList.add(Constant.BLUE)
         collectioPlateColorList.add(Constant.GREEN)
         collectioPlateColorList.add(Constant.YELLOW)
@@ -186,6 +186,7 @@ class AdmissionTakePhotoActivity : VbBaseActivity<AdmissionTakePhotoViewModel, A
         return false
     }
 
+    @SuppressLint("NewApi")
     override fun onClick(v: View?) {
         if (keyboardUtil.isShow()) {
             keyboardUtil.hideKeyboard()
@@ -207,35 +208,23 @@ class AdmissionTakePhotoActivity : VbBaseActivity<AdmissionTakePhotoViewModel, A
                                 multipleSeat = seat
                                 if (multipleSeat.isNotEmpty()) {
                                     binding.tvMultipleSeats.text = ""
-                                    binding.tvParkingNo.text = parkingNo + "-" + AppUtil.fillZero(multipleSeat)
-                                    extParkingNo = parkingNo.substring(0, parkingNo.length - 2) + AppUtil.fillZero(multipleSeat)
+                                    binding.tvMultipleSeats.gone()
+                                    binding.tvParkingNo.text = parkingNo + "-" + AppUtil.fillZero2(multipleSeat)
+                                    val list = parkingNo.split("-")
+                                    extParkingNo = "${list[0]}-${list[1]}-" + AppUtil.fillZero2(multipleSeat)
                                 } else {
                                     binding.tvMultipleSeats.text = i18N(com.rt.base.R.string.一车多位)
+                                    binding.tvMultipleSeats.show()
                                     binding.tvParkingNo.text = parkingNo
                                     extParkingNo = ""
                                 }
                             }
                         })
                 multipleSeatsPop?.showAsDropDown(v, (binding.rflMultipleSeats.width - SizeUtils.dp2px(92f)) / 2, SizeUtils.dp2px(3f))
-                val upDrawable = ContextCompat.getDrawable(BaseApplication.instance(), com.rt.common.R.mipmap.ic_multiple_seat_arrow_up)
-                upDrawable?.setBounds(0, 0, upDrawable.intrinsicWidth, upDrawable.intrinsicHeight)
-                binding.tvMultipleSeats.setCompoundDrawables(
-                    null,
-                    null,
-                    upDrawable,
-                    null
-                )
+                GlideUtils.instance?.loadImage(binding.ivArrow, com.rt.common.R.mipmap.ic_multiple_seat_arrow_up)
                 multipleSeatsPop?.setOnDismissListener(object : PopupWindow.OnDismissListener {
                     override fun onDismiss() {
-                        val downDrawable =
-                            ContextCompat.getDrawable(BaseApplication.instance(), com.rt.common.R.mipmap.ic_multiple_seat_arrow_down)
-                        downDrawable?.setBounds(0, 0, downDrawable.intrinsicWidth, downDrawable.intrinsicHeight)
-                        binding.tvMultipleSeats.setCompoundDrawables(
-                            null,
-                            null,
-                            downDrawable,
-                            null
-                        )
+                        GlideUtils.instance?.loadImage(binding.ivArrow, com.rt.common.R.mipmap.ic_multiple_seat_arrow_down)
                     }
                 })
             }
@@ -406,7 +395,7 @@ class AdmissionTakePhotoActivity : VbBaseActivity<AdmissionTakePhotoViewModel, A
         val photoFile: File? = createImageFile()
         val photoURI: Uri = FileProvider.getUriForFile(
             this,
-            "com.rt.ipms_mg.fileprovider",
+            "com.rt.bxapp.fileprovider",
             photoFile!!
         )
         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
@@ -505,20 +494,44 @@ class AdmissionTakePhotoActivity : VbBaseActivity<AdmissionTakePhotoViewModel, A
                     }
                     binding.pvPlate.setAllPlate(plateId)
                     if (plate.startsWith("蓝")) {
-                        collectionPlateColorAdapter?.updateColor(Constant.BLUE, 0)
+                        checkedColor = Constant.BLUE
+                        collectionPlateColorAdapter?.updateColor(checkedColor, 0)
+                        binding.pvPlate.setPlateBgAndTxtColor(checkedColor)
                     } else if (plate.startsWith("绿")) {
-                        collectionPlateColorAdapter?.updateColor(Constant.GREEN, 1)
+                        checkedColor = Constant.GREEN
+                        collectionPlateColorAdapter?.updateColor(checkedColor, 1)
+                        binding.pvPlate.setPlateBgAndTxtColor(checkedColor)
                     } else if (plate.startsWith("黄")) {
-                        collectionPlateColorAdapter?.updateColor(Constant.YELLOW, 2)
+                        checkedColor = Constant.YELLOW
+                        collectionPlateColorAdapter?.updateColor(checkedColor, 2)
+                        binding.pvPlate.setPlateBgAndTxtColor(checkedColor)
                     } else if (plate.startsWith("黄绿")) {
-                        collectionPlateColorAdapter?.updateColor(Constant.YELLOW_GREEN, 3)
+                        checkedColor = Constant.YELLOW_GREEN
+                        collectionPlateColorAdapter?.updateColor(checkedColor, 3)
+                        binding.pvPlate.setPlateBgAndTxtColor(checkedColor)
                     } else if (plate.startsWith("白")) {
-                        collectionPlateColorAdapter?.updateColor(Constant.WHITE, 4)
+                        checkedColor = Constant.WHITE
+                        collectionPlateColorAdapter?.updateColor(checkedColor, 4)
+                        binding.pvPlate.setPlateBgAndTxtColor(checkedColor)
                     } else if (plate.startsWith("黑")) {
+                        checkedColor = Constant.BLACK
                         collectionPlateColorAdapter?.updateColor(Constant.BLACK, 5)
+                        binding.pvPlate.setPlateBgAndTxtColor(Constant.BLACK)
                     } else {
-                        collectionPlateColorAdapter?.updateColor(Constant.OTHERS, 6)
+                        checkedColor = Constant.OTHERS
+                        collectionPlateColorAdapter?.updateColor(checkedColor, 6)
+                        binding.pvPlate.setPlateBgAndTxtColor(checkedColor)
                     }
+                    binding.rflTakePhoto.show()
+                    binding.rflPlateImg.gone()
+                    plateImageBitmap = null
+                    plateBase64 = ""
+                    plateFileName = ""
+                    binding.rflTakePhoto2.show()
+                    binding.rflPanoramaImg.gone()
+                    panoramaImageBitmap = null
+                    panoramaBase64 = ""
+                    panoramaFileName = ""
                     if (plateImageBitmap == null) {
                         photoType = 10
                         takePhoto()

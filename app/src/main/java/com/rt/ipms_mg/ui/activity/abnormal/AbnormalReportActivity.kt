@@ -148,7 +148,7 @@ class AbnormalReportActivity : VbBaseActivity<AbnormalReportViewModel, ActivityA
         }
         binding.tvLotName.text = currentStreet?.streetName
         binding.rtvStreetNo.text = currentStreet?.streetNo
-        binding.retParkingNo.setText(parkingNo.replaceFirst(currentStreet?.streetNo + "-", ""))
+        binding.retParkingNo.setText(parkingNo.replaceFirst(currentStreet?.streetNo.toString(), "").replace("-", ""))
 
         classificationList.add(i18n(com.rt.base.R.string.无法关单))
         classificationList.add(i18n(com.rt.base.R.string.订单丢失))
@@ -297,18 +297,20 @@ class AbnormalReportActivity : VbBaseActivity<AbnormalReportViewModel, ActivityA
                     ToastUtil.showMiddleToast(i18n(com.rt.base.R.string.请选择车牌颜色))
                     return
                 }
-                if (plateImageBitmap == null) {
+                if (type == "03" && plateImageBitmap == null) {
                     ToastUtil.showMiddleToast(i18n(com.rt.base.R.string.请上传车牌照))
                     return
                 }
-                if (panoramaImageBitmap == null) {
+                if (type == "03" && panoramaImageBitmap == null) {
                     ToastUtil.showMiddleToast(i18n(com.rt.base.R.string.请上传全景照))
                     return
                 }
-                plateImageBitmap = addTextWatermark(plateImageBitmap!!)
-                panoramaImageBitmap = addTextWatermark(panoramaImageBitmap!!)
-                convertBase64(plateImageBitmap!!, 10)
-                convertBase64(panoramaImageBitmap!!, 11)
+                if (type == "03") {
+                    plateImageBitmap = addTextWatermark(plateImageBitmap!!)
+                    panoramaImageBitmap = addTextWatermark(panoramaImageBitmap!!)
+                    convertBase64(plateImageBitmap!!, 10)
+                    convertBase64(panoramaImageBitmap!!, 11)
+                }
                 val param = HashMap<String, Any>()
                 val jsonobject = JSONObject()
                 jsonobject["parkingNo"] = currentStreet?.streetNo + "-" + fillZero(binding.retParkingNo.text.toString())
@@ -481,20 +483,44 @@ class AbnormalReportActivity : VbBaseActivity<AbnormalReportViewModel, ActivityA
                     binding.etPlate.setText(plateId)
                     binding.etPlate.setSelection(plateId.length)
                     if (plate.startsWith("蓝")) {
-                        collectionPlateColorAdapter?.updateColor(Constant.BLUE, 0)
+                        checkedColor = Constant.BLUE
+                        collectionPlateColorAdapter?.updateColor(checkedColor, 0)
+                        collectionPlateColorAdapter?.updateColor(checkedColor, 0)
                     } else if (plate.startsWith("绿")) {
-                        collectionPlateColorAdapter?.updateColor(Constant.GREEN, 1)
+                        checkedColor = Constant.BLUE
+                        collectionPlateColorAdapter?.updateColor(checkedColor, 0)
+                        collectionPlateColorAdapter?.updateColor(checkedColor, 1)
                     } else if (plate.startsWith("黄")) {
-                        collectionPlateColorAdapter?.updateColor(Constant.YELLOW, 2)
+                        checkedColor = Constant.BLUE
+                        collectionPlateColorAdapter?.updateColor(checkedColor, 0)
+                        collectionPlateColorAdapter?.updateColor(checkedColor, 2)
                     } else if (plate.startsWith("黄绿")) {
-                        collectionPlateColorAdapter?.updateColor(Constant.YELLOW_GREEN, 3)
+                        checkedColor = Constant.BLUE
+                        collectionPlateColorAdapter?.updateColor(checkedColor, 0)
+                        collectionPlateColorAdapter?.updateColor(checkedColor, 3)
                     } else if (plate.startsWith("白")) {
-                        collectionPlateColorAdapter?.updateColor(Constant.WHITE, 4)
+                        checkedColor = Constant.BLUE
+                        collectionPlateColorAdapter?.updateColor(checkedColor, 0)
+                        collectionPlateColorAdapter?.updateColor(checkedColor, 4)
                     } else if (plate.startsWith("黑")) {
-                        collectionPlateColorAdapter?.updateColor(Constant.BLACK, 5)
+                        checkedColor = Constant.BLUE
+                        collectionPlateColorAdapter?.updateColor(checkedColor, 0)
+                        collectionPlateColorAdapter?.updateColor(checkedColor, 5)
                     } else {
-                        collectionPlateColorAdapter?.updateColor(Constant.OTHERS, 6)
+                        checkedColor = Constant.BLUE
+                        collectionPlateColorAdapter?.updateColor(checkedColor, 0)
+                        collectionPlateColorAdapter?.updateColor(checkedColor, 6)
                     }
+                    binding.rflTakePhoto.show()
+                    binding.rflPlateImg.gone()
+                    plateImageBitmap = null
+                    plateBase64 = ""
+                    plateFileName = ""
+                    binding.rflTakePhoto2.show()
+                    binding.rflPanoramaImg.gone()
+                    panoramaImageBitmap = null
+                    panoramaBase64 = ""
+                    panoramaFileName = ""
                 }
             }
         }
@@ -523,8 +549,10 @@ class AbnormalReportActivity : VbBaseActivity<AbnormalReportViewModel, ActivityA
             }
             abnormalReportLiveData.observe(this@AbnormalReportActivity) {
                 dismissProgressDialog()
-                uploadImg(orderNo, plateBase64, plateFileName, 10)
-                uploadImg(orderNo, panoramaBase64, panoramaFileName, 11)
+                if (type == "03") {
+                    uploadImg(orderNo, plateBase64, plateFileName, 10)
+                    uploadImg(orderNo, panoramaBase64, panoramaFileName, 11)
+                }
                 ToastUtil.showMiddleToast(i18n(com.rt.base.R.string.上报成功))
                 EventBus.getDefault().post(RefreshParkingSpaceEvent())
                 onBackPressedSupport()

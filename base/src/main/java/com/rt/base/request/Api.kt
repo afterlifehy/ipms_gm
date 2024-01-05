@@ -8,7 +8,7 @@ interface Api {
     /**
      * 签到
      */
-    @POST("S_MG_01")
+    @POST("S_MG_001")
     suspend fun login(@Body param: @JvmSuppressWildcards Map<String, Any?>): HttpWrapper<LoginBean>
 
     /**
@@ -38,7 +38,7 @@ interface Api {
     /**
      * 支付结果查询
      */
-    @POST("S_MG_05")
+    @POST("S_MG_005")
     suspend fun payResultInquiry(@Body param: @JvmSuppressWildcards Map<String, Any?>): HttpWrapper<PayResultBean>
 
     /**
@@ -56,7 +56,7 @@ interface Api {
     /**
      * 图片上传
      */
-    @POST("S_MG_08")
+    @POST("S_MG_008")
     suspend fun picUpload(@Body param: @JvmSuppressWildcards Map<String, Any?>): HttpWrapper<Any>
 
     /**
