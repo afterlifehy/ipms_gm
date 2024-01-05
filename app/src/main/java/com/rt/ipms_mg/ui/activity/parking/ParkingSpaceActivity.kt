@@ -280,7 +280,7 @@ class ParkingSpaceActivity : VbBaseActivity<ParkingSpaceViewModel, ActivityParki
         val photoFile: File? = createImageFile()
         val photoURI: Uri = FileProvider.getUriForFile(
             this,
-            "com.rt.bxapp.fileprovider",
+            "com.rt.ipms_mg.fileprovider",
             photoFile!!
         )
         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
