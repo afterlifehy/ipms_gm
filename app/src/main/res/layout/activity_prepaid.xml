@@ -43,7 +43,7 @@
                 android:drawableStart="@mipmap/ic_plate"
                 android:drawablePadding="@dimen/dp_6"
                 android:textColor="@color/color_ff1a1a1a"
-                android:textSize="@dimen/sp_24"
+                android:textSize="@dimen/sp_22"
                 android:textStyle="bold"
                 tools:text="沪A36N81" />
 
@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|end"
                 android:textColor="@color/color_ff04a091"
-                android:textSize="@dimen/sp_24"
+                android:textSize="@dimen/sp_22"
                 android:textStyle="bold"
                 tools:text="JAZ02109" />
         </com.aries.ui.view.radius.RadiusFrameLayout>

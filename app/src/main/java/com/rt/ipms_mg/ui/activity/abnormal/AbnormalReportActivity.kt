@@ -387,6 +387,7 @@ class AbnormalReportActivity : VbBaseActivity<AbnormalReportViewModel, ActivityA
             photoFile!!
         )
         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+        takePictureIntent.putExtra("android.intent.extra.quickCapture",true)
         takePictureLauncher.launch(takePictureIntent)
     }
 

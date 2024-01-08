@@ -100,7 +100,7 @@ class IncomeCountingActivity : VbBaseActivity<IncomeCountingViewModel, ActivityI
 
             R.id.tv_totalIncomeTitle -> {
                 promptDialog = PromptDialog(
-                    i18N(com.rt.base.R.string.今日总收费和本月总收入均包含自主缴费金额和被追缴金额且不包含追缴他人金额),
+                    i18N(com.rt.base.R.string.总收费和总收入均包含自主缴费金额和被追缴金额且不包含追缴他人金额),
                     "",
                     i18N(com.rt.base.R.string.确定),
                     object : PromptDialog.PromptCallBack {

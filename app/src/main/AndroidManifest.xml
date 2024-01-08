@@ -233,7 +233,8 @@
         <activity
             android:name="com.rt.ipms_mg.ui.activity.order.OrderInquiryActivity"
             android:exported="false"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme"/>
 
         <activity
             android:name="com.rt.ipms_mg.ui.activity.order.OrderDetailActivity"

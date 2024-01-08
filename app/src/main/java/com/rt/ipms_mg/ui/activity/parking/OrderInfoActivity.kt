@@ -56,6 +56,8 @@ class OrderInfoActivity : VbBaseActivity<OrderInfoViewModel, ActivityOrderInfoBi
     var tradeNo = ""
     var orderList: MutableList<String> = ArrayList()
 
+    var isOrderCreate = false
+
     override fun initView() {
         binding.layoutToolbar.tvTitle.text = i18N(com.rt.base.R.string.订单信息)
         GlideUtils.instance?.loadImage(binding.layoutToolbar.ivBack, com.rt.common.R.mipmap.ic_back_white)
@@ -90,24 +92,29 @@ class OrderInfoActivity : VbBaseActivity<OrderInfoViewModel, ActivityOrderInfoBi
                 onBackPressedSupport()
             }
 
+            R.id.rfl_refusePay,
             R.id.rfl_appPay -> {
-                upload()
-            }
-
-            R.id.rfl_refusePay -> {
-                upload()
+                if (!isOrderCreate) {
+                    upload()
+                } else {
+                    ToastUtil.showMiddleToast(i18N(com.rt.base.R.string.正在支付无法上传欠费))
+                }
             }
 
             R.id.rfl_scanPay -> {
-                val param = HashMap<String, Any>()
-                val jsonobject = JSONObject()
-                jsonobject["orderNo"] = orderNo
-                jsonobject["totalAmount"] = totalAmount
-                jsonobject["loginName"] = loginName
-                jsonobject["simId"] = simId
-                jsonobject["orderType"] = "2"
-                param["attr"] = jsonobject
-                mViewModel.endOrderQR(param)
+                if (!isOrderCreate) {
+                    val param = HashMap<String, Any>()
+                    val jsonobject = JSONObject()
+                    jsonobject["orderNo"] = orderNo
+                    jsonobject["totalAmount"] = totalAmount
+                    jsonobject["loginName"] = loginName
+                    jsonobject["simId"] = simId
+                    jsonobject["orderType"] = "2"
+                    param["attr"] = jsonobject
+                    mViewModel.endOrderQR(param)
+                } else {
+                    ToastUtil.showMiddleToast(i18N(com.rt.base.R.string.正在支付中))
+                }
             }
         }
     }
@@ -142,6 +149,7 @@ class OrderInfoActivity : VbBaseActivity<OrderInfoViewModel, ActivityOrderInfoBi
             }
             endOrderQRLiveData.observe(this@OrderInfoActivity) {
                 dismissProgressDialog()
+                isOrderCreate = true
                 tradeNo = it.tradeNo
                 paymentQrDialog = PaymentQrDialog(it.qr_code, AppUtil.keepNDecimals(it.totalAmount.toString(), 2))
                 paymentQrDialog?.show()

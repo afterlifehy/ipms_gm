@@ -148,7 +148,7 @@
     <string name="追缴他人">追缴他人</string>
     <string name="自主缴费">自主缴费</string>
     <string name="总收入">总收入</string>
-    <string name="今日总收费和本月总收入均包含自主缴费金额和被追缴金额且不包含追缴他人金额">今日总收费和本月总收入均包含自主缴费金额和被追缴金额，且不包含追缴他人金额。</string>
+    <string name="总收费和总收入均包含自主缴费金额和被追缴金额且不包含追缴他人金额">总收费和总收入均包含自主缴费金额和被追缴金额，且不包含追缴他人金额。</string>
     <string name="交易查询">交易查询</string>
     <string name="欠费追缴">欠费追缴</string>
     <string name="订单查询">订单查询</string>
@@ -186,4 +186,6 @@
     <string name="正常关单">正常关单</string>
     <string name="当前车辆没有欠费记录">当前车辆没有欠费记录</string>
     <string name="请先拍摄在场照片">请先拍摄在场照片</string>
+    <string name="正在支付无法上传欠费">正在支付，无法上传欠费</string>
+    <string name="正在支付中">正在支付中...</string>
 </resources>
