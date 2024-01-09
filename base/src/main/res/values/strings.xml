@@ -170,7 +170,6 @@
     <string name="上传欠费">上传欠费</string>
     <string name="已付">已付:</string>
     <string name="欠">欠:</string>
-    <string name="是否立即上传">是否立即上传</string>
     <string name="订单详细信息">订单详细信息</string>
     <string name="总额">总额</string>
     <string name="交易记录">交易记录</string>
@@ -178,9 +177,6 @@
     <string name="是否确认下单">是否确认下单</string>
     <string name="请选择离场方式">请选择离场方式</string>
     <string name="支付">支付:</string>
-    <string name="请选择需要上传的订单">请选择需要上传的订单</string>
-    <string name="上传成功">上传成功</string>
-    <string name="上传失败">上传失败</string>
     <string name="请上传车牌照">请上传车牌照</string>
     <string name="请上传全景照">请上传全景照</string>
     <string name="正常关单">正常关单</string>

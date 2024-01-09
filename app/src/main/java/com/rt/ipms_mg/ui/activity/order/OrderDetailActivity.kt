@@ -15,7 +15,6 @@ import com.rt.base.arouter.ARouterMap
 import com.rt.base.bean.OrderBean
 import com.rt.base.ext.i18N
 import com.rt.base.ext.i18n
-import com.rt.base.ext.show
 import com.rt.base.viewbase.VbBaseActivity
 import com.rt.common.util.AppUtil
 import com.rt.common.util.BigDecimalManager
@@ -24,13 +23,8 @@ import com.rt.ipms_mg.R
 import com.rt.ipms_mg.databinding.ActivityOrderDetailBinding
 import com.rt.ipms_mg.mvvm.viewmodel.OrderDetailViewModel
 import com.zrq.spanbuilder.TextStyle
-import com.rt.base.dialog.DialogHelp
-import com.rt.base.ext.gone
 import com.rt.base.ext.startArouter
-import com.rt.base.help.ActivityCacheManager
 import com.rt.base.util.ToastUtil
-import com.rt.common.event.RefreshOrderListEvent
-import org.greenrobot.eventbus.EventBus
 
 @Route(path = ARouterMap.ORDER_DETAIL)
 class OrderDetailActivity : VbBaseActivity<OrderDetailViewModel, ActivityOrderDetailBinding>(), OnClickListener {
@@ -63,7 +57,6 @@ class OrderDetailActivity : VbBaseActivity<OrderDetailViewModel, ActivityOrderDe
             val strings =
                 arrayOf(i18n(com.rt.base.R.string.已付), order?.paidAmount.toString(), i18n(com.rt.base.R.string.元))
             binding.tvPayment.text = AppUtil.getSpan(strings, sizes, colors, styles)
-            binding.rtvUpload.gone()
             binding.rtvTransactionRecord.delegate.setBackgroundColor(
                 ContextCompat.getColor(
                     BaseApplication.instance(), com.rt.base.R.color.color_ff04a091
@@ -77,7 +70,6 @@ class OrderDetailActivity : VbBaseActivity<OrderDetailViewModel, ActivityOrderDe
                 i18n(com.rt.base.R.string.元)
             )
             binding.tvPayment.text = AppUtil.getSpan(strings, sizes, colors, styles)
-            binding.rtvUpload.gone()
             binding.rtvTransactionRecord.delegate.setBackgroundColor(
                 ContextCompat.getColor(
                     BaseApplication.instance(), com.rt.base.R.color.color_ffc5dddb
@@ -96,7 +88,6 @@ class OrderDetailActivity : VbBaseActivity<OrderDetailViewModel, ActivityOrderDe
                 i18n(com.rt.base.R.string.元)
             )
             binding.tvPayment.text = AppUtil.getSpan(strings, sizes, colors1, styles)
-            binding.rtvUpload.show()
             binding.rtvTransactionRecord.delegate.setBackgroundColor(
                 ContextCompat.getColor(
                     BaseApplication.instance(), com.rt.base.R.color.color_ffc5dddb
@@ -104,23 +95,6 @@ class OrderDetailActivity : VbBaseActivity<OrderDetailViewModel, ActivityOrderDe
             )
             binding.rtvTransactionRecord.setOnClickListener(null)
             binding.rtvTransactionRecord.delegate.init()
-            if (order?.isPrinted == "0") {
-                binding.rtvUpload.delegate.setBackgroundColor(
-                    ContextCompat.getColor(
-                        BaseApplication.instance(), com.rt.base.R.color.color_ff04a091
-                    )
-                )
-                binding.rtvUpload.setOnClickListener(this)
-                binding.rtvUpload.delegate.init()
-            } else {
-                binding.rtvUpload.delegate.setBackgroundColor(
-                    ContextCompat.getColor(
-                        BaseApplication.instance(), com.rt.base.R.color.color_ffc5dddb
-                    )
-                )
-                binding.rtvUpload.setOnClickListener(null)
-                binding.rtvUpload.delegate.init()
-            }
         }
 
         val strings1 = arrayOf(i18N(com.rt.base.R.string.订单) + "：", order?.orderNo.toString())
@@ -174,26 +148,6 @@ class OrderDetailActivity : VbBaseActivity<OrderDetailViewModel, ActivityOrderDe
                 })
             }
 
-            R.id.rtv_upload -> {
-                DialogHelp.Builder().setTitle(i18N(com.rt.base.R.string.是否立即上传))
-                    .setLeftMsg(i18N(com.rt.base.R.string.取消))
-                    .setRightMsg(i18N(com.rt.base.R.string.确定)).setCancelable(true)
-                    .setOnButtonClickLinsener(object : DialogHelp.OnButtonClickLinsener {
-                        override fun onLeftClickLinsener(msg: String) {
-                        }
-
-                        override fun onRightClickLinsener(msg: String) {
-                            showProgressDialog(20000)
-                            val param = HashMap<String, Any>()
-                            val jsonobject = JSONObject()
-                            jsonobject["orderNoList"] = order?.orderNo
-                            param["attr"] = jsonobject
-                            mViewModel.debtUpload(param)
-                        }
-
-                    }).build(ActivityCacheManager.instance().getCurrentActivity()).showDailog()
-            }
-
             R.id.riv_pic1 -> {
                 startArouter(ARouterMap.PREVIEW_IMAGE, data = Bundle().apply {
                     putInt(ARouterMap.IMG_INDEX, 0)
@@ -228,22 +182,6 @@ class OrderDetailActivity : VbBaseActivity<OrderDetailViewModel, ActivityOrderDe
                 GlideUtils.instance?.loadImage(binding.rivPic1, picList[0], com.rt.common.R.mipmap.ic_placeholder)
                 GlideUtils.instance?.loadImage(binding.rivPic2, picList[1], com.rt.common.R.mipmap.ic_placeholder)
                 GlideUtils.instance?.loadImage(binding.rivPic3, picList[2], com.rt.common.R.mipmap.ic_placeholder)
-            }
-            debtUploadLiveData.observe(this@OrderDetailActivity) {
-                dismissProgressDialog()
-                if (it.result) {
-                    ToastUtil.showMiddleToast(i18N(com.rt.base.R.string.上传成功))
-                    EventBus.getDefault().post(RefreshOrderListEvent())
-                    binding.rtvUpload.delegate.setBackgroundColor(
-                        ContextCompat.getColor(
-                            BaseApplication.instance(), com.rt.base.R.color.color_ffc5dddb
-                        )
-                    )
-                    binding.rtvUpload.setOnClickListener(null)
-                    binding.rtvUpload.delegate.init()
-                } else {
-                    ToastUtil.showMiddleToast(i18N(com.rt.base.R.string.上传失败))
-                }
             }
             errMsg.observe(this@OrderDetailActivity) {
                 dismissProgressDialog()

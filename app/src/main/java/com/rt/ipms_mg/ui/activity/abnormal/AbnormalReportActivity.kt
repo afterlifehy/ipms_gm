@@ -314,6 +314,7 @@ class AbnormalReportActivity : VbBaseActivity<AbnormalReportViewModel, ActivityA
                 val param = HashMap<String, Any>()
                 val jsonobject = JSONObject()
                 jsonobject["parkingNo"] = currentStreet?.streetNo + "-" + fillZero(binding.retParkingNo.text.toString())
+                jsonobject["loginName"] = loginName
                 param["attr"] = jsonobject
                 showProgressDialog(20000)
                 mViewModel.inquiryOrderNoByParkingNo(param)
@@ -387,7 +388,7 @@ class AbnormalReportActivity : VbBaseActivity<AbnormalReportViewModel, ActivityA
             photoFile!!
         )
         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-        takePictureIntent.putExtra("android.intent.extra.quickCapture",true)
+        takePictureIntent.putExtra("android.intent.extra.quickCapture", true)
         takePictureLauncher.launch(takePictureIntent)
     }
 

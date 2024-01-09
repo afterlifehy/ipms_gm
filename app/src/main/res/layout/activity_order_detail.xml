@@ -190,21 +190,6 @@
             app:rv_radius="@dimen/dp_7" />
 
         <com.aries.ui.view.radius.RadiusTextView
-            android:id="@+id/rtv_upload"
-            android:layout_width="@dimen/dp_0"
-            android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/dp_5"
-            android:layout_marginEnd="@dimen/dp_5"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/上传欠费"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp_19"
-            android:textStyle="bold"
-            app:rv_backgroundColor="@color/color_ff04a091"
-            app:rv_radius="@dimen/dp_7" />
-
-        <com.aries.ui.view.radius.RadiusTextView
             android:id="@+id/rtv_transactionRecord"
             android:layout_width="@dimen/dp_0"
             android:layout_height="match_parent"

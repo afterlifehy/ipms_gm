@@ -42,12 +42,6 @@ interface Api {
     suspend fun payResultInquiry(@Body param: @JvmSuppressWildcards Map<String, Any?>): HttpWrapper<PayResultBean>
 
     /**
-     * 欠费上传
-     */
-    @POST("S_MG_06")
-    suspend fun debtUpload(@Body param: @JvmSuppressWildcards Map<String, Any?>): HttpWrapper<DebtUploadBean>
-
-    /**
      * 签退
      */
     @POST("S_MG_07")

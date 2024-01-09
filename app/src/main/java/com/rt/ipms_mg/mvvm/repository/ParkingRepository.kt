@@ -58,11 +58,4 @@ class ParkingRepository : BaseRepository() {
     suspend fun inquiryTransactionByOrderNo(param: @JvmSuppressWildcards Map<String, Any?>): HttpWrapper<TicketPrintResultBean> {
         return mServer.inquiryTransactionByOrderNo(param)
     }
-
-    /**
-     * 欠费上传
-     */
-    suspend fun debtUpload(param: @JvmSuppressWildcards Map<String, Any?>): HttpWrapper<DebtUploadBean> {
-        return mServer.debtUpload(param)
-    }
 }

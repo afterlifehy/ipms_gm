@@ -17,14 +17,12 @@ import com.blankj.utilcode.util.TimeUtils
 import com.rt.base.BaseApplication
 import com.rt.base.arouter.ARouterMap
 import com.rt.base.bean.OrderBean
-import com.rt.base.dialog.DialogHelp
 import com.rt.base.ds.PreferencesDataStore
 import com.rt.base.ds.PreferencesKeys
 import com.rt.base.ext.gone
 import com.rt.base.ext.i18N
 import com.rt.base.ext.show
 import com.rt.base.ext.startArouter
-import com.rt.base.help.ActivityCacheManager
 import com.rt.base.util.ToastUtil
 import com.rt.base.viewbase.VbBaseActivity
 import com.rt.common.util.GlideUtils
@@ -87,7 +85,6 @@ class OrderInquiryActivity : VbBaseActivity<OrderInquiryViewModel, ActivityOrder
         binding.layoutToolbar.ivRight.setOnClickListener(this)
         binding.root.setOnClickListener(this)
         binding.layoutToolbar.toolbar.setOnClickListener(this)
-        binding.rflUpload.setOnClickListener(this)
         binding.ivCamera.setOnClickListener(this)
         binding.srlOrder.setOnRefreshListener {
             pageIndex = 1
@@ -172,30 +169,6 @@ class OrderInquiryActivity : VbBaseActivity<OrderInquiryViewModel, ActivityOrder
                 ARouter.getInstance().build(ARouterMap.SCAN_PLATE).navigation(this@OrderInquiryActivity, 1)
             }
 
-            R.id.rfl_upload -> {
-                val orderList = orderInquiryAdapter?.getUploadOrderList()
-                if (orderList?.size == 0) {
-                    ToastUtil.showMiddleToast(i18N(com.rt.base.R.string.请选择需要上传的订单))
-                    return
-                }
-                DialogHelp.Builder().setTitle(i18N(com.rt.base.R.string.是否立即上传))
-                    .setLeftMsg(i18N(com.rt.base.R.string.取消))
-                    .setRightMsg(i18N(com.rt.base.R.string.确定)).setCancelable(true)
-                    .setOnButtonClickLinsener(object : DialogHelp.OnButtonClickLinsener {
-                        override fun onLeftClickLinsener(msg: String) {
-                        }
-
-                        override fun onRightClickLinsener(msg: String) {
-                            showProgressDialog(20000)
-                            val param = HashMap<String, Any>()
-                            val jsonobject = JSONObject()
-                            jsonobject["orderNoList"] = orderList?.joinToString(separator = ",") { it.orderNo }
-                            param["attr"] = jsonobject
-                            mViewModel.debtUpload(param)
-                        }
-
-                    }).build(ActivityCacheManager.instance().getCurrentActivity()).showDailog()
-            }
         }
     }
 
@@ -207,13 +180,11 @@ class OrderInquiryActivity : VbBaseActivity<OrderInquiryViewModel, ActivityOrder
                 val tempList = it.result
                 if (pageIndex == 1) {
                     if (tempList.isEmpty()) {
-                        binding.rflUpload.gone()
                         orderInquiryAdapter?.setNewInstance(null)
                         binding.rvOrders.gone()
                         binding.layoutNoData.root.show()
                         binding.srlOrder.finishRefresh()
                     } else {
-                        binding.rflUpload.show()
                         orderList.clear()
                         orderList.addAll(tempList)
                         orderInquiryAdapter?.setList(orderList)
@@ -230,20 +201,6 @@ class OrderInquiryActivity : VbBaseActivity<OrderInquiryViewModel, ActivityOrder
                         orderInquiryAdapter?.setList(orderList)
                         binding.srlOrder.finishLoadMore(300)
                     }
-                }
-            }
-            debtUploadLiveData.observe(this@OrderInquiryActivity) {
-                dismissProgressDialog()
-                if (it.result) {
-                    ToastUtil.showMiddleToast(i18N(com.rt.base.R.string.上传成功))
-                    orderInquiryAdapter?.clearUploadOrderList()
-                    pageIndex = 1
-                    orderList.clear()
-                    query()
-                } else {
-                    orderInquiryAdapter?.clearUploadOrderList()
-                    orderInquiryAdapter?.notifyDataSetChanged()
-                    ToastUtil.showMiddleToast(i18N(com.rt.base.R.string.上传失败))
                 }
             }
             errMsg.observe(this@OrderInquiryActivity) {

@@ -107,30 +107,6 @@
         </FrameLayout>
     </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
-    <com.aries.ui.view.radius.RadiusFrameLayout
-        android:id="@+id/rfl_upload"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_47"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="@dimen/dp_13"
-        android:layout_marginEnd="@dimen/dp_13"
-        android:layout_marginBottom="@dimen/dp_13"
-        app:rv_backgroundColor="@color/color_ff04a091"
-        app:rv_radius="@dimen/dp_7">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:drawableStart="@mipmap/ic_report"
-            android:drawablePadding="@dimen/dp_14"
-            android:gravity="center"
-            android:text="@string/上传欠费"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp_19"
-            android:textStyle="bold" />
-    </com.aries.ui.view.radius.RadiusFrameLayout>
-
     <com.rt.common.view.keyboard.MyKeyboardView
         android:id="@+id/kv_keyBoard"
         android:layout_width="match_parent"

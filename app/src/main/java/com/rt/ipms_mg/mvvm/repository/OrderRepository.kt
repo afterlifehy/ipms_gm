@@ -58,13 +58,6 @@ class OrderRepository : BaseRepository() {
     }
 
     /**
-     * 欠费上传
-     */
-    suspend fun debtUpload(param: @JvmSuppressWildcards Map<String, Any?>): HttpWrapper<DebtUploadBean> {
-        return mServer.debtUpload(param)
-    }
-
-    /**
      * 票据打印
      */
     suspend fun ticketPrint(param: @JvmSuppressWildcards Map<String, Any?>): HttpWrapper<TicketPrintBean> {

@@ -396,11 +396,6 @@ class ParkingSpaceActivity : VbBaseActivity<ParkingSpaceViewModel, ActivityParki
                     }
 
                     "2", "3", "5" -> {
-                        val param = HashMap<String, Any>()
-                        val jsonobject = JSONObject()
-                        jsonobject["orderNoList"] = orderList.joinToString(separator = ",") { it }
-                        param["attr"] = jsonobject
-                        mViewModel.debtUpload(param)
                         EventBus.getDefault().post(EndOrderEvent())
                         onBackPressedSupport()
                     }
@@ -409,8 +404,6 @@ class ParkingSpaceActivity : VbBaseActivity<ParkingSpaceViewModel, ActivityParki
                         onBackPressedSupport()
                     }
                 }
-            }
-            debtUploadLiveData.observe(this@ParkingSpaceActivity) {
             }
             picUploadLiveData.observe(this@ParkingSpaceActivity) {
                 isUpload = true
