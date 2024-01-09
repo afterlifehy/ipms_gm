@@ -7,12 +7,14 @@ import android.view.KeyEvent
 import android.view.View
 import android.view.View.OnClickListener
 import android.view.WindowManager
+import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewbinding.ViewBinding
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.alibaba.fastjson.JSONObject
+import com.blankj.utilcode.util.TimeUtils
 import com.rt.base.BaseApplication
 import com.rt.base.arouter.ARouterMap
 import com.rt.base.bean.DebtCollectionBean
@@ -34,6 +36,7 @@ import com.rt.ipms_mg.R
 import com.rt.ipms_mg.adapter.DebtCollectionAdapter
 import com.rt.ipms_mg.databinding.ActivityDebtCollectionBinding
 import com.rt.ipms_mg.mvvm.viewmodel.DebtCollectionViewModel
+import com.rt.ipms_mg.pop.DatePop
 import kotlinx.coroutines.runBlocking
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -43,6 +46,9 @@ class DebtCollectionActivity : VbBaseActivity<DebtCollectionViewModel, ActivityD
     private lateinit var keyboardUtil: KeyboardUtil
     var debtCollectionAdapter: DebtCollectionAdapter? = null
     var debtCollectionList: MutableList<DebtCollectionBean> = ArrayList()
+    var datePop: DatePop? = null
+    var startDate = TimeUtils.millis2String(System.currentTimeMillis(), "yyyy-MM-dd")
+    var endDate = TimeUtils.millis2String(System.currentTimeMillis(), "yyyy-MM-dd")
     var carLicense = ""
     var simId = ""
 
@@ -59,6 +65,8 @@ class DebtCollectionActivity : VbBaseActivity<DebtCollectionViewModel, ActivityD
         GlideUtils.instance?.loadImage(binding.layoutToolbar.ivBack, com.rt.common.R.mipmap.ic_back_white)
         binding.layoutToolbar.tvTitle.text = i18N(com.rt.base.R.string.欠费追缴)
         binding.layoutToolbar.tvTitle.setTextColor(ContextCompat.getColor(BaseApplication.instance(), com.rt.base.R.color.white))
+        GlideUtils.instance?.loadImage(binding.layoutToolbar.ivRight, com.rt.common.R.mipmap.ic_calendar)
+        binding.layoutToolbar.ivRight.show()
         GlideUtils.instance?.loadImage(binding.layoutNoData.ivNoData, com.rt.common.R.mipmap.ic_no_data_2)
         binding.layoutNoData.tvNoDataTitle.text = i18N(com.rt.base.R.string.通过车牌号未查询到欠费订单)
 
@@ -93,6 +101,7 @@ class DebtCollectionActivity : VbBaseActivity<DebtCollectionViewModel, ActivityD
 
     override fun initListener() {
         binding.layoutToolbar.flBack.setOnClickListener(this)
+        binding.layoutToolbar.ivRight.setOnClickListener(this)
         binding.ivCamera.setOnClickListener(this)
         binding.tvSearch.setOnClickListener(this)
         binding.root.setOnClickListener(this)
@@ -111,6 +120,28 @@ class DebtCollectionActivity : VbBaseActivity<DebtCollectionViewModel, ActivityD
         when (v?.id) {
             R.id.fl_back -> {
                 onBackPressedSupport()
+            }
+
+            R.id.iv_right -> {
+                datePop = DatePop(BaseApplication.instance(), startDate, endDate, 0, object : DatePop.DateCallBack {
+                    override fun selectDate(startTime: String, endTime: String) {
+                        startDate = startTime
+                        endDate = endTime
+                        carLicense = binding.etSearch.text.toString()
+                        if (carLicense.isEmpty()) {
+                            ToastUtil.showMiddleToast(i18n(com.rt.base.R.string.请输入车牌号))
+                            return
+                        }
+                        if (carLicense.length != 7 && carLicense.length != 8) {
+                            ToastUtil.showMiddleToast(i18N(com.rt.base.R.string.车牌长度只能是7位或8位))
+                            return
+                        }
+                        showProgressDialog(20000)
+                        query()
+                    }
+
+                })
+                datePop?.showAsDropDown((v.parent) as Toolbar)
             }
 
             R.id.iv_camera -> {
@@ -153,6 +184,8 @@ class DebtCollectionActivity : VbBaseActivity<DebtCollectionViewModel, ActivityD
             val jsonobject = JSONObject()
             jsonobject["simId"] = simId
             jsonobject["plateId"] = carLicense
+            jsonobject["startDate"] = startDate
+            jsonobject["endDate"] = endDate
             param["attr"] = jsonobject
             mViewModel.debtInquiry(param)
         }
