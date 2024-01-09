@@ -36,6 +36,7 @@ import com.rt.base.ext.show
 import com.rt.base.ext.startArouter
 import com.rt.base.util.ToastUtil
 import com.rt.base.viewbase.VbBaseActivity
+import com.rt.common.event.AbnormalReportEvent
 import com.rt.common.realm.RealmUtil
 import com.rt.common.util.AppUtil
 import com.rt.common.util.GlideUtils
@@ -47,7 +48,6 @@ import com.rt.ipms_mg.databinding.ActivityAbnormalReportBinding
 import com.rt.ipms_mg.dialog.AbnormalClassificationDialog
 import com.rt.ipms_mg.dialog.AbnormalStreetListDialog
 import com.rt.ipms_mg.mvvm.viewmodel.AbnormalReportViewModel
-import com.rt.common.event.RefreshParkingSpaceEvent
 import com.rt.common.util.Constant
 import com.rt.common.util.FileUtil
 import kotlinx.coroutines.runBlocking
@@ -148,7 +148,7 @@ class AbnormalReportActivity : VbBaseActivity<AbnormalReportViewModel, ActivityA
         }
         binding.tvLotName.text = currentStreet?.streetName
         binding.rtvStreetNo.text = currentStreet?.streetNo
-        binding.retParkingNo.setText(parkingNo.replaceFirst(currentStreet?.streetNo.toString(), "").replace("-", ""))
+        binding.retParkingNo.setText(parkingNo.replace("-", "").replaceFirst(currentStreet?.streetNo.toString(), ""))
 
         classificationList.add(i18n(com.rt.base.R.string.无法关单))
         classificationList.add(i18n(com.rt.base.R.string.订单丢失))
@@ -555,7 +555,7 @@ class AbnormalReportActivity : VbBaseActivity<AbnormalReportViewModel, ActivityA
                     uploadImg(orderNo, panoramaBase64, panoramaFileName, 11)
                 }
                 ToastUtil.showMiddleToast(i18n(com.rt.base.R.string.上报成功))
-                EventBus.getDefault().post(RefreshParkingSpaceEvent())
+                EventBus.getDefault().post(AbnormalReportEvent())
                 onBackPressedSupport()
             }
             errMsg.observe(this@AbnormalReportActivity) {

@@ -9,13 +9,13 @@ data class IncomeCountingBean(
 
 data class TodayIncomeBean(
     var onlineMoney: String = "",
-    var orderCount: Int = 0,
-    var oweCount: Int = 0,
+    var orderCount: Int = -1,
+    var oweCount: Int = -1,
     var oweMoney: String = "",
-    var partPayCount: Int = 0,
+    var partPayCount: Int = -1,
     var passMoney: String = "",
     var payMoney: String = "",
-    var refusePayCount: Int = 0
+    var refusePayCount: Int = -1
 )
 
 data class RangeIncomeBean(

@@ -184,11 +184,6 @@
             android:launchMode="singleTask" />
 
         <activity
-            android:name="com.rt.ipms_mg.ui.activity.mine.DataPrintActivity"
-            android:exported="false"
-            android:launchMode="singleTask" />
-
-        <activity
             android:name="com.rt.ipms_mg.ui.activity.mine.MineActivity"
             android:exported="false"
             android:launchMode="singleTask" />

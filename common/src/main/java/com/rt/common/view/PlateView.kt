@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.ArrayMap
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import com.rt.base.BaseApplication
@@ -18,6 +17,7 @@ class PlateView @JvmOverloads constructor(
     var binding: ViewPlateBinding? = null
     var emptyPosition = 0
     var plateTxtColorMap: MutableMap<String, Int> = ArrayMap()
+    var plateBgColor = Constant.BLUE
 
     init {
         initView()
@@ -52,6 +52,9 @@ class PlateView @JvmOverloads constructor(
             1 -> {
                 binding!!.tvPlate2.text = value
                 emptyPosition = 2
+                if (plateBgColor == Constant.WHITE) {
+                    whiteWJTxtColor()
+                }
             }
 
             2 -> {
@@ -77,11 +80,21 @@ class PlateView @JvmOverloads constructor(
             6 -> {
                 binding!!.tvPlate7.text = value
                 emptyPosition = 7
+                if (plateBgColor == Constant.WHITE) {
+                    whiteWJTxtColor()
+                }
             }
 
             7 -> {
-                binding!!.tvPlate8.text = value
-                emptyPosition = -1
+                if (binding!!.tvPlate7.text == "警" && value == "警") {
+                    return
+                } else {
+                    binding!!.tvPlate8.text = value
+                    emptyPosition = -1
+                }
+                if (plateBgColor == Constant.WHITE) {
+                    whiteWJTxtColor()
+                }
             }
 
             -1 -> {
@@ -103,6 +116,9 @@ class PlateView @JvmOverloads constructor(
             binding!!.tvPlate8.text = plateArray[7].toString()
         }
         emptyPosition = -1
+        if (plateBgColor == Constant.WHITE) {
+            whiteWJTxtColor()
+        }
     }
 
     fun getPvTxt(): String {
@@ -158,8 +174,9 @@ class PlateView @JvmOverloads constructor(
     }
 
     fun setPlateBgAndTxtColor(color: String) {
-        setTxtColor(color)
-        when (color) {
+        plateBgColor = color
+        setTxtColor(plateBgColor)
+        when (plateBgColor) {
             Constant.BLUE -> {
                 setPlateImgBg(R.mipmap.ic_plate_blue_bg_start, R.mipmap.ic_plate_blue_bg_middle, R.mipmap.ic_plate_blue_bg_end)
             }
@@ -182,16 +199,7 @@ class PlateView @JvmOverloads constructor(
             }
 
             Constant.WHITE -> {
-                binding!!.tvPlate1.setTextColor(
-                    ContextCompat.getColor(
-                        BaseApplication.instance(), com.rt.base.R.color.color_ffeb0000
-                    )
-                )
-                binding!!.tvPlate2.setTextColor(
-                    ContextCompat.getColor(
-                        BaseApplication.instance(), com.rt.base.R.color.color_ffeb0000
-                    )
-                )
+                whiteWJTxtColor()
                 setPlateImgBg(R.mipmap.ic_plate_white_bg_start, R.mipmap.ic_plate_white_bg_middle, R.mipmap.ic_plate_white_bg_end)
             }
 
@@ -202,6 +210,59 @@ class PlateView @JvmOverloads constructor(
             Constant.OTHERS -> {
                 setPlateImgBg(R.mipmap.ic_plate_white_bg_start, R.mipmap.ic_plate_white_bg_middle, R.mipmap.ic_plate_white_bg_end)
             }
+        }
+    }
+
+    fun whiteWJTxtColor() {
+        if (binding!!.tvPlate1.text == "W" && binding!!.tvPlate2.text == "J") {
+            binding!!.tvPlate1.setTextColor(
+                ContextCompat.getColor(
+                    BaseApplication.instance(), com.rt.base.R.color.color_ffeb0000
+                )
+            )
+            binding!!.tvPlate2.setTextColor(
+                ContextCompat.getColor(
+                    BaseApplication.instance(), com.rt.base.R.color.color_ffeb0000
+                )
+            )
+        } else {
+            binding!!.tvPlate1.setTextColor(
+                ContextCompat.getColor(
+                    BaseApplication.instance(), com.rt.base.R.color.black
+                )
+            )
+            binding!!.tvPlate2.setTextColor(
+                ContextCompat.getColor(
+                    BaseApplication.instance(), com.rt.base.R.color.black
+                )
+            )
+        }
+        if (binding!!.tvPlate7.text == "警") {
+            binding!!.tvPlate7.setTextColor(
+                ContextCompat.getColor(
+                    BaseApplication.instance(), com.rt.base.R.color.color_ffeb0000
+                )
+            )
+        } else {
+            binding!!.tvPlate7.setTextColor(
+                ContextCompat.getColor(
+                    BaseApplication.instance(), com.rt.base.R.color.black
+                )
+            )
+        }
+
+        if (binding!!.tvPlate8.text == "警") {
+            binding!!.tvPlate8.setTextColor(
+                ContextCompat.getColor(
+                    BaseApplication.instance(), com.rt.base.R.color.color_ffeb0000
+                )
+            )
+        } else {
+            binding!!.tvPlate8.setTextColor(
+                ContextCompat.getColor(
+                    BaseApplication.instance(), com.rt.base.R.color.black
+                )
+            )
         }
     }
 

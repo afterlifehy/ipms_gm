@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Paint
 import android.graphics.Rect
 import android.graphics.Typeface
+import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
@@ -15,9 +16,12 @@ import com.alibaba.fastjson.JSONObject
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.TimeUtils
 import com.rt.base.BaseApplication
+import com.rt.base.arouter.ARouterMap
 import com.rt.base.bean.IncomeCountingBean
 import com.rt.base.bean.PrintInfoBean
+import com.rt.base.dialog.DialogHelp
 import com.rt.base.ext.i18n
+import com.rt.base.ext.startArouter
 import com.rt.base.help.ActivityCacheManager
 import com.rt.base.util.ToastUtil
 import org.json.JSONException
@@ -55,7 +59,24 @@ class BluePrint() {
             printResult = Print1(content)
         } catch (e: Exception) {
             Handler(Looper.getMainLooper()).post {
-                ToastUtil.showMiddleToast("打印机状态异常")
+                DialogHelp.Builder().setTitle(i18n(com.rt.base.R.string.打印机状态异常请重新连接))
+                    .setLeftMsg(i18n(com.rt.base.R.string.取消))
+                    .setRightMsg(i18n(com.rt.base.R.string.去连接)).setCancelable(true)
+                    .setOnButtonClickLinsener(object : DialogHelp.OnButtonClickLinsener {
+                        override fun onLeftClickLinsener(msg: String) {
+                        }
+
+                        override fun onRightClickLinsener(msg: String) {
+//                            if (ActivityCacheManager.instance().getCurrentActivity() !is LoginActivity &&
+//                                ActivityCacheManager.instance().getCurrentActivity() !is StreetChooseActivity
+//                            ) {
+                            startArouter(ARouterMap.MINE, data = Bundle().apply {
+                                putInt(ARouterMap.MINE_BLUE_PRINT, 1)
+                            })
+//                            }
+                        }
+
+                    }).build(ActivityCacheManager.instance().getCurrentActivity()).showDailog()
             }
         }
         ActivityCacheManager.instance().getCurrentActivity()!!.runOnUiThread {
@@ -134,7 +155,7 @@ class BluePrint() {
             }
             if (receipt) {
                 val incomeCountingBean = JSONObject.parseObject(printText, IncomeCountingBean::class.java)
-                var height = 600
+                var height = 400
                 if (incomeCountingBean.list2 != null && incomeCountingBean.list2.size > 0) {
                     height += 200
                 }
@@ -160,7 +181,7 @@ class BluePrint() {
                         printDrawText("总收费：", todayIncomeBean.payMoney + " 元", ystart, 9)
                         ystart += 40
                     }
-                    if (todayIncomeBean.orderCount != -1) {
+                    if (todayIncomeBean.orderCount != 0) {
                         printDrawText("已下单：", todayIncomeBean.orderCount.toString() + " 笔", ystart, 9)
                         ystart += 40
                     }
@@ -326,7 +347,24 @@ class BluePrint() {
                 when (zpSDK?.GetStatus()) {
                     -1 -> {
                         Handler(Looper.getMainLooper()).post {
-                            ToastUtil.showMiddleToast(i18n(com.rt.base.R.string.打印机状态异常))
+                            DialogHelp.Builder().setTitle(i18n(com.rt.base.R.string.打印机状态异常请重新连接))
+                                .setLeftMsg(i18n(com.rt.base.R.string.取消))
+                                .setRightMsg(i18n(com.rt.base.R.string.去连接)).setCancelable(true)
+                                .setOnButtonClickLinsener(object : DialogHelp.OnButtonClickLinsener {
+                                    override fun onLeftClickLinsener(msg: String) {
+                                    }
+
+                                    override fun onRightClickLinsener(msg: String) {
+//                            if (ActivityCacheManager.instance().getCurrentActivity() !is LoginActivity &&
+//                                ActivityCacheManager.instance().getCurrentActivity() !is StreetChooseActivity
+//                            ) {
+                                        startArouter(ARouterMap.MINE, data = Bundle().apply {
+                                            putInt(ARouterMap.MINE_BLUE_PRINT, 1)
+                                        })
+//                            }
+                                    }
+
+                                }).build(ActivityCacheManager.instance().getCurrentActivity()).showDailog()
                         }
                         return@Thread
                     }
@@ -351,7 +389,24 @@ class BluePrint() {
                 }
             } catch (e: Exception) {
                 Handler(Looper.getMainLooper()).post {
-                    ToastUtil.showMiddleToast(i18n(com.rt.base.R.string.打印机状态异常))
+                    DialogHelp.Builder().setTitle(i18n(com.rt.base.R.string.打印机状态异常请重新连接))
+                        .setLeftMsg(i18n(com.rt.base.R.string.取消))
+                        .setRightMsg(i18n(com.rt.base.R.string.去连接)).setCancelable(true)
+                        .setOnButtonClickLinsener(object : DialogHelp.OnButtonClickLinsener {
+                            override fun onLeftClickLinsener(msg: String) {
+                            }
+
+                            override fun onRightClickLinsener(msg: String) {
+//                            if (ActivityCacheManager.instance().getCurrentActivity() !is LoginActivity &&
+//                                ActivityCacheManager.instance().getCurrentActivity() !is StreetChooseActivity
+//                            ) {
+                                startArouter(ARouterMap.MINE, data = Bundle().apply {
+                                    putInt(ARouterMap.MINE_BLUE_PRINT, 1)
+                                })
+//                            }
+                            }
+
+                        }).build(ActivityCacheManager.instance().getCurrentActivity()).showDailog()
                 }
                 return@Thread
             }

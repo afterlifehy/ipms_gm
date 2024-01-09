@@ -140,7 +140,7 @@ interface Api {
     /**
      * 根据泊位号查询orderNo
      */
-    @POST("S_G0_22")
+    @POST("S_MG_22")
     suspend fun inquiryOrderNoByParkingNo(@Body param: @JvmSuppressWildcards Map<String, Any?>): HttpWrapper<OrderNoBean>
 
     /**

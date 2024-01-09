@@ -41,6 +41,7 @@ import com.rt.base.ext.show
 import com.rt.base.ext.startArouter
 import com.rt.base.util.ToastUtil
 import com.rt.base.viewbase.VbBaseActivity
+import com.rt.common.event.AbnormalReportEvent
 import com.rt.ipms_mg.R
 import com.rt.ipms_mg.databinding.ActivityParkingSpaceBinding
 import com.rt.ipms_mg.dialog.ExitMethodDialog
@@ -96,6 +97,11 @@ class ParkingSpaceActivity : VbBaseActivity<ParkingSpaceViewModel, ActivityParki
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEvent(refreshParkingSpaceEvent: RefreshParkingSpaceEvent) {
         parkingSpaceRequest()
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEvent(abnormalReportEvent: AbnormalReportEvent) {
+        onBackPressedSupport()
     }
 
     override fun initView() {

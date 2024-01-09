@@ -27,6 +27,8 @@ import com.rt.ipms_mg.databinding.ActivityLogOutBinding
 import com.rt.ipms_mg.mvvm.viewmodel.LogoutViewModel
 import com.tbruyelle.rxpermissions3.RxPermissions
 import com.rt.base.ext.startArouter
+import com.rt.base.help.ActivityCacheManager
+import com.rt.ipms_mg.ui.activity.login.LoginActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
@@ -175,10 +177,20 @@ class LogoutActivity : VbBaseActivity<LogoutViewModel, ActivityLogOutBinding>(),
         mViewModel.apply {
             logoutLiveData.observe(this@LogoutActivity) {
                 dismissProgressDialog()
-                startArouter(ARouterMap.DATA_PRINT, data = Bundle().apply {
-                    putString(ARouterMap.DATA_PRINT_LOGIN_NAME, loginName)
-                })
                 ToastUtil.showMiddleToast(i18N(com.rt.base.R.string.签退成功))
+                runBlocking {
+                    PreferencesDataStore(BaseApplication.instance()).putString(PreferencesKeys.simId, "")
+                    PreferencesDataStore(BaseApplication.instance()).putString(PreferencesKeys.phone, "")
+                    PreferencesDataStore(BaseApplication.instance()).putString(PreferencesKeys.name, "")
+                    PreferencesDataStore(BaseApplication.instance()).putString(PreferencesKeys.loginName, "")
+                }
+                RealmUtil.instance?.deleteAllStreet()
+                startArouter(ARouterMap.LOGIN)
+                for (i in ActivityCacheManager.instance().getAllActivity()) {
+                    if (i !is LoginActivity) {
+                        i.finish()
+                    }
+                }
             }
             errMsg.observe(this@LogoutActivity) {
                 dismissProgressDialog()
