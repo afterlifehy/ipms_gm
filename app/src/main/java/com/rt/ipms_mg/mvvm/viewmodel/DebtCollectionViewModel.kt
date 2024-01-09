@@ -14,7 +14,6 @@ class DebtCollectionViewModel : BaseViewModel() {
     }
 
     val debtInquiryLiveData = MutableLiveData<DebtCollectionResultBean>()
-    val debtPayLiveData = MutableLiveData<Any>()
 
     fun debtInquiry(param: Map<String, Any?>) {
         launch {
