@@ -146,6 +146,6 @@ interface Api {
     /**
      * 追缴二维码
      */
-    @POST("S_OR4_0113")
+    @POST("S_MG_30")
     suspend fun debtPayQr(@Body param: @JvmSuppressWildcards Map<String, Any?>): HttpWrapper<PayQRBean>
 }

@@ -19,7 +19,7 @@ data class OrderBean(
     var startTime: String = "",
     var streetName: String = "",
     var paidAmount: String = "",
-    var isPrinted: String = "0"
+    var isPrinted: String = "1"
 ) : Parcelable {
     init {
         if (duration.isNullOrEmpty()) {

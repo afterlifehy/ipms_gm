@@ -62,7 +62,7 @@ class KeyboardUtil(val keyboardView: MyKeyboardView, var requestEditAct: (() -> 
                         -1 -> changeKeyboard(true)
                         -2 -> changeKeyboard(false)
                         -3 -> {
-                            val etValue = editText?.text.toString()
+                            val etValue = editText?.text
                             if (etValue != null) {
                                 if (etValue.isNotEmpty()) {
                                     val stringBuilder: StringBuilder = StringBuilder(etValue)

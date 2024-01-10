@@ -9,19 +9,13 @@ data class DebtCollectionResultBean(
 
 @Parcelize
 data class DebtCollectionBean @JvmOverloads constructor(
+    var oweMoney: Int,
+    var paidMoney: Int,
     var carLicense: String? = "",
-    var companyName: String = "",
-    var companyPhone: String = "",
-    var districtId: String = "",
     var dueMoney: Int,
     var endTime: String = "",
     var orderNo: String = "",
-    var orderType: Int,
-    var oweMoney: Int,
-    var oweOrderId: String = "",
-    var paidMoney: Int,
     var parkingNo: String = "",
-    var parkingTime: String = "",
     var startTime: String = "",
     var streetName: String = "",
     var streetNo: String = ""

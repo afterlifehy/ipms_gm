@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.View.OnClickListener
@@ -274,6 +275,10 @@ class TransactionInquiryActivity : VbBaseActivity<TransactionInquiryViewModel, A
             errMsg.observe(this@TransactionInquiryActivity) {
                 dismissProgressDialog()
                 ToastUtil.showMiddleToast(it.msg)
+            }
+            mException.observe(this@TransactionInquiryActivity){
+                dismissProgressDialog()
+                ToastUtil.showMiddleToast(it.message)
             }
         }
     }

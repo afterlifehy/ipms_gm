@@ -28,7 +28,6 @@ import com.rt.ipms_mg.R
 import com.rt.ipms_mg.databinding.ActivityOrderInfoBinding
 import com.rt.ipms_mg.dialog.PaymentQrDialog
 import com.rt.ipms_mg.mvvm.viewmodel.OrderInfoViewModel
-import com.rt.common.event.EndOrderEvent
 import com.rt.common.event.RefreshParkingSpaceEvent
 import com.rt.common.util.AppUtil
 import com.rt.common.util.BluePrint

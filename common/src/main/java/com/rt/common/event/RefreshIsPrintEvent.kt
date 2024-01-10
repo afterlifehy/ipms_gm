@@ -1,4 +1,4 @@
 package com.rt.common.event
 
-class EndOrderEvent {
+class RefreshIsPrintEvent {
 }
