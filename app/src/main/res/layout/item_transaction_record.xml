@@ -111,7 +111,7 @@
                 android:drawableStart="@mipmap/ic_print"
                 android:drawablePadding="@dimen/dp_10"
                 android:gravity="center"
-                android:text="@string/告知书"
+                android:text="@string/打印告知书"
                 android:textColor="@color/color_ffef7000"
                 android:textSize="@dimen/sp_19" />
         </FrameLayout>

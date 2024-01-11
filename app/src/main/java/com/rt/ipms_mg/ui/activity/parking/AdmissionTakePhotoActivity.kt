@@ -404,7 +404,7 @@ class AdmissionTakePhotoActivity : VbBaseActivity<AdmissionTakePhotoViewModel, A
             var imageBitmap = BitmapFactory.decodeFile(currentPhotoPath)
             imageBitmap = ImageUtils.compressBySampleSize(imageBitmap, 10)
             imageBitmap = FileUtil.compressToMaxSize(imageBitmap, 50, false)
-            ImageUtils.save(imageBitmap, imageFile, Bitmap.CompressFormat.JPEG)
+            ImageUtils.save(imageBitmap, imageFile, Bitmap.CompressFormat.PNG)
             if (photoType == 10) {
                 plateImageBitmap = imageBitmap
                 GlideUtils.instance?.loadImage(binding.rivPlate, plateImageBitmap)
