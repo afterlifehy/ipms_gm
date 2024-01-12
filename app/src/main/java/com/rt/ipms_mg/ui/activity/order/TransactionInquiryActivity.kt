@@ -280,6 +280,9 @@ class TransactionInquiryActivity : VbBaseActivity<TransactionInquiryViewModel, A
                 dismissProgressDialog()
                 ToastUtil.showMiddleToast(it.message)
             }
+            mException.observe(this@TransactionInquiryActivity) {
+                dismissProgressDialog()
+            }
         }
     }
 

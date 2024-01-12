@@ -156,6 +156,9 @@ class PrepaidActivity : VbBaseActivity<PrepaidViewModel, ActivityPrepaidBinding>
                 dismissProgressDialog()
                 ToastUtil.showMiddleToast(it.msg)
             }
+            mException.observe(this@PrepaidActivity) {
+                dismissProgressDialog()
+            }
         }
     }
 

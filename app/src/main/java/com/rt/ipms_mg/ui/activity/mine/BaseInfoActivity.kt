@@ -10,6 +10,7 @@ import com.rt.base.BaseApplication
 import com.rt.base.arouter.ARouterMap
 import com.rt.base.bean.Street
 import com.rt.base.ext.i18N
+import com.rt.base.util.ToastUtil
 import com.rt.base.viewbase.VbBaseActivity
 import com.rt.common.realm.RealmUtil
 import com.rt.common.util.GlideUtils
@@ -56,6 +57,13 @@ class BaseInfoActivity : VbBaseActivity<BaseInfoViewModel, ActivityBaseInfoBindi
                 binding.tvName.text = it[0]
                 binding.tvAccount.text = it[1]
                 binding.tvPhoneNum.text = it[2]
+            }
+            errMsg.observe(this@BaseInfoActivity) {
+                dismissProgressDialog()
+                ToastUtil.showMiddleToast(it.msg)
+            }
+            mException.observe(this@BaseInfoActivity) {
+                dismissProgressDialog()
             }
         }
     }

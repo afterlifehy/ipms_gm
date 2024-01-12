@@ -83,6 +83,9 @@ class PicActivity : VbBaseActivity<PicViewModel, ActivityPicBinding>(), OnClickL
                 dismissProgressDialog()
                 ToastUtil.showMiddleToast(it.msg)
             }
+            mException.observe(this@PicActivity) {
+                dismissProgressDialog()
+            }
         }
     }
 
