@@ -236,7 +236,7 @@ class DebtOrderDetailActivity : VbBaseActivity<DebtOrderDetailViewModel, Activit
             roadId = it.roadName,
             plateId = it.carLicense,
             payMoney = String.format("%.2f", payMoney.toFloat()),
-            orderId = debtCollectionBean!!.orderNo,
+            orderId = it.tradeNo,
             phone = it.phone,
             startTime = it.startTime,
             leftTime = it.endTime,

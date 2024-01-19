@@ -102,7 +102,7 @@ class TransactionRecordActivity : VbBaseActivity<TransactionRecordViewModel, Act
             roadId = it.roadName,
             plateId = it.carLicense,
             payMoney = String.format("%.2f", payMoney.toFloat()),
-            orderId = orderNo,
+            orderId = it.tradeNo,
             phone = it.phone,
             startTime = it.startTime,
             leftTime = it.endTime,

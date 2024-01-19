@@ -486,30 +486,23 @@ class AbnormalReportActivity : VbBaseActivity<AbnormalReportViewModel, ActivityA
                     if (plate.startsWith("蓝")) {
                         checkedColor = Constant.BLUE
                         collectionPlateColorAdapter?.updateColor(checkedColor, 0)
-                        collectionPlateColorAdapter?.updateColor(checkedColor, 0)
                     } else if (plate.startsWith("绿")) {
-                        checkedColor = Constant.BLUE
-                        collectionPlateColorAdapter?.updateColor(checkedColor, 0)
+                        checkedColor = Constant.GREEN
                         collectionPlateColorAdapter?.updateColor(checkedColor, 1)
                     } else if (plate.startsWith("黄")) {
-                        checkedColor = Constant.BLUE
-                        collectionPlateColorAdapter?.updateColor(checkedColor, 0)
+                        checkedColor = Constant.YELLOW
                         collectionPlateColorAdapter?.updateColor(checkedColor, 2)
                     } else if (plate.startsWith("黄绿")) {
-                        checkedColor = Constant.BLUE
-                        collectionPlateColorAdapter?.updateColor(checkedColor, 0)
+                        checkedColor = Constant.YELLOW_GREEN
                         collectionPlateColorAdapter?.updateColor(checkedColor, 3)
                     } else if (plate.startsWith("白")) {
-                        checkedColor = Constant.BLUE
-                        collectionPlateColorAdapter?.updateColor(checkedColor, 0)
+                        checkedColor = Constant.WHITE
                         collectionPlateColorAdapter?.updateColor(checkedColor, 4)
                     } else if (plate.startsWith("黑")) {
-                        checkedColor = Constant.BLUE
-                        collectionPlateColorAdapter?.updateColor(checkedColor, 0)
+                        checkedColor = Constant.BLACK
                         collectionPlateColorAdapter?.updateColor(checkedColor, 5)
                     } else {
-                        checkedColor = Constant.BLUE
-                        collectionPlateColorAdapter?.updateColor(checkedColor, 0)
+                        checkedColor = Constant.OTHERS
                         collectionPlateColorAdapter?.updateColor(checkedColor, 6)
                     }
                     binding.rflTakePhoto.show()
