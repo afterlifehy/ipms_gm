@@ -41,6 +41,7 @@ import com.rt.ipms_mg.util.UpdateUtil
 import com.tbruyelle.rxpermissions3.RxPermissions
 import com.rt.base.ext.startArouter
 import kotlinx.coroutines.runBlocking
+import com.rt.ipms_mg.BuildConfig
 
 @Route(path = ARouterMap.MINE)
 class MineActivity : VbBaseActivity<MineViewModel, ActivityMineBinding>(), OnClickListener {
@@ -57,7 +58,11 @@ class MineActivity : VbBaseActivity<MineViewModel, ActivityMineBinding>(), OnCli
         binding.layoutToolbar.tvTitle.setTextColor(ContextCompat.getColor(BaseApplication.instance(), com.rt.base.R.color.white))
 
         mineBluePrint = intent.getIntExtra(ARouterMap.MINE_BLUE_PRINT, 0)
-        binding.tvVersion.text = AppUtils.getAppVersionName()
+        if (BuildConfig.is_dev) {
+            binding.tvVersion.text = AppUtils.getAppVersionName() + " Dev"
+        } else {
+            binding.tvVersion.text = AppUtils.getAppVersionName()
+        }
     }
 
     override fun initListener() {

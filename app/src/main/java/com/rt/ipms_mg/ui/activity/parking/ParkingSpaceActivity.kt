@@ -32,6 +32,7 @@ import com.rt.base.arouter.ARouterMap
 import com.rt.base.bean.ExitMethodBean
 import com.rt.base.bean.ParkingSpaceBean
 import com.rt.base.bean.PrintInfoBean
+import com.rt.base.bean.Street
 import com.rt.base.bean.TicketPrintBean
 import com.rt.base.dialog.DialogHelp
 import com.rt.base.ds.PreferencesDataStore
@@ -47,15 +48,17 @@ import com.rt.ipms_mg.databinding.ActivityParkingSpaceBinding
 import com.rt.ipms_mg.dialog.ExitMethodDialog
 import com.rt.ipms_mg.mvvm.viewmodel.ParkingSpaceViewModel
 import com.rt.common.event.RefreshParkingSpaceEvent
+import com.rt.common.realm.RealmUtil
 import com.rt.common.util.AppUtil
 import com.rt.common.util.BluePrint
 import com.rt.common.util.FileUtil
 import com.rt.common.util.GlideUtils
+import com.rt.common.util.ImageCompressor
+import com.rt.common.util.ImageUtil
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import java.io.File
@@ -87,6 +90,7 @@ class ParkingSpaceActivity : VbBaseActivity<ParkingSpaceViewModel, ActivityParki
 
     var isUpload = false
     var orderList: MutableList<String> = ArrayList()
+    var currentStreet: Street? = null
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEvent(refreshParkingSpaceEvent: RefreshParkingSpaceEvent) {
@@ -123,6 +127,8 @@ class ParkingSpaceActivity : VbBaseActivity<ParkingSpaceViewModel, ActivityParki
     }
 
     override fun initData() {
+        currentStreet = RealmUtil.instance?.findCurrentStreet()
+
         exitMethodList.add(ExitMethodBean("2", i18N(com.rt.base.R.string.收费员不在场欠费驶离)))
         exitMethodList.add(ExitMethodBean("1", i18N(com.rt.base.R.string.正常缴费驶离)))
         exitMethodList.add(ExitMethodBean("3", i18N(com.rt.base.R.string.当面拒绝驶离)))
@@ -290,40 +296,38 @@ class ParkingSpaceActivity : VbBaseActivity<ParkingSpaceViewModel, ActivityParki
 
     val takePictureLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
-            var imageBitmap = BitmapFactory.decodeFile(currentPhotoPath)
-            imageBitmap = ImageUtils.compressBySampleSize(imageBitmap, 10)
-            imageBitmap = FileUtil.compressToMaxSize(imageBitmap, 50, false)
-            imageBitmap = ImageUtils.addTextWatermark(
-                imageBitmap,
-                TimeUtils.millis2String(System.currentTimeMillis(), "yyyy-MM-dd HH:mm:ss"),
-                16, Color.RED, 6f, 3f
-            )
-            imageBitmap = ImageUtils.addTextWatermark(
-                imageBitmap,
-                parkingSpaceBean?.parkingNo + "   " + carLicense,
-                16, Color.RED, 6f, 19f
-            )
-            ImageUtils.save(imageBitmap, imageFile, Bitmap.CompressFormat.JPEG)
-            FileUtils.notifySystemToScan(imageFile)
-            val bytes = ConvertUtils.bitmap2Bytes(imageBitmap)
-            picBase64 = EncodeUtils.base64Encode2String(bytes)
-            uploadImg(parkingSpaceBean!!.orderNo, picBase64, imageFile!!.name)
+            ImageCompressor.compress(this@ParkingSpaceActivity, imageFile!!, object : ImageCompressor.CompressResult {
+                override fun onSuccess(file: File) {
+                    val waterContent1: String = currentStreet?.streetName + " " + parkingSpaceBean?.parkingNo
+                    val waterContent2: String =
+                        parkingSpaceBean?.carLicense + " " + TimeUtils.millis2String(System.currentTimeMillis(), "yyyy-MM-dd HH:mm:ss")
+                    var bitmapCompressed = ImageUtil.getCompressedImage(file.absolutePath, 945f, 1140f)
+                    var bitmapWater = ImageUtil.addWaterMark3(
+                        bitmapCompressed!!,
+                        waterContent1,
+                        waterContent2,
+                        this@ParkingSpaceActivity
+                    )
+                    FileUtils.delete(imageFile)
+                    val savedFile = FileUtil.FileSaveToInside("${parkingSpaceBean!!.orderNo}_20.png", bitmapWater)
+                    picBase64 = FileUtil.fileToBase64(savedFile).toString()
+                    uploadImg(parkingSpaceBean!!.orderNo, picBase64, "${parkingSpaceBean!!.orderNo}_20.png")
+                }
+
+                override fun onError(e: Throwable) {
+
+                }
+
+            })
         }
     }
 
-    var currentPhotoPath = ""
     var imageFile: File? = null
     private fun createImageFile(): File? {
         // 创建图像文件名称
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
         val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        imageFile = File.createTempFile(
-            "PNG_${timeStamp}_", /* 前缀 */
-            ".png", /* 后缀 */
-            storageDir /* 目录 */
-        )
-
-        currentPhotoPath = imageFile!!.absolutePath
+        imageFile = File(storageDir, "PNG_${timeStamp}_${photoType}.png")
         return imageFile
     }
 

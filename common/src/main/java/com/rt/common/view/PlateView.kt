@@ -114,6 +114,8 @@ class PlateView @JvmOverloads constructor(
         binding!!.tvPlate7.text = plateArray[6].toString()
         if (plateArray.size == 8) {
             binding!!.tvPlate8.text = plateArray[7].toString()
+        }else{
+            binding!!.tvPlate8.text = ""
         }
         emptyPosition = -1
         if (plateBgColor == Constant.WHITE) {

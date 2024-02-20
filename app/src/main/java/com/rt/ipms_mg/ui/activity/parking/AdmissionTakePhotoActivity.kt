@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -24,11 +22,12 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.alibaba.fastjson.JSONObject
 import com.blankj.utilcode.util.ConvertUtils
 import com.blankj.utilcode.util.EncodeUtils
-import com.blankj.utilcode.util.ImageUtils
+import com.blankj.utilcode.util.FileUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.TimeUtils
 import com.rt.base.BaseApplication
 import com.rt.base.arouter.ARouterMap
+import com.rt.base.bean.Street
 import com.rt.base.dialog.DialogHelp
 import com.rt.base.ds.PreferencesDataStore
 import com.rt.base.ds.PreferencesKeys
@@ -52,6 +51,8 @@ import com.rt.common.util.Constant
 import com.rt.common.util.FileUtil
 import com.rt.common.util.GlideUtils
 import com.rt.common.view.keyboard.KeyboardUtil
+import com.rt.common.util.ImageCompressor
+import com.rt.common.util.ImageUtil
 import kotlinx.coroutines.runBlocking
 import java.io.File
 import java.text.SimpleDateFormat
@@ -76,14 +77,13 @@ class AdmissionTakePhotoActivity : VbBaseActivity<AdmissionTakePhotoViewModel, A
     var panoramaBase64 = ""
     var plateImageBitmap: Bitmap? = null
     var panoramaImageBitmap: Bitmap? = null
-    var plateFileName = ""
-    var panoramaFileName = ""
 
     var promptDialog: PromptDialog? = null
     var simId = ""
     var vehicleType = "1"
     var extParkingNo = ""
     var loginName = ""
+    var street: Street? = null
 
     override fun initView() {
         GlideUtils.instance?.loadImage(binding.layoutToolbar.ivBack, com.rt.common.R.mipmap.ic_back_white)
@@ -106,7 +106,7 @@ class AdmissionTakePhotoActivity : VbBaseActivity<AdmissionTakePhotoViewModel, A
         binding.rvPlateColor.adapter = collectionPlateColorAdapter
 
         binding.tvParkingNo.text = parkingNo
-        val street = RealmUtil.instance?.findCurrentStreet()
+        street = RealmUtil.instance?.findCurrentStreet()
         binding.tvStreetName.text = street?.streetName
         binding.pvPlate.setPlateBgAndTxtColor(Constant.BLUE)
 
@@ -271,10 +271,6 @@ class AdmissionTakePhotoActivity : VbBaseActivity<AdmissionTakePhotoViewModel, A
 
                         override fun onRightClickLinsener(msg: String) {
                             showProgressDialog(20000)
-                            plateImageBitmap = addTextWatermark(plateImageBitmap!!)
-                            panoramaImageBitmap = addTextWatermark(panoramaImageBitmap!!)
-                            convertBase64(plateImageBitmap!!, 10)
-                            convertBase64(panoramaImageBitmap!!, 11)
                             val param = HashMap<String, Any>()
                             val jsonobject = JSONObject()
                             jsonobject["carLicense"] = binding.pvPlate.getPvTxt()
@@ -296,7 +292,6 @@ class AdmissionTakePhotoActivity : VbBaseActivity<AdmissionTakePhotoViewModel, A
                 binding.rflPlateImg.gone()
                 plateImageBitmap = null
                 plateBase64 = ""
-                plateFileName = ""
             }
 
             R.id.iv_panoramaDelete -> {
@@ -304,7 +299,6 @@ class AdmissionTakePhotoActivity : VbBaseActivity<AdmissionTakePhotoViewModel, A
                 binding.rflPanoramaImg.gone()
                 panoramaImageBitmap = null
                 panoramaBase64 = ""
-                panoramaFileName = ""
             }
 
             R.id.riv_plate -> {
@@ -335,8 +329,14 @@ class AdmissionTakePhotoActivity : VbBaseActivity<AdmissionTakePhotoViewModel, A
         mViewModel.apply {
             placeOrderLiveData.observe(this@AdmissionTakePhotoActivity) {
                 dismissProgressDialog()
-                uploadImg(it.orderNo, plateBase64, plateFileName, 10)
-                uploadImg(it.orderNo, panoramaBase64, panoramaFileName, 11)
+
+                val plateSavedFile = FileUtil.FileSaveToInside("${it.orderNo}_10.png", plateImageBitmap!!)
+                plateBase64 = FileUtil.fileToBase64(plateSavedFile).toString()
+                uploadImg(it.orderNo, plateBase64, "${it.orderNo}_10.png", 10)
+
+                val panoramaSavedFile = FileUtil.FileSaveToInside("${it.orderNo}_11.png", panoramaImageBitmap!!)
+                panoramaBase64 = FileUtil.fileToBase64(panoramaSavedFile).toString()
+                uploadImg(it.orderNo, panoramaBase64, "${it.orderNo}_11.png", 11)
 //                promptDialog = PromptDialog(
 //                    i18N(com.rt.base.R.string.下单成功当前车辆有欠费记录是否追缴),
 //                    i18N(com.rt.base.R.string.是),
@@ -398,74 +398,85 @@ class AdmissionTakePhotoActivity : VbBaseActivity<AdmissionTakePhotoViewModel, A
             photoFile!!
         )
         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-        takePictureIntent.putExtra("android.intent.extra.quickCapture",true)
-        takePictureLauncher.launch(takePictureIntent)
-    }
-
-    val takePictureLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            var imageBitmap = BitmapFactory.decodeFile(currentPhotoPath)
-            imageBitmap = ImageUtils.compressBySampleSize(imageBitmap, 10)
-            imageBitmap = FileUtil.compressToMaxSize(imageBitmap, 50, false)
-            ImageUtils.save(imageBitmap, imageFile, Bitmap.CompressFormat.PNG)
-            if (photoType == 10) {
-                plateImageBitmap = imageBitmap
-                GlideUtils.instance?.loadImage(binding.rivPlate, plateImageBitmap)
-                binding.rflTakePhoto.hide()
-                binding.rflPlateImg.show()
-            } else {
-                panoramaImageBitmap = imageBitmap
-                GlideUtils.instance?.loadImage(binding.rivPanorama, panoramaImageBitmap)
-                binding.rflTakePhoto2.hide()
-                binding.rflPanoramaImg.show()
-            }
-            if (panoramaImageBitmap == null) {
-                photoType = 11
-                takePhoto()
-            }
-        }
-    }
-
-    fun addTextWatermark(imageBitmap: Bitmap): Bitmap? {
-        var bitmap = ImageUtils.addTextWatermark(
-            imageBitmap,
-            TimeUtils.millis2String(System.currentTimeMillis(), "yyyy-MM-dd HH:mm:ss"),
-            16, Color.RED, 6f, 3f
-        )
-        bitmap = ImageUtils.addTextWatermark(
-            bitmap,
-            parkingNo + "   " + binding.pvPlate.getPvTxt(),
-            16, Color.RED, 6f, 19f
-        )
-        return bitmap
-    }
-
-    fun convertBase64(imageBitmap: Bitmap, type: Int) {
-        val bytes = ConvertUtils.bitmap2Bytes(imageBitmap)
-
-        if (type == 10) {
-            plateBase64 = EncodeUtils.base64Encode2String(bytes)
-            plateFileName = imageFile!!.name
+        takePictureIntent.putExtra("android.intent.extra.quickCapture", true)
+        if (photoType == 10) {
+            takePictureLauncher10.launch(takePictureIntent)
         } else {
-            panoramaBase64 = EncodeUtils.base64Encode2String(bytes)
-            panoramaFileName = imageFile!!.name
+            takePictureLauncher11.launch(takePictureIntent)
         }
     }
 
-    var currentPhotoPath = ""
-    var imageFile: File? = null
+    val takePictureLauncher10 = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            ImageCompressor.compress(this@AdmissionTakePhotoActivity, imageFile10!!, object : ImageCompressor.CompressResult {
+                override fun onSuccess(file: File) {
+                    val waterContent1: String = street?.streetName + " " + parkingNo
+                    val waterContent2: String =
+                        binding.pvPlate.getPvTxt() + " " + TimeUtils.millis2String(System.currentTimeMillis(), "yyyy-MM-dd HH:mm:ss")
+                    val bitmapCompressed = ImageUtil.getCompressedImage(file.absolutePath, 945f, 1140f)
+                    var bitmapWater = ImageUtil.addWaterMark3(
+                        bitmapCompressed!!,
+                        waterContent1,
+                        waterContent2,
+                        this@AdmissionTakePhotoActivity
+                    )
+                    FileUtils.delete(imageFile10)
+                    GlideUtils.instance?.loadImage(binding.rivPlate, bitmapWater)
+                    binding.rflTakePhoto.hide()
+                    binding.rflPlateImg.show()
+                    plateImageBitmap = bitmapWater
+                }
+
+                override fun onError(e: Throwable) {
+
+                }
+
+            })
+        }
+    }
+
+    val takePictureLauncher11 = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            ImageCompressor.compress(this@AdmissionTakePhotoActivity, imageFile11!!, object : ImageCompressor.CompressResult {
+                override fun onSuccess(file: File) {
+                    val waterContent1: String = street?.streetName + " " + parkingNo
+                    val waterContent2: String =
+                        binding.pvPlate.getPvTxt() + " " + TimeUtils.millis2String(System.currentTimeMillis(), "yyyy-MM-dd HH:mm:ss")
+                    val bitmapCompressed = ImageUtil.getCompressedImage(file.absolutePath, 945f, 1140f)
+                    var bitmapWater = ImageUtil.addWaterMark3(
+                        bitmapCompressed!!,
+                        waterContent1,
+                        waterContent2,
+                        this@AdmissionTakePhotoActivity
+                    )
+                    GlideUtils.instance?.loadImage(binding.rivPanorama, bitmapWater)
+                    binding.rflTakePhoto2.hide()
+                    binding.rflPanoramaImg.show()
+                    panoramaImageBitmap = bitmapWater
+                    FileUtils.delete(imageFile11)
+                }
+
+                override fun onError(e: Throwable) {
+
+                }
+
+            })
+        }
+    }
+
+    var imageFile10: File? = null
+    var imageFile11: File? = null
     private fun createImageFile(): File? {
         // 创建图像文件名称
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
         val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        imageFile = File.createTempFile(
-            "PNG_${timeStamp}_", /* 前缀 */
-            ".png", /* 后缀 */
-            storageDir /* 目录 */
-        )
-
-        currentPhotoPath = imageFile!!.absolutePath
-        return imageFile
+        if (photoType == 10) {
+            imageFile10 = File(storageDir, "PNG_${timeStamp}_${photoType}.png")
+            return imageFile10
+        } else {
+            imageFile11 = File(storageDir, "PNG_${timeStamp}_${photoType}.png")
+            return imageFile11
+        }
     }
 
     fun uploadImg(orderNo: String, photo: String, name: String, type: Int) {
@@ -526,16 +537,10 @@ class AdmissionTakePhotoActivity : VbBaseActivity<AdmissionTakePhotoViewModel, A
                     binding.rflPlateImg.gone()
                     plateImageBitmap = null
                     plateBase64 = ""
-                    plateFileName = ""
                     binding.rflTakePhoto2.show()
                     binding.rflPanoramaImg.gone()
                     panoramaImageBitmap = null
                     panoramaBase64 = ""
-                    panoramaFileName = ""
-                    if (plateImageBitmap == null) {
-                        photoType = 10
-                        takePhoto()
-                    }
                 }
             }
         }

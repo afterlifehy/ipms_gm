@@ -150,7 +150,6 @@ class StreetChooseActivity : VbBaseActivity<StreetChooseViewModel, ActivityStree
                 for (i in streetChoosedList) {
                     RealmUtil.instance?.updateStreetChoosed(i)
                 }
-                val streetList = loginInfo?.result as ArrayList<Street>
                 runBlocking {
                     PreferencesDataStore(BaseApplication.instance()).putString(PreferencesKeys.simId, loginInfo!!.simId)
                     PreferencesDataStore(BaseApplication.instance()).putString(PreferencesKeys.phone, loginInfo!!.phone)
@@ -158,7 +157,7 @@ class StreetChooseActivity : VbBaseActivity<StreetChooseViewModel, ActivityStree
                     PreferencesDataStore(BaseApplication.instance()).putString(PreferencesKeys.loginName, loginInfo!!.loginName)
                 }
                 RealmUtil.instance?.deleteAllStreet()
-                RealmUtil.instance?.addRealmAsyncList(streetList)
+                RealmUtil.instance?.addRealmAsyncList(streetChoosedList)
                 RealmUtil.instance?.updateCurrentStreet(streetChoosedList[0], null)
 
                 val workingHoursBean = RealmUtil.instance?.findCurrentWorkingHour(loginInfo!!.loginName)

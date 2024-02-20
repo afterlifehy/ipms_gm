@@ -22,6 +22,7 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.alibaba.fastjson.JSONObject
 import com.blankj.utilcode.util.ConvertUtils
 import com.blankj.utilcode.util.EncodeUtils
+import com.blankj.utilcode.util.FileUtils
 import com.blankj.utilcode.util.ImageUtils
 import com.blankj.utilcode.util.TimeUtils
 import com.rt.base.BaseApplication
@@ -50,6 +51,8 @@ import com.rt.ipms_mg.dialog.AbnormalStreetListDialog
 import com.rt.ipms_mg.mvvm.viewmodel.AbnormalReportViewModel
 import com.rt.common.util.Constant
 import com.rt.common.util.FileUtil
+import com.rt.common.util.ImageCompressor
+import com.rt.common.util.ImageUtil
 import kotlinx.coroutines.runBlocking
 import org.greenrobot.eventbus.EventBus
 import java.io.File
@@ -147,14 +150,19 @@ class AbnormalReportActivity : VbBaseActivity<AbnormalReportViewModel, ActivityA
             binding.rflLotName.setOnClickListener(this)
         }
         binding.tvLotName.text = currentStreet?.streetName
-        binding.rtvStreetNo.text = currentStreet?.streetNo
-        binding.retParkingNo.setText(parkingNo.replace("-", "").replaceFirst(currentStreet?.streetNo.toString(), ""))
+        if (currentStreet?.streetNo!!.contains("_")) {
+            val index = currentStreet?.streetNo!!.indexOf("_")
+            val newStreetNo = currentStreet?.streetNo!!.substring(0, index)
+            binding.rtvStreetNo.text = newStreetNo
+            binding.retParkingNo.setText(parkingNo.replaceFirst(newStreetNo, "").replace("-", ""))
+        } else {
+            binding.rtvStreetNo.text = currentStreet?.streetNo
+            binding.retParkingNo.setText(parkingNo.replaceFirst(currentStreet?.streetNo.toString(), "").replace("-", ""))
+        }
 
         classificationList.add(i18n(com.rt.base.R.string.无法关单))
         classificationList.add(i18n(com.rt.base.R.string.订单丢失))
         classificationList.add(i18n(com.rt.base.R.string.车牌录入错误))
-
-
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -305,12 +313,6 @@ class AbnormalReportActivity : VbBaseActivity<AbnormalReportViewModel, ActivityA
                     ToastUtil.showMiddleToast(i18n(com.rt.base.R.string.请上传全景照))
                     return
                 }
-                if (type == "03") {
-                    plateImageBitmap = addTextWatermark(plateImageBitmap!!)
-                    panoramaImageBitmap = addTextWatermark(panoramaImageBitmap!!)
-                    convertBase64(plateImageBitmap!!, 10)
-                    convertBase64(panoramaImageBitmap!!, 11)
-                }
                 val param = HashMap<String, Any>()
                 val jsonobject = JSONObject()
                 jsonobject["parkingNo"] = currentStreet?.streetNo + "-" + fillZero(binding.retParkingNo.text.toString())
@@ -382,79 +384,88 @@ class AbnormalReportActivity : VbBaseActivity<AbnormalReportViewModel, ActivityA
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         val photoFile: File? = createImageFile()
         val photoURI: Uri = FileProvider.getUriForFile(
-            this,
-            "com.rt.ipms_mg.fileprovider",
-            photoFile!!
+            this, "com.rt.ipms_mg.fileprovider", photoFile!!
         )
         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
         takePictureIntent.putExtra("android.intent.extra.quickCapture", true)
-        takePictureLauncher.launch(takePictureIntent)
-    }
-
-    val takePictureLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            var imageBitmap = BitmapFactory.decodeFile(currentPhotoPath)
-            imageBitmap = ImageUtils.compressBySampleSize(imageBitmap, 10)
-            imageBitmap = FileUtil.compressToMaxSize(imageBitmap, 50, false)
-            ImageUtils.save(imageBitmap, imageFile, Bitmap.CompressFormat.JPEG)
-            if (photoType == 10) {
-                plateImageBitmap = imageBitmap
-                GlideUtils.instance?.loadImage(binding.rivPlate, plateImageBitmap)
-                binding.rflTakePhoto.hide()
-                binding.rflPlateImg.show()
-            } else {
-                panoramaImageBitmap = imageBitmap
-                GlideUtils.instance?.loadImage(binding.rivPanorama, panoramaImageBitmap)
-                binding.rflTakePhoto2.hide()
-                binding.rflPanoramaImg.show()
-            }
-            if (panoramaImageBitmap == null) {
-                photoType = 11
-                takePhoto()
-            }
-        }
-    }
-
-    fun addTextWatermark(imageBitmap: Bitmap): Bitmap? {
-        var bitmap = ImageUtils.addTextWatermark(
-            imageBitmap,
-            TimeUtils.millis2String(System.currentTimeMillis(), "yyyy-MM-dd HH:mm:ss"),
-            16, Color.RED, 6f, 3f
-        )
-        bitmap = ImageUtils.addTextWatermark(
-            bitmap,
-            parkingNo + "   " + binding.etPlate.toString(),
-            16, Color.RED, 6f, 19f
-        )
-        return bitmap
-    }
-
-    fun convertBase64(imageBitmap: Bitmap, type: Int) {
-        val bytes = ConvertUtils.bitmap2Bytes(imageBitmap)
-
-        if (type == 10) {
-            plateBase64 = EncodeUtils.base64Encode2String(bytes)
-            plateFileName = imageFile!!.name
+        if (photoType == 10) {
+            takePictureLauncher10.launch(takePictureIntent)
         } else {
-            panoramaBase64 = EncodeUtils.base64Encode2String(bytes)
-            panoramaFileName = imageFile!!.name
+            takePictureLauncher11.launch(takePictureIntent)
         }
     }
 
-    var currentPhotoPath = ""
-    var imageFile: File? = null
+    val takePictureLauncher10 = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            ImageCompressor.compress(this@AbnormalReportActivity, imageFile10!!, object : ImageCompressor.CompressResult {
+                override fun onSuccess(file: File) {
+                    val waterContent1: String = currentStreet?.streetName + " " + parkingNo
+                    val waterContent2: String =
+                        binding.etPlate.text.toString()+ " " + TimeUtils.millis2String(System.currentTimeMillis(), "yyyy-MM-dd HH:mm:ss")
+                    val bitmapCompressed = ImageUtil.getCompressedImage(file.absolutePath, 945f, 1140f)
+                    var bitmapWater = ImageUtil.addWaterMark3(
+                        bitmapCompressed!!,
+                        waterContent1,
+                        waterContent2,
+                        this@AbnormalReportActivity
+                    )
+                    FileUtils.delete(imageFile10)
+                    GlideUtils.instance?.loadImage(binding.rivPlate, bitmapWater)
+                    binding.rflTakePhoto.hide()
+                    binding.rflPlateImg.show()
+                    plateImageBitmap = bitmapWater
+                }
+
+                override fun onError(e: Throwable) {
+
+                }
+
+            })
+        }
+    }
+
+    val takePictureLauncher11 = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            ImageCompressor.compress(this@AbnormalReportActivity, imageFile11!!, object : ImageCompressor.CompressResult {
+                override fun onSuccess(file: File) {
+                    val waterContent1: String = currentStreet?.streetName + " " + parkingNo
+                    val waterContent2: String =
+                        binding.etPlate.text.toString() + " " + TimeUtils.millis2String(System.currentTimeMillis(), "yyyy-MM-dd HH:mm:ss")
+                    val bitmapCompressed = ImageUtil.getCompressedImage(file.absolutePath, 945f, 1140f)
+                    var bitmapWater = ImageUtil.addWaterMark3(
+                        bitmapCompressed!!,
+                        waterContent1,
+                        waterContent2,
+                        this@AbnormalReportActivity
+                    )
+                    GlideUtils.instance?.loadImage(binding.rivPanorama, bitmapWater)
+                    binding.rflTakePhoto2.hide()
+                    binding.rflPanoramaImg.show()
+                    panoramaImageBitmap = bitmapWater
+                    FileUtils.delete(imageFile11)
+                }
+
+                override fun onError(e: Throwable) {
+
+                }
+
+            })
+        }
+    }
+
+    var imageFile10: File? = null
+    var imageFile11: File? = null
     private fun createImageFile(): File? {
         // 创建图像文件名称
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
         val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        imageFile = File.createTempFile(
-            "PNG_${timeStamp}_", /* 前缀 */
-            ".png", /* 后缀 */
-            storageDir /* 目录 */
-        )
-
-        currentPhotoPath = imageFile!!.absolutePath
-        return imageFile
+        if (photoType == 10) {
+            imageFile10 = File(storageDir, "PNG_${timeStamp}_${photoType}.png")
+            return imageFile10
+        } else {
+            imageFile11 = File(storageDir, "PNG_${timeStamp}_${photoType}.png")
+            return imageFile11
+        }
     }
 
     fun uploadImg(orderNo: String, photo: String, name: String, type: Int) {
@@ -545,8 +556,13 @@ class AbnormalReportActivity : VbBaseActivity<AbnormalReportViewModel, ActivityA
             abnormalReportLiveData.observe(this@AbnormalReportActivity) {
                 dismissProgressDialog()
                 if (type == "03") {
-                    uploadImg(orderNo, plateBase64, plateFileName, 10)
-                    uploadImg(orderNo, panoramaBase64, panoramaFileName, 11)
+                    val plateSavedFile = FileUtil.FileSaveToInside("${orderNo}_10.png", plateImageBitmap!!)
+                    plateBase64 = FileUtil.fileToBase64(plateSavedFile).toString()
+                    uploadImg(orderNo, plateBase64, "${orderNo}_10.png", 10)
+
+                    val panoramaSavedFile = FileUtil.FileSaveToInside("${orderNo}_11.png", panoramaImageBitmap!!)
+                    panoramaBase64 = FileUtil.fileToBase64(panoramaSavedFile).toString()
+                    uploadImg(orderNo, panoramaBase64, "${orderNo}_11.png", 11)
                 }
                 ToastUtil.showMiddleToast(i18n(com.rt.base.R.string.上报成功))
                 EventBus.getDefault().post(AbnormalReportEvent())
@@ -556,7 +572,7 @@ class AbnormalReportActivity : VbBaseActivity<AbnormalReportViewModel, ActivityA
                 dismissProgressDialog()
                 ToastUtil.showMiddleToast(it.msg)
             }
-            mException.observe(this@AbnormalReportActivity){
+            mException.observe(this@AbnormalReportActivity) {
                 dismissProgressDialog()
             }
         }

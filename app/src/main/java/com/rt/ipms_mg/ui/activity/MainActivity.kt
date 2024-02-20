@@ -63,10 +63,7 @@ class MainActivity : VbBaseActivity<MainViewModel, ActivityMainBinding>(), OnCli
         if (FileUtils.createOrExistsDir(path)) {
             val list = FileUtils.listFilesInDir(path)
             for (i in list) {
-                val createTime = TimeUtils.string2Millis(i.name.split("_")[1] + i.name.split("_")[2], "yyyyMMddHHmmss")
-                if (System.currentTimeMillis() - createTime > 7 * 24 * 60 * 60 * 1000) {
-                    i.delete()
-                }
+                i.delete()
             }
         }
     }

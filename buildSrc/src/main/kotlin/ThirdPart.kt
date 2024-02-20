@@ -158,6 +158,8 @@ object ThirdPart {
     const val room = "androidx.room:room-compiler:$room_version"
 
     const val umsdk_common = "com.umeng.umsdk:common:9.4.4"
-    const val umsdk_asms =  "com.umeng.umsdk:asms:1.4.1"
+    const val umsdk_asms = "com.umeng.umsdk:asms:1.4.1"
     const val umeng_apm = "com.umeng.umsdk:apm:1.5.2"
+
+    const val luban = "top.zibin:Luban:1.1.8"
 }
