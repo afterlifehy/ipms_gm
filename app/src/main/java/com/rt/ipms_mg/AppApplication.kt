@@ -58,7 +58,7 @@ class AppApplication : BaseApplication() {
         list.add(TokenInterceptor())
         if (BuildConfig.is_debug) {
             list.add(LogInterceptor(BuildConfig.is_debug))
-            val mHttpLoggingInterceptor = HttpLoggingInterceptor("inspector_http")
+            val mHttpLoggingInterceptor = HttpLoggingInterceptor("ipms_mg_http")
             mHttpLoggingInterceptor.setPrintLevel(HttpLoggingInterceptor.Level.BODY)
             list.add(mHttpLoggingInterceptor)
         }

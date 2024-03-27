@@ -193,7 +193,7 @@ class DebtOrderDetailActivity : VbBaseActivity<DebtOrderDetailViewModel, Activit
             debtPayQrLiveData.observe(this@DebtOrderDetailActivity) {
                 dismissProgressDialog()
                 tradeNo = it.tradeNo
-                paymentQrDialog = PaymentQrDialog(it.qrCode, AppUtil.keepNDecimals(it.totalAmount.toString(), 2))
+                paymentQrDialog = PaymentQrDialog(it.qrCode, AppUtil.keepNDecimals((it.amount / 100).toString(), 2))
                 paymentQrDialog?.show()
                 paymentQrDialog?.setOnDismissListener { handler.removeCallbacks(runnable) }
                 count = 0
