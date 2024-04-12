@@ -94,6 +94,7 @@ class OrderInfoActivity : VbBaseActivity<OrderInfoViewModel, ActivityOrderInfoBi
             R.id.rfl_refusePay,
             R.id.rfl_appPay -> {
                 if (!isOrderCreate) {
+                    upload()
                 } else {
                     ToastUtil.showMiddleToast(i18N(com.rt.base.R.string.正在支付无法上传欠费))
                 }
@@ -117,6 +118,15 @@ class OrderInfoActivity : VbBaseActivity<OrderInfoViewModel, ActivityOrderInfoBi
         }
     }
 
+    fun upload() {
+//        showProgressDialog(20000)
+//        val param = HashMap<String, Any>()
+//        val jsonobject = JSONObject()
+//        jsonobject["orderNoList"] = orderList.joinToString(separator = ",") { it }
+//        param["attr"] = jsonobject
+//        mViewModel.debtUpload(param)
+    }
+
     @SuppressLint("CheckResult")
     override fun startObserve() {
         super.startObserve()
@@ -130,6 +140,10 @@ class OrderInfoActivity : VbBaseActivity<OrderInfoViewModel, ActivityOrderInfoBi
                 binding.tvOrderAmount.text = AppUtil.getSpan(strings, sizes, colors, styles)
                 binding.tvPaidAmount.text = endOrderBean?.havePayMoney
                 binding.rtvPayableAmount.text = endOrderBean?.realtimeMoney
+            }
+            debtUploadLiveData.observe(this@OrderInfoActivity) {
+                dismissProgressDialog()
+                onBackPressedSupport()
             }
             endOrderQRLiveData.observe(this@OrderInfoActivity) {
                 dismissProgressDialog()

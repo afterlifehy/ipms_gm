@@ -20,6 +20,8 @@ class OrderInfoViewModel : BaseViewModel() {
     val endOrderInfoLiveData = MutableLiveData<EndOrderInfoBean>()
     val endOrderQRLiveData = MutableLiveData<PayQRBean>()
     val payResultInquiryLiveData = MutableLiveData<PayResultBean>()
+    val debtUploadLiveData = MutableLiveData<DebtUploadBean>()
+
     fun endOrderInfo(param: Map<String, Any?>) {
         launch {
 
@@ -59,4 +61,17 @@ class OrderInfoViewModel : BaseViewModel() {
             })
         }
     }
+
+//    fun debtUpload(param: Map<String, Any?>) {
+//        launch {
+//            val response = withContext(Dispatchers.IO) {
+//                mOrderRepository.debtUpload(param)
+//            }
+//            executeResponse(response, {
+//                debtUploadLiveData.value = response.attr
+//            }, {
+//                traverseErrorMsg(ErrorMessage(msg = response.msg, code = response.status))
+//            })
+//        }
+//    }
 }

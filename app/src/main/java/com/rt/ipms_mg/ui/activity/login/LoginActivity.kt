@@ -189,8 +189,8 @@ class LoginActivity : VbBaseActivity<LoginViewModel, ActivityLoginBinding>(), On
                             val jsonobject = JSONObject()
                             jsonobject["loginName"] = binding.etAccount.text.toString()
                             jsonobject["passWord"] = binding.etPw.text.toString()
-                            jsonobject["longitude"] = lon
-                            jsonobject["latitude"] = lat
+                            jsonobject["longitude"] = lon.toString()
+                            jsonobject["latitude"] = lat.toString()
                             param["attr"] = jsonobject
                             mViewModel.login(param)
                         } else {

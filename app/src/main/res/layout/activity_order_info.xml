@@ -158,61 +158,6 @@
                 android:layout_height="@dimen/dp_1"
                 android:background="@color/color_ffcccccc" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_47"
-                android:layout_marginTop="@dimen/dp_16"
-                android:orientation="horizontal">
-
-                <com.aries.ui.view.radius.RadiusFrameLayout
-                    android:id="@+id/rfl_appPay"
-                    android:layout_width="@dimen/dp_0"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="@dimen/dp_6"
-                    android:layout_weight="1"
-                    app:rv_backgroundColor="@color/color_ffeefaf9"
-                    app:rv_radius="@dimen/dp_7"
-                    app:rv_strokeColor="@color/color_ff04a091"
-                    app:rv_strokeWidth="@dimen/dp_1">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:drawableStart="@mipmap/ic_app_pay"
-                        android:drawablePadding="@dimen/dp_13"
-                        android:gravity="center"
-                        android:text="@string/APP支付"
-                        android:textColor="@color/color_ff04a091"
-                        android:textSize="@dimen/sp_19"
-                        android:textStyle="bold" />
-                </com.aries.ui.view.radius.RadiusFrameLayout>
-
-                <com.aries.ui.view.radius.RadiusFrameLayout
-                    android:id="@+id/rfl_refusePay"
-                    android:layout_width="@dimen/dp_0"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="@dimen/dp_6"
-                    android:layout_weight="1"
-                    app:rv_backgroundColor="@color/color_ffffebeb"
-                    app:rv_radius="@dimen/dp_7"
-                    app:rv_strokeColor="@color/color_fff70f0f"
-                    app:rv_strokeWidth="@dimen/dp_1">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:drawableStart="@mipmap/ic_refuse_pay"
-                        android:drawablePadding="@dimen/dp_13"
-                        android:gravity="center"
-                        android:text="@string/拒绝支付"
-                        android:textColor="@color/color_fff70f0f"
-                        android:textSize="@dimen/sp_19"
-                        android:textStyle="bold" />
-                </com.aries.ui.view.radius.RadiusFrameLayout>
-            </LinearLayout>
-
             <com.aries.ui.view.radius.RadiusFrameLayout
                 android:id="@+id/rfl_scanPay"
                 android:layout_width="match_parent"

@@ -122,8 +122,8 @@ class StreetChooseActivity : VbBaseActivity<StreetChooseViewModel, ActivityStree
                     val jsonobject = JSONObject()
                     jsonobject["loginName"] = loginInfo?.loginName
                     jsonobject["streetNos"] = streetChoosedList.joinToString(separator = ",") { it.streetNo }
-                    jsonobject["longitude"] = lon
-                    jsonobject["latitude"] = lat
+                    jsonobject["longitude"] = lon.toString()
+                    jsonobject["latitude"] = lat.toString()
                     param["attr"] = jsonobject
                     mViewModel.checkOnWork(param)
                 } else {
