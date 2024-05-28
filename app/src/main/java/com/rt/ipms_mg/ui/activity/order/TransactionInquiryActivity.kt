@@ -199,12 +199,6 @@ class TransactionInquiryActivity : VbBaseActivity<TransactionInquiryViewModel, A
             R.id.fl_paymentInquiry -> {
                 isQueryResult = true
                 currentTransactionBean = v.tag as TransactionBean
-                val param = HashMap<String, Any>()
-                val jsonobject = JSONObject()
-                jsonobject["tradeNo"] = currentTransactionBean?.tradeNo
-                jsonobject["simId"] = simId
-                param["attr"] = jsonobject
-                mViewModel.payResultInquiry(param)
             }
 
             R.id.toolbar,
@@ -264,15 +258,6 @@ class TransactionInquiryActivity : VbBaseActivity<TransactionInquiryViewModel, A
                 Thread {
                     BluePrint.instance?.zkblueprint(JSONObject.toJSONString(printInfo))
                 }.start()
-            }
-            payResultInquiryLiveData.observe(this@TransactionInquiryActivity) {
-                dismissProgressDialog()
-                if(it != null){
-                    ToastUtil.showMiddleToast(i18N(com.rt.base.R.string.支付成功))
-                    currentTransactionBean?.hasPayed = "1"
-                    currentTransactionBean?.payedAmount = currentTransactionBean!!.oweMoney
-                    transactionInquiryAdapter?.notifyItemChanged(transactionInquiryList.indexOf(currentTransactionBean))
-                }
             }
             errMsg.observe(this@TransactionInquiryActivity) {
                 dismissProgressDialog()

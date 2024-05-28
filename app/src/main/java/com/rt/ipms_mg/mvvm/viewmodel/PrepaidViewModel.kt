@@ -15,7 +15,6 @@ class PrepaidViewModel: BaseViewModel() {
     }
 
     val prePayFeeInquiryLiveData = MutableLiveData<PayQRBean>()
-    val payResultInquiryLiveData = MutableLiveData<PayResultBean>()
 
     fun prePayFeeInquiry(param: Map<String, Any?>) {
         launch {
@@ -30,16 +29,4 @@ class PrepaidViewModel: BaseViewModel() {
         }
     }
 
-    fun payResultInquiry(param: Map<String, Any?>) {
-        launch {
-            val response = withContext(Dispatchers.IO) {
-                mOrderRepository.payResultInquiry(param)
-            }
-            executeResponse(response, {
-                payResultInquiryLiveData.value = response.attr
-            }, {
-                traverseErrorMsg(ErrorMessage(msg = response.msg, code = response.status))
-            })
-        }
-    }
 }

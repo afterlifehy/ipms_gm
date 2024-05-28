@@ -17,7 +17,6 @@ class TransactionInquiryViewModel : BaseViewModel() {
 
     val transactionInquiryLiveData = MutableLiveData<TransactionResultBean>()
     val ticketPrintLiveData = MutableLiveData<TicketPrintBean>()
-    val payResultInquiryLiveData = MutableLiveData<PayResultBean>()
 
     fun transactionInquiry(param: Map<String, Any?>) {
         launch {
@@ -45,16 +44,4 @@ class TransactionInquiryViewModel : BaseViewModel() {
         }
     }
 
-    fun payResultInquiry(param: Map<String, Any?>) {
-        launch {
-            val response = withContext(Dispatchers.IO) {
-                mOrderRepository.payResultInquiry(param)
-            }
-            executeResponse(response, {
-                payResultInquiryLiveData.value = response.attr
-            }, {
-                traverseErrorMsg(ErrorMessage(msg = response.msg, code = response.status))
-            })
-        }
-    }
 }

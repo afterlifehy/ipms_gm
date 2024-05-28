@@ -68,8 +68,6 @@ class OrderInfoActivity : VbBaseActivity<OrderInfoViewModel, ActivityOrderInfoBi
 
     override fun initListener() {
         binding.layoutToolbar.flBack.setOnClickListener(this)
-        binding.rflAppPay.setOnClickListener(this)
-        binding.rflRefusePay.setOnClickListener(this)
         binding.rflScanPay.setOnClickListener(this)
     }
 
@@ -91,15 +89,6 @@ class OrderInfoActivity : VbBaseActivity<OrderInfoViewModel, ActivityOrderInfoBi
                 onBackPressedSupport()
             }
 
-            R.id.rfl_refusePay,
-            R.id.rfl_appPay -> {
-                if (!isOrderCreate) {
-                    upload()
-                } else {
-                    ToastUtil.showMiddleToast(i18N(com.rt.base.R.string.正在支付无法上传欠费))
-                }
-            }
-
             R.id.rfl_scanPay -> {
                 if (!isOrderCreate) {
                     val param = HashMap<String, Any>()
@@ -116,15 +105,6 @@ class OrderInfoActivity : VbBaseActivity<OrderInfoViewModel, ActivityOrderInfoBi
                 }
             }
         }
-    }
-
-    fun upload() {
-//        showProgressDialog(20000)
-//        val param = HashMap<String, Any>()
-//        val jsonobject = JSONObject()
-//        jsonobject["orderNoList"] = orderList.joinToString(separator = ",") { it }
-//        param["attr"] = jsonobject
-//        mViewModel.debtUpload(param)
     }
 
     @SuppressLint("CheckResult")
@@ -151,32 +131,8 @@ class OrderInfoActivity : VbBaseActivity<OrderInfoViewModel, ActivityOrderInfoBi
                 tradeNo = it.tradeNo
                 paymentQrDialog = PaymentQrDialog(it.qr_code, AppUtil.keepNDecimals(it.totalAmount.toString(), 2))
                 paymentQrDialog?.show()
-                paymentQrDialog?.setOnDismissListener { handler.removeCallbacks(runnable) }
+                paymentQrDialog?.setOnDismissListener { }
                 count = 0
-                handler.postDelayed(runnable, 2000)
-            }
-            payResultInquiryLiveData.observe(this@OrderInfoActivity) {
-                dismissProgressDialog()
-                if (it != null) {
-                    handler.removeCallbacks(runnable)
-                    ToastUtil.showMiddleToast(i18N(com.rt.base.R.string.支付成功))
-                    if (paymentQrDialog != null) {
-                        paymentQrDialog?.dismiss()
-                    }
-                    val payResultBean = it
-                    var rxPermissions = RxPermissions(this@OrderInfoActivity)
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                        rxPermissions.request(Manifest.permission.BLUETOOTH_CONNECT, Manifest.permission.BLUETOOTH_SCAN).subscribe {
-                            if (it) {
-                                startPrint(payResultBean)
-                            }
-                        }
-                    } else {
-                        startPrint(payResultBean)
-                    }
-                    EventBus.getDefault().post(RefreshParkingSpaceEvent())
-                    onBackPressedSupport()
-                }
             }
             errMsg.observe(this@OrderInfoActivity) {
                 dismissProgressDialog()
@@ -186,25 +142,6 @@ class OrderInfoActivity : VbBaseActivity<OrderInfoViewModel, ActivityOrderInfoBi
                 dismissProgressDialog()
             }
         }
-    }
-
-    val runnable = object : Runnable {
-        override fun run() {
-            if (count < 60) {
-                checkPayResult()
-                count++
-                handler.postDelayed(this, 3000)
-            }
-        }
-    }
-
-    fun checkPayResult() {
-        val param = HashMap<String, Any>()
-        val jsonobject = JSONObject()
-        jsonobject["simId"] = simId
-        jsonobject["tradeNo"] = tradeNo
-        param["attr"] = jsonobject
-        mViewModel.payResultInquiry(param)
     }
 
     fun startPrint(it: PayResultBean) {
@@ -247,16 +184,10 @@ class OrderInfoActivity : VbBaseActivity<OrderInfoViewModel, ActivityOrderInfoBi
 
     override fun onStop() {
         super.onStop()
-        if (handler != null) {
-            handler.removeCallbacks(runnable)
-        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        if (handler != null) {
-            handler.removeCallbacks(runnable)
-        }
     }
 
 }

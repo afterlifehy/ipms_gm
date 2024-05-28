@@ -52,7 +52,6 @@ class DebtOrderDetailActivity : VbBaseActivity<DebtOrderDetailViewModel, Activit
     var simId = ""
     var loginName = ""
     var count = 0
-    var handler = Handler(Looper.getMainLooper())
     var picList: MutableList<String> = ArrayList()
 
     @SuppressLint("NewApi")
@@ -158,25 +157,6 @@ class DebtOrderDetailActivity : VbBaseActivity<DebtOrderDetailViewModel, Activit
         }
     }
 
-    fun checkPayResult() {
-        val param = HashMap<String, Any>()
-        val jsonobject = JSONObject()
-        jsonobject["simId"] = simId
-        jsonobject["tradeNo"] = tradeNo
-        param["attr"] = jsonobject
-        mViewModel.payResultInquiry(param)
-    }
-
-    val runnable = object : Runnable {
-        override fun run() {
-            if (count < 60) {
-                checkPayResult()
-                count++
-                handler.postDelayed(this, 3000)
-            }
-        }
-    }
-
     @SuppressLint("CheckResult")
     override fun startObserve() {
         super.startObserve()
@@ -195,30 +175,8 @@ class DebtOrderDetailActivity : VbBaseActivity<DebtOrderDetailViewModel, Activit
                 tradeNo = it.tradeNo
                 paymentQrDialog = PaymentQrDialog(it.qrCode, AppUtil.keepNDecimals((it.amount / 100).toString(), 2))
                 paymentQrDialog?.show()
-                paymentQrDialog?.setOnDismissListener { handler.removeCallbacks(runnable) }
+                paymentQrDialog?.setOnDismissListener {  }
                 count = 0
-                handler.postDelayed(runnable, 2000)
-            }
-            payResultInquiryLiveData.observe(this@DebtOrderDetailActivity) {
-                dismissProgressDialog()
-                handler.removeCallbacks(runnable)
-                ToastUtil.showMiddleToast(i18N(com.rt.base.R.string.支付成功))
-                if (paymentQrDialog != null) {
-                    paymentQrDialog?.dismiss()
-                }
-                val payResultBean = it
-                var rxPermissions = RxPermissions(this@DebtOrderDetailActivity)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                    rxPermissions.request(Manifest.permission.BLUETOOTH_CONNECT, Manifest.permission.BLUETOOTH_SCAN).subscribe {
-                        if (it) {
-                            startPrint(payResultBean)
-                        }
-                    }
-                } else {
-                    startPrint(it)
-                }
-                EventBus.getDefault().post(RefreshDebtOrderListEvent())
-                onBackPressedSupport()
             }
             errMsg.observe(this@DebtOrderDetailActivity) {
                 dismissProgressDialog()
@@ -270,15 +228,9 @@ class DebtOrderDetailActivity : VbBaseActivity<DebtOrderDetailViewModel, Activit
 
     override fun onStop() {
         super.onStop()
-        if (handler != null) {
-            handler.removeCallbacks(runnable)
-        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        if (handler != null) {
-            handler.removeCallbacks(runnable)
-        }
     }
 }

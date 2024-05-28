@@ -140,7 +140,7 @@ interface Api {
     /**
      * 离场支付二维码
      */
-    @POST("S_OR_0112")
+    @POST("S_MG_0112")
     suspend fun endOrderQR(@Body param: @JvmSuppressWildcards Map<String, Any?>): HttpWrapper<PayQRBean>
 
     /**
