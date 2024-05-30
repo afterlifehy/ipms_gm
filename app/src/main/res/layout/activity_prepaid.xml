@@ -182,38 +182,6 @@
                     android:textColor="@color/color_ff1a1a1a"
                     android:textSize="@dimen/sp_14" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dp_11"
-                    android:drawableStart="@mipmap/ic_ali"
-                    android:drawablePadding="@dimen/dp_6"
-                    android:gravity="center"
-                    android:text="@string/支付宝"
-                    android:textColor="@color/color_ff1a1a1a"
-                    android:textSize="@dimen/sp_14" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dp_11"
-                    android:drawableStart="@mipmap/ic_cloud_pay"
-                    android:drawablePadding="@dimen/dp_6"
-                    android:gravity="center"
-                    android:text="@string/云闪付"
-                    android:textColor="@color/color_ff1a1a1a"
-                    android:textSize="@dimen/sp_14" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dp_11"
-                    android:drawableStart="@mipmap/ic_digital_rmb"
-                    android:drawablePadding="@dimen/dp_6"
-                    android:gravity="center"
-                    android:text="@string/数字人民币"
-                    android:textColor="@color/color_ff1a1a1a"
-                    android:textSize="@dimen/sp_14" />
             </LinearLayout>
         </com.aries.ui.view.radius.RadiusLinearLayout>
     </LinearLayout>
