@@ -73,8 +73,8 @@ class PicActivity : VbBaseActivity<PicViewModel, ActivityPicBinding>(), OnClickL
         mViewModel.apply {
             picInquiryLiveData.observe(this@PicActivity) {
                 dismissProgressDialog()
-                picList.add(it.inPicture11)
                 picList.add(it.inPicture10)
+                picList.add(it.inPicture11)
                 picList.add(it.inPicture20)
                 picAdapter?.setList(picList)
                 binding.tvNoPic.gone()
