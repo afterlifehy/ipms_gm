@@ -14,6 +14,7 @@ import androidx.viewbinding.ViewBinding
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.alibaba.fastjson.JSONObject
+import com.blankj.utilcode.constant.TimeConstants
 import com.blankj.utilcode.util.TimeUtils
 import com.rt.base.BaseApplication
 import com.rt.base.arouter.ARouterMap
@@ -72,8 +73,26 @@ class DebtCollectionActivity : VbBaseActivity<DebtCollectionViewModel, ActivityD
 
         if (intent.getStringExtra(ARouterMap.DEBT_CAR_LICENSE) != null) {
             carLicense = intent.getStringExtra(ARouterMap.DEBT_CAR_LICENSE).toString()
+            val time = intent.getIntExtra(ARouterMap.DEBT_CAR_TIME, 1)
             binding.etSearch.setText(carLicense)
             binding.etSearch.setSelection(carLicense.length)
+            when (time) {
+                1 -> {
+
+                }
+
+                7 -> {
+
+                }
+
+                30 -> {
+                    startDate = TimeUtils.getStringByNow(-30, TimeConstants.DAY).substring(0, 10)
+                }
+
+                90 -> {
+
+                }
+            }
         }
         binding.rvDebt.setHasFixedSize(true)
         binding.rvDebt.layoutManager = LinearLayoutManager(this)

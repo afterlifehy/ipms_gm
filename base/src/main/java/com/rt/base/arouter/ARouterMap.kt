@@ -61,6 +61,7 @@ object ARouterMap {
 
     const val DEBT_COLLECTION = "/ipms_mg_app/debtCollection"
     const val DEBT_CAR_LICENSE = "carLicense"
+    const val DEBT_CAR_TIME = "time"
 
     const val DEBT_ORDER_DETAIL = "/ipms_mg_app/debtOrderDetail"
     const val DEBT_ORDER = "debtOrder"

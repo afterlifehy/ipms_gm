@@ -170,7 +170,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="@dimen/dp_12"
             android:gravity="center"
-            android:text="签退"
+            android:text="@string/重新登录"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_17"
             app:rv_backgroundColor="@color/color_ff04a091"
@@ -188,4 +188,19 @@
         android:id="@+id/layout_toolbar"
         layout="@layout/layout_comment_toolbar" />
 
+    <com.aries.ui.view.radius.RadiusFrameLayout
+        android:layout_width="@dimen/dp_67"
+        android:layout_height="@dimen/dp_67"
+        android:layout_below="@+id/iv_mineBg"
+        android:layout_marginStart="@dimen/dp_33"
+        android:layout_marginTop="@dimen/dp_n60"
+        app:rv_backgroundColor="@color/color_ffe1faf8"
+        app:rv_radius="@dimen/dp_7">
+
+        <ImageView
+            android:layout_width="@dimen/dp_53"
+            android:layout_height="@dimen/dp_53"
+            android:layout_gravity="center"
+            android:src="@mipmap/ic_guan_logo" />
+    </com.aries.ui.view.radius.RadiusFrameLayout>
 </RelativeLayout>

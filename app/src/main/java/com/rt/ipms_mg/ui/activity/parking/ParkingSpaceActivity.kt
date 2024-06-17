@@ -172,6 +172,7 @@ class ParkingSpaceActivity : VbBaseActivity<ParkingSpaceViewModel, ActivityParki
                 if (parkingSpaceBean?.historyCount != 0) {
                     startArouter(ARouterMap.DEBT_COLLECTION, data = Bundle().apply {
                         putString(ARouterMap.DEBT_CAR_LICENSE, carLicense)
+                        putInt(ARouterMap.DEBT_CAR_TIME, 30)
                     })
                 } else {
                     ToastUtil.showMiddleToast(i18N(com.rt.base.R.string.当前车辆没有欠费记录))

@@ -67,7 +67,7 @@ class MainActivity : VbBaseActivity<MainViewModel, ActivityMainBinding>(), OnCli
         binding.flIncomeCounting.setOnClickListener(this)
         binding.flOrder.setOnClickListener(this)
         binding.flBerthAbnormal.setOnClickListener(this)
-//        binding.flLogout.setOnClickListener(this)
+        binding.flLogout.setOnClickListener(this)
     }
 
     @SuppressLint("SetTextI18n")
@@ -219,9 +219,9 @@ class MainActivity : VbBaseActivity<MainViewModel, ActivityMainBinding>(), OnCli
                 startAct<AbnormalReportActivity>()
             }
 
-//            R.id.fl_logout -> {
-//                startAct<LogoutActivity>()
-//            }
+            R.id.fl_logout -> {
+                startAct<LogoutActivity>()
+            }
         }
     }
 
