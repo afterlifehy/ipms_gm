@@ -186,9 +186,6 @@ class ParkingLotActivity : VbBaseActivity<ParkingLotViewModel, ActivityParkingLo
         return ActivityParkingLotBinding.inflate(layoutInflater)
     }
 
-    override fun onReloadData() {
-    }
-
     override val isFullScreen: Boolean
         get() = true
 

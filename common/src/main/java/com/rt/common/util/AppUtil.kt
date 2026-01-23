@@ -3,10 +3,12 @@ package com.rt.common.util
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.text.Spannable
 import android.text.TextUtils
+import android.util.Base64
 import android.util.Log
 import android.view.View
 import androidx.core.content.FileProvider
@@ -264,5 +266,17 @@ object AppUtil {
             return "${day}天${hour}小时${minute}分钟"
         }
         return "${day}天${hour}小时${minute}分钟"
+    }
+
+    fun base64ToBitmap(base64String: String): Bitmap? {
+        return try {
+            // 解码 Base64 字符串为字节数组
+            val decodedBytes = Base64.decode(base64String, Base64.DEFAULT)
+            // 将字节数组转换为 Bitmap
+            BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
+        } catch (e: IllegalArgumentException) {
+            e.printStackTrace()
+            null
+        }
     }
 }

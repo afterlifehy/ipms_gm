@@ -72,9 +72,6 @@ class SplashActivity : VbBaseActivity<SplashViewModel, ActivitySplashBinding>(),
         return ActivitySplashBinding.inflate(layoutInflater)
     }
 
-    override fun onReloadData() {
-    }
-
     override val isFullScreen: Boolean
         get() = true
 

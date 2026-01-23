@@ -121,9 +121,6 @@ class FeeRateActivity : VbBaseActivity<FeeRateViewModel, ActivityFeeRateBinding>
         return ActivityFeeRateBinding.inflate(layoutInflater)
     }
 
-    override fun onReloadData() {
-    }
-
     override val isFullScreen: Boolean
         get() = true
 

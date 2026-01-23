@@ -42,9 +42,6 @@ class AbnormalHelpActivity : VbBaseActivity<AbnormalHelpViewModel, ActivityAbnor
         return ActivityAbnormalHelpBinding.inflate(layoutInflater)
     }
 
-    override fun onReloadData() {
-    }
-
     override val isFullScreen: Boolean
         get() = true
 

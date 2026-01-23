@@ -96,7 +96,6 @@ class TransactionRecordActivity : VbBaseActivity<TransactionRecordViewModel, Act
     }
 
     fun print(it: TicketPrintBean) {
-        ToastUtil.showMiddleToast(i18n(com.rt.base.R.string.开始打印))
         val payMoney = it.payMoney
         val printInfo = PrintInfoBean(
             roadId = it.roadName,
@@ -108,11 +107,22 @@ class TransactionRecordActivity : VbBaseActivity<TransactionRecordViewModel, Act
             leftTime = it.endTime,
             remark = it.remark,
             company = it.businessCname,
-            oweCount = it.oweCount
+            oweCount = it.oweCount,
+            qrcode = "12345"
         )
-        Thread {
-            BluePrint.instance?.zkblueprint(JSONObject.toJSONString(printInfo))
-        }.start()
+        val printList = BluePrint.instance?.blueToothDevice!!
+        if (printList.size == 1) {
+            Thread {
+                val device = printList[0]
+                var connectResult = BluePrint.instance?.connet(device.address)
+                if (connectResult == 0) {
+                    runOnUiThread {
+                        ToastUtil.showBottomToast("开始打印")
+                    }
+                    BluePrint.instance?.zkblueprint(JSONObject.toJSONString(printInfo))
+                }
+            }.start()
+        }
     }
 
     override fun startObserve() {
@@ -143,9 +153,6 @@ class TransactionRecordActivity : VbBaseActivity<TransactionRecordViewModel, Act
 
     override fun getVbBindingView(): ViewBinding {
         return ActivityTransactionRecordBinding.inflate(layoutInflater)
-    }
-
-    override fun onReloadData() {
     }
 
     override val isFullScreen: Boolean

@@ -191,9 +191,6 @@ class IncomeCountingActivity : VbBaseActivity<IncomeCountingViewModel, ActivityI
         return ActivityIncomeCountingBinding.inflate(layoutInflater)
     }
 
-    override fun onReloadData() {
-    }
-
     override val isFullScreen: Boolean
         get() = true
 

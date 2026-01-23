@@ -582,9 +582,6 @@ class AbnormalReportActivity : VbBaseActivity<AbnormalReportViewModel, ActivityA
         return ActivityAbnormalReportBinding.inflate(layoutInflater)
     }
 
-    override fun onReloadData() {
-    }
-
     override val isFullScreen: Boolean
         get() = true
 

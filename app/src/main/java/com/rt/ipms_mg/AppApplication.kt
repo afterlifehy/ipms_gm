@@ -52,15 +52,17 @@ class AppApplication : BaseApplication() {
 
     override fun onAddOkHttpInterceptor(): List<Interceptor> {
         val list = ArrayList<Interceptor>()
-        list.add(HeaderInterceptor())
-        list.add(LoginExpiredInterceptor())
-        list.add(HostInterceptor())
-        list.add(TokenInterceptor())
+//        list.add(HeaderInterceptor())
+//        list.add(LoginExpiredInterceptor())
+//        list.add(HostInterceptor())
+//        list.add(TokenInterceptor())
+        list.add(ExceptionInterceptor())
+        list.add(RetryInterceptor())
         if (BuildConfig.is_debug) {
             list.add(LogInterceptor(BuildConfig.is_debug))
-            val mHttpLoggingInterceptor = HttpLoggingInterceptor("ipms_mg_http")
-            mHttpLoggingInterceptor.setPrintLevel(HttpLoggingInterceptor.Level.BODY)
-            list.add(mHttpLoggingInterceptor)
+//            val mHttpLoggingInterceptor = HttpLoggingInterceptor("ipms_mg_http")
+//            mHttpLoggingInterceptor.setPrintLevel(HttpLoggingInterceptor.Level.BODY)
+//            list.add(mHttpLoggingInterceptor)
         }
         return list
     }

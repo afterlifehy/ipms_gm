@@ -197,9 +197,6 @@ class OrderDetailActivity : VbBaseActivity<OrderDetailViewModel, ActivityOrderDe
         return ActivityOrderDetailBinding.inflate(layoutInflater)
     }
 
-    override fun onReloadData() {
-    }
-
     override val isFullScreen: Boolean
         get() = true
 

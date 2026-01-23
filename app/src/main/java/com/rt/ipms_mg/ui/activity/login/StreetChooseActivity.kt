@@ -186,9 +186,6 @@ class StreetChooseActivity : VbBaseActivity<StreetChooseViewModel, ActivityStree
         return ActivityStreetChooseBinding.inflate(layoutInflater)
     }
 
-    override fun onReloadData() {
-    }
-
     override val isFullScreen: Boolean
         get() = true
 

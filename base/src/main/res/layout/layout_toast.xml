@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.aries.ui.view.radius.RadiusTextView
+        android:id="@+id/rtv_toast"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:layout_marginBottom="@dimen/dp_16"
+        android:paddingTop="@dimen/dp_16"
+        android:paddingBottom="@dimen/dp_16"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_16"
+        app:rv_backgroundColor="@color/color_fff44336"
+        app:rv_radius="@dimen/dp_10" />
+
+</LinearLayout>

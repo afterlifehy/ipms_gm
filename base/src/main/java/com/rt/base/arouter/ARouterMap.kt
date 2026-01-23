@@ -47,7 +47,6 @@ object ARouterMap {
     const val DATA_PRINT_LOGIN_NAME = "loginName"
 
     const val MINE = "/ipms_mg_app/mine"
-    const val MINE_BLUE_PRINT = "mineBluePrint"
 
     const val BASE_INFO = "/ipms_mg_app/baseInfo"
 

@@ -149,7 +149,8 @@ class PrepaidActivity : VbBaseActivity<PrepaidViewModel, ActivityPrepaidBinding>
             leftTime = it.endTime,
             remark = it.remark,
             company = it.businessCname,
-            oweCount = it.oweCount
+            oweCount = it.oweCount,
+            qrcode = "12345"
         )
         ToastUtil.showMiddleToast(i18n(com.rt.base.R.string.开始打印))
         Thread {
@@ -163,9 +164,6 @@ class PrepaidActivity : VbBaseActivity<PrepaidViewModel, ActivityPrepaidBinding>
 
     override fun getVbBindingView(): ViewBinding {
         return ActivityPrepaidBinding.inflate(layoutInflater)
-    }
-
-    override fun onReloadData() {
     }
 
     override val isFullScreen: Boolean

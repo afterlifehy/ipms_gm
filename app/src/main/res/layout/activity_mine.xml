@@ -119,50 +119,6 @@
                 android:src="@mipmap/ic_arrow_right_small" />
         </RelativeLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_1"
-            android:layout_below="@+id/fl_feeRate"
-            android:background="@color/color_ffcccccc" />
-
-        <RelativeLayout
-            android:id="@+id/fl_blueToothPrint"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_72"
-            android:layout_below="@+id/fl_feeRate">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:drawableStart="@mipmap/ic_bluetooth_print"
-                android:drawablePadding="@dimen/dp_13"
-                android:gravity="center"
-                android:text="@string/打印管理"
-                android:textColor="@color/color_ff1a1a1a"
-                android:textSize="@dimen/sp_19" />
-
-            <TextView
-                android:id="@+id/tv_deviceName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="@dimen/dp_10"
-                android:layout_toStartOf="@+id/iv_arrow2"
-                android:textColor="@color/color_ff1a1a1a"
-                android:textSize="@dimen/sp_19"
-                tools:text="1.0.1" />
-
-            <ImageView
-                android:id="@+id/iv_arrow2"
-                android:layout_width="@dimen/dp_7"
-                android:layout_height="@dimen/dp_12"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_gravity="end|center_vertical"
-                android:src="@mipmap/ic_arrow_right_small" />
-        </RelativeLayout>
-
         <com.aries.ui.view.radius.RadiusTextView
             android:id="@+id/rtv_logout"
             android:layout_width="match_parent"

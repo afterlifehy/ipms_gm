@@ -3,25 +3,16 @@ package com.rt.common.util
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Paint
-import android.graphics.Rect
-import android.graphics.Typeface
-import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
-import android.util.TypedValue
 import com.alibaba.fastjson.JSONObject
-import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.TimeUtils
 import com.rt.base.BaseApplication
-import com.rt.base.arouter.ARouterMap
 import com.rt.base.bean.IncomeCountingBean
 import com.rt.base.bean.PrintInfoBean
-import com.rt.base.dialog.DialogHelp
 import com.rt.base.ext.i18n
-import com.rt.base.ext.startArouter
 import com.rt.base.help.ActivityCacheManager
 import com.rt.base.util.ToastUtil
 import org.json.JSONException
@@ -52,6 +43,12 @@ class BluePrint() {
             }
     }
 
+    val orderTypeMap = mutableMapOf(
+        1 to "预付",
+        2 to "场内支付",
+        3 to "欠费补缴"
+    )
+
     @Throws(JSONException::class)
     fun zkblueprint(content: String) {
         //打印文本
@@ -59,37 +56,17 @@ class BluePrint() {
             printResult = Print1(content)
         } catch (e: Exception) {
             Handler(Looper.getMainLooper()).post {
-                DialogHelp.Builder().setTitle(i18n(com.rt.base.R.string.打印机状态异常请重新连接))
-                    .setLeftMsg(i18n(com.rt.base.R.string.取消))
-                    .setRightMsg(i18n(com.rt.base.R.string.去连接)).setCancelable(true)
-                    .setOnButtonClickLinsener(object : DialogHelp.OnButtonClickLinsener {
-                        override fun onLeftClickLinsener(msg: String) {
-                        }
-
-                        override fun onRightClickLinsener(msg: String) {
-//                            if (ActivityCacheManager.instance().getCurrentActivity() !is LoginActivity &&
-//                                ActivityCacheManager.instance().getCurrentActivity() !is StreetChooseActivity
-//                            ) {
-                            startArouter(ARouterMap.MINE, data = Bundle().apply {
-                                putInt(ARouterMap.MINE_BLUE_PRINT, 1)
-                            })
-//                            }
-                        }
-
-                    }).build(ActivityCacheManager.instance().getCurrentActivity()).showDailog()
+                ToastUtil.showMiddleToast("打印机状态异常")
             }
         }
         ActivityCacheManager.instance().getCurrentActivity()!!.runOnUiThread {
             if (printResult == 0) {
-//                val toast = Toast.makeText(BaseApplication.instance(), "打印完成", Toast.LENGTH_LONG)
-//                toast.setGravity(Gravity.CENTER, 0, 0)
-//                toast.show()
             } else if (printResult == -1) {
-                ToastUtil.showMiddleToast("蓝牙未连接")
+                ToastUtil.showBottomToast("蓝牙未连接")
             } else if (printResult == -2) {
-                ToastUtil.showMiddleToast("路段名称过长...")
+                ToastUtil.showBottomToast("路段名称过长...")
             } else {
-                ToastUtil.showMiddleToast("打印失败")
+                ToastUtil.showBottomToast("打印失败，请检查打印机连接状态")
             }
         }
     }
@@ -99,18 +76,19 @@ class BluePrint() {
         mAddress = address
         zpSDK = zp_cpcl_BluetoothPrinter(BaseApplication.instance())
         Handler(Looper.getMainLooper()).post {
-            ToastUtil.showMiddleToast("打印机开始连接")
+            ToastUtil.showBottomToast("打印机开始连接")
         }
 
         if (!zpSDK!!.connect(mAddress)) {
             Handler(Looper.getMainLooper()).post {
-                ToastUtil.showMiddleToast("打印机连接失败")
+                ToastUtil.showBottomToast("打印机连接失败")
             }
+            zpSDK = null
             printResult = -1
             return printResult
         }
         Handler(Looper.getMainLooper()).post {
-            ToastUtil.showMiddleToast("打印机连接成功")
+            ToastUtil.showBottomToast("打印机连接成功")
         }
         return 0
     }
@@ -155,7 +133,7 @@ class BluePrint() {
             }
             if (receipt) {
                 val incomeCountingBean = JSONObject.parseObject(printText, IncomeCountingBean::class.java)
-                var height = 400
+                var height = 600
                 if (incomeCountingBean.list2 != null && incomeCountingBean.list2.size > 0) {
                     height += 200
                 }
@@ -181,7 +159,7 @@ class BluePrint() {
                         printDrawText("总收费：", todayIncomeBean.payMoney + " 元", ystart, 9)
                         ystart += 40
                     }
-                    if (todayIncomeBean.orderCount != 0) {
+                    if (todayIncomeBean.orderCount != -1) {
                         printDrawText("已下单：", todayIncomeBean.orderCount.toString() + " 笔", ystart, 9)
                         ystart += 40
                     }
@@ -238,13 +216,15 @@ class BluePrint() {
                 val now = Calendar.getInstance()
                 val today = now[Calendar.YEAR].toString() + "年" + (now[Calendar.MONTH] + 1) + "月" + now[Calendar.DAY_OF_MONTH] + "日"
                 val printInfo = JSONObject.parseObject(printText, PrintInfoBean::class.java)
-                zpSDK!!.pageSetup(800, 1400)
+                zpSDK!!.pageSetup(800, 1600)
                 //zpSDK.drawGraphic(0, 0, 0, 0, bmp);
-                zpSDK!!.DrawSpecialText(147, 10, PrinterInterface.Textfont.siyuanheiti, 24, "上海市机动车道路停车费", 0, 0, 0) //3
-                zpSDK!!.DrawSpecialText(197, 10 + 36, PrinterInterface.Textfont.siyuanheiti, 24, "电子票据告知书", 0, 0, 0) //3
+                zpSDK!!.DrawSpecialText(147, 10, PrinterInterface.Textfont.siyuanheiti, 24, "上海市机动车道路停车收费", 0, 0, 0) //3
+                zpSDK!!.DrawSpecialText(197, 10 + 36, PrinterInterface.Textfont.siyuanheiti, 24, "电子缴款书下载告知", 0, 0, 0) //3
                 drawText(10 + 36 + 40, 20, "-----------------------------------------------")
                 drawText(10 + 36 + 40 + 32, 20, "停车单号:   " + printInfo.orderId)
-                drawText(10 + 36 + 40 + 32 + 32, 20, "车牌号码:   " + printInfo.plateId)
+                drawText(10 + 36 + 40 + 32 + 32, 20, "缴费类型:   " + orderTypeMap[printInfo.orderType])
+                drawText(10 + 36 + 40 + 32 + 32 + 32, 20, "车牌号码:   " + printInfo.plateId)
+                yLocation += 32
                 if (printInfo.roadId.length <= 17) {
                     drawText(yLocation, 20, "停车路段:   " + printInfo.roadId)
                 } else if (printInfo.roadId.length > 17 && printInfo.roadId.length <= 34) {
@@ -264,58 +244,71 @@ class BluePrint() {
                 drawText(yLocation + 32, 20, "            " + printInfo.startTime)
                 drawText(yLocation + 64, 20, "            " + printInfo.leftTime)
                 yLocation += 96
-                drawText(yLocation, 20, "缴费金额:   " + printInfo.payMoney)
-                yLocation += 32
                 drawText(yLocation, 20, "-----------------------------------------------")
                 yLocation += 36
-                drawText(yLocation, 20, "----------------电子票据开具方式----------------")
+                drawText(yLocation, 20, "----------------电子缴款书开具方式----------------")
                 yLocation += 36
-                drawText(yLocation, 20, "1、扫描下载“上海停车”官方APP、小程序(微信、支付宝)")
+                drawText(yLocation, 20, "扫描如下二维码，确认订单，填写邮箱地址，开具道路停车")
                 yLocation += 36
+                drawText(yLocation, 20, "收费电子书")
+                yLocation += 36
+
+                var bitmap: Bitmap? = null
+                if (printInfo.qrcode.isEmpty()) {
+                    bitmap = BitmapFactory.decodeResource(BaseApplication.instance().resources, com.rt.common.R.mipmap.ic_print_qr)
+                } else {
+                    bitmap = AppUtil.base64ToBitmap(printInfo.qrcode)
+                }
+                val scaledBitmap = Bitmap.createScaledBitmap(bitmap!!, 300, 300, true)
                 zpSDK!!.drawGraphic(
                     65 + 60,
                     yLocation,
                     300,
                     300,
-                    BitmapFactory.decodeResource(BaseApplication.instance().resources, com.rt.common.R.mipmap.ic_print_qr)
+                    scaledBitmap
                 )
 //                zpSDK!!.drawQrCode(65 + 60, yLocation, "https://shtc.jtcx.sh.cn/union.html", 0, 10, 0)
                 yLocation += (300 + 18)
-                drawText(yLocation, 20, "2、注册您的“上海停车”账号,绑定车牌。")
+
+                drawText(yLocation, 20, "--------------------温馨提示：-------------------")
                 yLocation += 36
-                drawText(yLocation, 20, "3、在“停车缴费”---“我要开票”---“道路停车电子缴”")
+                drawText(yLocation, 20, "${printInfo.plateId}的车主(单位)")
                 yLocation += 36
-                drawText(yLocation, 20, "款书(票据)---下载您的道路停车票据")
-//                yLocation += 36
-//                drawText(yLocation, 20, "提示:")
-//                yLocation += 36
-//                drawText(yLocation, 20, printInfo.plateId + "的车主(单位)")
-//                yLocation += 36
-//                drawText(yLocation, 20, "您(单位)在" + today + "之前，累计有 " + printInfo.oweCount + " 笔道路停车欠费记")
-//                yLocation += 36
-//                drawText(yLocation, 20, "录，请您尽快在本市任一道路停车场补缴。（其中，属智慧道")
-//                yLocation += 36
-//                drawText(yLocation, 20, "路停车场的欠费，可在智慧道路停车场或者登录“上海停车”")
-//                yLocation += 36
-//                drawText(yLocation, 20, "官方APP、小程序查询补缴。）")
+                drawText(
+                    yLocation,
+                    20,
+                    "您(单位)在${
+                        TimeUtils.millis2String(
+                            System.currentTimeMillis(),
+                            "yyyy年MM月dd日"
+                        )
+                    }之前，累计有${printInfo.oweCount}笔道路停车欠费"
+                )
+                yLocation += 36
+                drawText(yLocation, 20, "记录，请您(单位)登录“上海停车“官方 APP、小程序(微")
+                yLocation += 36
+                drawText(yLocation, 20, "信、支付宝)尽快补缴。")
+                yLocation += 36
                 yLocation += 36
                 drawText(yLocation, 20, "--------------------注意事项-------------------")
                 yLocation += 36
-                drawText(yLocation, 20, "1、本告知书仅为您(单位)本次停车付费的凭证，不作为电子")
+                drawText(yLocation, 20, "1、如需要核实有关停车收费情况请致电 " + printInfo.phone + " 。")
                 yLocation += 36
-                drawText(yLocation, 20, "   票据。")
+                drawText(yLocation, 20, "2、本告知书仅为您(单位)本次停车付费的凭证，如需开具")
                 yLocation += 36
-                drawText(yLocation, 20, "2、如需要核实有关停车收费情况请致电 " + printInfo.phone + " 。")
+                drawText(yLocation, 20, "   电子缴款书请扫描二维码。")
                 yLocation += 36
-                drawText(yLocation, 20, "3、如您需要电子票据的,请在即日起30天内，通过“上海停")
+                drawText(yLocation, 20, "3、预付费遵循多退少补原则，实际停车时长超出预付时长")
                 yLocation += 36
-                drawText(yLocation, 20, "   车”官方APP、小程序(微信、支付宝)下载。如您(单位)")
+                drawText(yLocation, 20, "   的，请及时补缴停车费;实际停车时长少于预付时长的，")
                 yLocation += 36
-                drawText(yLocation, 20, "   在下载电子票据过程中遇到问题，请将问题描述和您的")
+                drawText(yLocation, 20, "   在车辆离场后 24小时内将原路退还超出的停车费。")
                 yLocation += 36
-                drawText(yLocation, 20, "   姓名、电话等有效的联系方式反馈至邮箱service@shtc")
+                drawText(yLocation, 20, "4、如您(单位)在下载电子票据过程中遇到问题，请将问题")
                 yLocation += 36
-                drawText(yLocation, 20, "   xx.com")
+                drawText(yLocation, 20, "   描述和您的姓名、电话等有效的联系方式反馈至邮箱")
+                yLocation += 36
+                drawText(yLocation, 20, "   service@jtcx.sh.com")
                 yLocation += 36
                 drawText(yLocation, 20, "-----------------------------------------------")
                 yLocation += 36
@@ -346,68 +339,72 @@ class BluePrint() {
             try {
                 when (zpSDK?.GetStatus()) {
                     -1 -> {
-                        Handler(Looper.getMainLooper()).post {
-                            DialogHelp.Builder().setTitle(i18n(com.rt.base.R.string.打印机状态异常请重新连接))
-                                .setLeftMsg(i18n(com.rt.base.R.string.取消))
-                                .setRightMsg(i18n(com.rt.base.R.string.去连接)).setCancelable(true)
-                                .setOnButtonClickLinsener(object : DialogHelp.OnButtonClickLinsener {
-                                    override fun onLeftClickLinsener(msg: String) {
-                                    }
-
-                                    override fun onRightClickLinsener(msg: String) {
-//                            if (ActivityCacheManager.instance().getCurrentActivity() !is LoginActivity &&
-//                                ActivityCacheManager.instance().getCurrentActivity() !is StreetChooseActivity
-//                            ) {
-                                        startArouter(ARouterMap.MINE, data = Bundle().apply {
-                                            putInt(ARouterMap.MINE_BLUE_PRINT, 1)
-                                        })
-//                            }
-                                    }
-
-                                }).build(ActivityCacheManager.instance().getCurrentActivity()).showDailog()
-                        }
+//                        Handler(Looper.getMainLooper()).post {
+//                            DialogHelp.Builder().setTitle(i18n(com.rt.base.R.string.打印机状态异常请重新连接))
+//                                .setLeftMsg(i18n(com.rt.base.R.string.取消))
+//                                .setRightMsg(i18n(com.rt.base.R.string.去连接)).setCancelable(true)
+//                                .setOnButtonClickLinsener(object : DialogHelp.OnButtonClickLinsener {
+//                                    override fun onLeftClickLinsener(msg: String) {
+//                                    }
+//
+//                                    override fun onRightClickLinsener(msg: String) {
+////                            if (ActivityCacheManager.instance().getCurrentActivity() !is LoginActivity &&
+////                                ActivityCacheManager.instance().getCurrentActivity() !is StreetChooseActivity
+////                            ) {
+//                                        startArouter(ARouterMap.MINE, data = Bundle().apply {
+//                                            putInt(ARouterMap.MINE_BLUE_PRINT, 1)
+//                                        })
+////                            }
+//                                    }
+//
+//                                }).build(ActivityCacheManager.instance().getCurrentActivity()).showDailog()
+//                        }
+                        disConnect()
                         return@Thread
                     }
 
                     0 -> {
-
+                        disConnect()
                     }
 
                     1 -> {
                         Handler(Looper.getMainLooper()).post {
-                            ToastUtil.showMiddleToast(i18n(com.rt.base.R.string.打印机缺纸))
+                            ToastUtil.showBottomToast(i18n(com.rt.base.R.string.打印机缺纸))
                         }
+                        disConnect()
                         return@Thread
                     }
 
                     2 -> {
                         Handler(Looper.getMainLooper()).post {
-                            ToastUtil.showMiddleToast(i18n(com.rt.base.R.string.打印机开盖))
+                            ToastUtil.showBottomToast(i18n(com.rt.base.R.string.打印机开盖))
                         }
+                        disConnect()
                         return@Thread
                     }
                 }
             } catch (e: Exception) {
-                Handler(Looper.getMainLooper()).post {
-                    DialogHelp.Builder().setTitle(i18n(com.rt.base.R.string.打印机状态异常请重新连接))
-                        .setLeftMsg(i18n(com.rt.base.R.string.取消))
-                        .setRightMsg(i18n(com.rt.base.R.string.去连接)).setCancelable(true)
-                        .setOnButtonClickLinsener(object : DialogHelp.OnButtonClickLinsener {
-                            override fun onLeftClickLinsener(msg: String) {
-                            }
-
-                            override fun onRightClickLinsener(msg: String) {
-//                            if (ActivityCacheManager.instance().getCurrentActivity() !is LoginActivity &&
-//                                ActivityCacheManager.instance().getCurrentActivity() !is StreetChooseActivity
-//                            ) {
-                                startArouter(ARouterMap.MINE, data = Bundle().apply {
-                                    putInt(ARouterMap.MINE_BLUE_PRINT, 1)
-                                })
+//                Handler(Looper.getMainLooper()).post {
+//                    DialogHelp.Builder().setTitle(i18n(com.rt.base.R.string.打印机状态异常请重新连接))
+//                        .setLeftMsg(i18n(com.rt.base.R.string.取消))
+//                        .setRightMsg(i18n(com.rt.base.R.string.去连接)).setCancelable(true)
+//                        .setOnButtonClickLinsener(object : DialogHelp.OnButtonClickLinsener {
+//                            override fun onLeftClickLinsener(msg: String) {
 //                            }
-                            }
-
-                        }).build(ActivityCacheManager.instance().getCurrentActivity()).showDailog()
-                }
+//
+//                            override fun onRightClickLinsener(msg: String) {
+////                            if (ActivityCacheManager.instance().getCurrentActivity() !is LoginActivity &&
+////                                ActivityCacheManager.instance().getCurrentActivity() !is StreetChooseActivity
+////                            ) {
+//                                startArouter(ARouterMap.MINE, data = Bundle().apply {
+//                                    putInt(ARouterMap.MINE_BLUE_PRINT, 1)
+//                                })
+////                            }
+//                            }
+//
+//                        }).build(ActivityCacheManager.instance().getCurrentActivity()).showDailog()
+//                }
+                disConnect()
                 return@Thread
             }
         }.start()

@@ -17,18 +17,9 @@ open class BaseViewModel : ViewModel(), LifecycleObserver {
     val errMsg: SafeMutableLiveData<ErrorMessage> = SafeMutableLiveData()
     val errorMsgList = ArrayList<SafeMutableLiveData<ErrorMessage>>()
     val mExceptionMsgList = ArrayList<SafeMutableLiveData<Exception>>()
-    private val mRequestErrorLinser = ArrayList<OnNetWorkCallLinsener>()
 
     override fun onCleared() {
         super.onCleared()
-        mRequestErrorLinser.clear()
-    }
-
-    /**
-     * 添加网络请求错误问题
-     */
-    fun regNetWorkRequestLinsener(mNetWorkRequestLinsener: OnNetWorkCallLinsener) {
-        mRequestErrorLinser.add(mNetWorkRequestLinsener)
     }
 
     /**
@@ -81,17 +72,6 @@ open class BaseViewModel : ViewModel(), LifecycleObserver {
         return mException
     }
 
-    private fun sendRequstError(exe: Exception, tag: String = "") {
-        if (TextUtils.isEmpty(tag)) {
-            return
-        }
-        mRequestErrorLinser.forEach {
-            it.onNewWorkErrorCall(tag, exe)
-        }
-
-
-    }
-
     private suspend fun tryCatch(
         tryBlock: suspend CoroutineScope.() -> Unit,
         catchBlock: suspend CoroutineScope.(Throwable) -> Unit,
@@ -107,8 +87,6 @@ open class BaseViewModel : ViewModel(), LifecycleObserver {
                         //提示报错信息
                         ToastUtil.showMiddleToast(e.toString())
                     }
-
-                    sendRequstError(e, tag)
                     traverseExpMsg(e)
                     catchBlock(e)
                 } else {

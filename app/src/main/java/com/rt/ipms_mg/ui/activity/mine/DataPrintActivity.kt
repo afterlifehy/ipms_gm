@@ -199,9 +199,6 @@ class DataPrintActivity : VbBaseActivity<DataPrintViewModel, ActivityDataPrintBi
         return ActivityDataPrintBinding.inflate(layoutInflater)
     }
 
-    override fun onReloadData() {
-    }
-
     override val isFullScreen: Boolean
         get() = true
 

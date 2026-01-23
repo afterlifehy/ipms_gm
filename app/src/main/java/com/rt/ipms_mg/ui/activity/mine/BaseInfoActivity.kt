@@ -76,9 +76,6 @@ class BaseInfoActivity : VbBaseActivity<BaseInfoViewModel, ActivityBaseInfoBindi
         return ActivityBaseInfoBinding.inflate(layoutInflater)
     }
 
-    override fun onReloadData() {
-    }
-
     override val isFullScreen: Boolean
         get() = true
 

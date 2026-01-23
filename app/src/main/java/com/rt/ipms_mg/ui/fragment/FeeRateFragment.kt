@@ -55,9 +55,6 @@ class FeeRateFragment : VbBaseFragment<FeeRateFragmentViewModel, FragmentFeeRate
         return FeeRateFragmentViewModel::class.java
     }
 
-    override fun onReloadData() {
-    }
-
     override fun getVbBindingView(): ViewBinding {
         return FragmentFeeRateBinding.inflate(layoutInflater)
     }

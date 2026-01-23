@@ -13,11 +13,7 @@ import com.rt.base.base.mvvm.BaseViewModel
 import com.rt.base.widget.PagerStatesView
 import java.util.*
 
-/**
- * Created by zj on 2019/12/23.
- */
-abstract class BaseDataFragmentKt<VM : BaseViewModel> : BaseFragment<VM>(), View.OnTouchListener,
-    BaseCommentLinsener, PagerStatesView.OnPagerClickLinsener {
+abstract class BaseDataFragmentKt<VM : BaseViewModel> : BaseFragment<VM>(), View.OnTouchListener {
     private var mViewAddManager: BaseViewAddManagers? = null
 
     init {
@@ -38,10 +34,7 @@ abstract class BaseDataFragmentKt<VM : BaseViewModel> : BaseFragment<VM>(), View
                 mRoot = mViewAddManager?.getRootViewId(requireContext(), getLayoutResId())!!
             } else {
                 mRoot = mViewAddManager?.getRootView(requireContext(), mBinView)!!
-
             }
-            mViewAddManager?.setIsShowTitle(isShowTitle())
-            mViewAddManager?.setIsLoadNotData(isLoadNotData())
             savedInstanceState?.let { }
             mInflater = inflater
             // Get savedInstanceState
@@ -52,104 +45,6 @@ abstract class BaseDataFragmentKt<VM : BaseViewModel> : BaseFragment<VM>(), View
 
     open fun getBindingView(): View? {
         return null
-    }
-
-    protected abstract fun onReloadData()
-
-    /**
-     * 是否需要添加暂无数据
-     *
-     * @return
-     */
-    open fun isLoadNotData(): Boolean {
-        return false
-    }
-
-    /**
-     * 如果有分页，统一关闭一些加载效果
-     */
-    open fun hindLoadStatus() {
-        hideLoadData()
-    }
-
-    /**
-     * 设置左边控件
-     */
-    override fun setRightIcon(icon: Int, onCLickLinsenr: View.OnClickListener) {
-        mViewAddManager?.setRightIcon(icon, onCLickLinsenr)
-    }
-
-    /**
-     * 判断当前是否暂无数据了
-     *
-     * @return
-     */
-    override fun notDataIsVisib(): Boolean {
-        return mViewAddManager?.notDataIsVisib()!!
-    }
-
-
-    /**
-     * @param textName
-     */
-    override fun setTitleName(title: String) {
-        mViewAddManager?.setTitleName(title)
-    }
-
-    /**
-     * 默认图标
-     */
-    override fun showPromptView(
-        text: String, errorIcont: Int,
-        mOnNotNetWorkClickLinsener: PagerStatesView.OnPagerClickLinsener?
-    ) {
-        mViewAddManager?.showPromptView(text, errorIcont, mOnNotNetWorkClickLinsener)
-    }
-
-    fun showNotDataView() {
-    }
-
-    /**
-     * 显示加载失败，点击屏幕重试
-     */
-    fun showLoadError() {
-    }
-
-    /**
-     * 请求数据
-     */
-    open fun getData() {
-
-    }
-
-    /**
-     * 隐藏我的
-     */
-    override fun hidePromptView() {
-        mViewAddManager?.hidePromptView()
-    }
-
-    /**
-     * 加载动画
-     */
-    override fun showLoadData() {
-        mViewAddManager?.showLoadData()
-    }
-
-    /**
-     * 隐藏加载框A
-     */
-    override fun hideLoadData() {
-        mViewAddManager?.hideLoadData()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        onMyPause()
-    }
-
-    override fun onMyPause() {
-        mViewAddManager?.onMyPause()
     }
 
     /**
@@ -182,50 +77,5 @@ abstract class BaseDataFragmentKt<VM : BaseViewModel> : BaseFragment<VM>(), View
             ?: return null
         val fragment = fragmentManager.findFragmentByTag(tag)
         return if (fragment is Fragment) fragment else null
-    }
-
-    override fun onNetWorkRequestError(errror: NetWorkRequestData) {
-        showLoadError()
-//        showNotDataView()
-    }
-
-    override fun onNoNetWorkErrror(errror: NetWorkRequestData) {
-        showNewWorkError()
-    }
-
-    /**
-     * 暂无网络
-     */
-    override fun showNewWorkError(mOnNotNetWorkClickLinsener: PagerStatesView.OnPagerClickLinsener?) {
-        mViewAddManager?.showNewWorkError(this)
-    }
-
-    /**
-     * 是否需要显示title
-     */
-    open fun isShowTitle(): Boolean {
-        return false
-    }
-
-    override fun currentNetWorkState(isNetWork: Boolean) {
-        super.currentNetWorkState(isNetWork)
-        if (isNetWork) {
-//             mViewAddManager?.setNetWorkStatesView(false)
-        } else {
-            //   mViewAddManager?.setNetWorkStatesView(true)
-        }
-    }
-
-    /**
-     * 隐藏掉暂无网络
-     */
-    override fun goneNewWorkError() {
-        mViewAddManager?.goneNewWorkError()
-    }
-
-    override fun onPagerClick() {
-        onReloadData()
-        getData()
-        hidePromptView()
     }
 }

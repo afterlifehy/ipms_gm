@@ -97,9 +97,6 @@ class PicActivity : VbBaseActivity<PicViewModel, ActivityPicBinding>(), OnClickL
         return ActivityPicBinding.inflate(layoutInflater)
     }
 
-    override fun onReloadData() {
-    }
-
     override val isFullScreen: Boolean
         get() = true
 

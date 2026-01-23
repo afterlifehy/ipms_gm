@@ -10,8 +10,10 @@ import android.view.View
 import android.view.View.OnClickListener
 import androidx.viewbinding.ViewBinding
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.blankj.utilcode.util.ClickUtils
 import com.blankj.utilcode.util.FileUtils
 import com.blankj.utilcode.util.PathUtils
+import com.blankj.utilcode.util.TimeUtils
 import com.hyperai.hyperlpr3.HyperLPR3
 import com.hyperai.hyperlpr3.bean.HyperLPRParameter
 import com.rt.base.BaseApplication
@@ -47,32 +49,43 @@ class MainActivity : VbBaseActivity<MainViewModel, ActivityMainBinding>(), OnCli
     }
 
     override fun initView() {
-        delete7DayPic()
+        delete2DayPic()
         initHyperLPR()
     }
 
-    fun delete7DayPic() {
+    fun delete2DayPic() {
         val path = PathUtils.getExternalAppPicturesPath()
         if (FileUtils.createOrExistsDir(path)) {
             val list = FileUtils.listFilesInDir(path)
             for (i in list) {
-                i.delete()
+                if (i.name.contains("_")) {
+                    val createTime = TimeUtils.string2Millis(i.name.substring(0, 8), "yyyyMMdd")
+                    if (System.currentTimeMillis() - createTime > 2 * 24 * 60 * 60 * 1000L) {
+                        i.delete()
+                    }
+                } else {
+                    i.delete()
+                }
             }
         }
     }
 
     override fun initListener() {
-        binding.ivHead.setOnClickListener(this)
-        binding.llParkingLot.setOnClickListener(this)
-        binding.flIncomeCounting.setOnClickListener(this)
-        binding.flOrder.setOnClickListener(this)
-        binding.flBerthAbnormal.setOnClickListener(this)
-        binding.flLogout.setOnClickListener(this)
+        val views = arrayOf(
+            binding.ivHead,
+            binding.llParkingLot,
+            binding.flIncomeCounting,
+            binding.flOrder,
+            binding.flBerthAbnormal,
+            binding.flLogout,
+            binding.ivG2
+        )
+        ClickUtils.applySingleDebouncing(views, 1000, this)
     }
 
     @SuppressLint("SetTextI18n")
     override fun initData() {
-        connectBluePrint()
+//        connectBluePrint()
     }
 
     @SuppressLint("CheckResult", "MissingPermission")
@@ -96,9 +109,7 @@ class MainActivity : VbBaseActivity<MainViewModel, ActivityMainBinding>(), OnCli
                                         if (ActivityCacheManager.instance().getCurrentActivity() !is LoginActivity &&
                                             ActivityCacheManager.instance().getCurrentActivity() !is StreetChooseActivity
                                         ) {
-                                            startArouter(ARouterMap.MINE, data = Bundle().apply {
-                                                putInt(ARouterMap.MINE_BLUE_PRINT, 1)
-                                            })
+                                            startArouter(ARouterMap.MINE)
                                         }
                                     }
 
@@ -186,9 +197,7 @@ class MainActivity : VbBaseActivity<MainViewModel, ActivityMainBinding>(), OnCli
                     if (ActivityCacheManager.instance().getCurrentActivity() !is LoginActivity &&
                         ActivityCacheManager.instance().getCurrentActivity() !is StreetChooseActivity
                     ) {
-                        startArouter(ARouterMap.MINE, data = Bundle().apply {
-                            putInt(ARouterMap.MINE_BLUE_PRINT, 1)
-                        })
+                        startArouter(ARouterMap.MINE)
                     }
                 }
 
@@ -198,9 +207,7 @@ class MainActivity : VbBaseActivity<MainViewModel, ActivityMainBinding>(), OnCli
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.iv_head -> {
-                startArouter(ARouterMap.MINE, data = Bundle().apply {
-                    putInt(ARouterMap.MINE_BLUE_PRINT, 0)
-                })
+                startArouter(ARouterMap.MINE)
             }
 
             R.id.ll_parkingLot -> {
@@ -244,10 +251,6 @@ class MainActivity : VbBaseActivity<MainViewModel, ActivityMainBinding>(), OnCli
 
     override fun getVbBindingView(): ViewBinding {
         return ActivityMainBinding.inflate(layoutInflater)
-    }
-
-    override fun onReloadData() {
-
     }
 
     override fun providerVMClass(): Class<MainViewModel> {

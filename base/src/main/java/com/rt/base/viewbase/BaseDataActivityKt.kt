@@ -10,13 +10,10 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.blankj.utilcode.util.BarUtils
 import com.rt.base.R
-import com.rt.base.bean.NetWorkRequestData
 import com.rt.base.base.mvvm.BaseViewModel
-import com.rt.base.widget.PagerStatesView
 
 
-abstract class BaseDataActivityKt<VM : BaseViewModel> : BaseActivity<VM>(), View.OnTouchListener,
-    BaseCommentLinsener, PagerStatesView.OnPagerClickLinsener {
+abstract class BaseDataActivityKt<VM : BaseViewModel> : BaseActivity<VM>(), View.OnTouchListener{
     protected var mRoot: View? = null
     protected var mViewAddManager: BaseViewAddManagers? = null
 
@@ -32,10 +29,8 @@ abstract class BaseDataActivityKt<VM : BaseViewModel> : BaseActivity<VM>(), View
             mRoot = mViewAddManager?.getRootView(this, mBinView)!!
 
         }
-        mViewAddManager?.setIsShowTitle(isShowTitle())
-        mViewAddManager?.setIsLoadNotData(isLoadNotData())
+        setStatusBarColor(R.color.black, true)
 
-        setStatusBarColor(com.rt.base.R.color.black, false)
         if (isFullScreen) {
             BarUtils.transparentStatusBar(this)
             if (marginStatusBarView() != null) {
@@ -61,145 +56,17 @@ abstract class BaseDataActivityKt<VM : BaseViewModel> : BaseActivity<VM>(), View
     }
 
     open fun navbarColor(): Int {
-        return R.color.white
+        return R.color.black
     }
 
     open fun marginStatusBarView(): View? {
         return null
     }
 
-    protected abstract fun onReloadData()
-
-    /**
-     * 是否需要添加暂无数据
-     *
-     * @return
-     */
-    open fun isLoadNotData(): Boolean {
-        return false
-    }
-
-    /**
-     * 是否需要显示title
-     */
-    open fun isShowTitle(): Boolean {
-        return false
-    }
-
     abstract val isFullScreen: Boolean
-
-    /**
-     * 如果有分页，统一关闭一些加载效果
-     */
-    open fun hideLoadStatus() {
-        hideLoadData()
-    }
-
-    /**
-     * 设置左边控件
-     */
-    override fun setRightIcon(icon: Int, onCLickLinsenr: View.OnClickListener) {
-        mViewAddManager?.setRightIcon(icon, onCLickLinsenr)
-    }
-
-    /**
-     * 判断当前是否暂无数据了
-     *
-     * @return
-     */
-    override fun notDataIsVisib(): Boolean {
-        return mViewAddManager?.notDataIsVisib()!!
-    }
-
-
-    /**
-     * @param textName
-     */
-    override fun setTitleName(title: String) {
-        mViewAddManager?.setTitleName(title)
-    }
-
-    /**
-     * 默认图标
-     */
-    override fun showPromptView(
-        text: String,
-        errorIcont: Int,
-        mOnNotNetWorkClickLinsener: PagerStatesView.OnPagerClickLinsener?
-    ) {
-        mViewAddManager?.showPromptView(
-            text,
-            errorIcont,
-            mOnNotNetWorkClickLinsener
-        )
-
-    }
-
-    fun showNotDataView() {
-    }
-
-    /**
-     * 显示加载失败，点击屏幕重试
-     */
-    fun showLoadError() {
-    }
-
-    /**
-     * 请求数据
-     */
-    open fun getData() {
-
-    }
-
-    /**
-     * 隐藏我的
-     */
-    override fun hidePromptView() {
-        mViewAddManager?.hidePromptView()
-    }
-
-    /**
-     * 暂无网络
-     */
-    override fun showNewWorkError(mOnNotNetWorkClickLinsener: PagerStatesView.OnPagerClickLinsener?) {
-        mViewAddManager?.showNewWorkError(this)
-    }
-
-    /**
-     * 隐藏掉暂无网络
-     */
-    override fun goneNewWorkError() {
-        mViewAddManager?.goneNewWorkError()
-    }
-
-
-    /**
-     * 加载动画
-     */
-    override fun showLoadData() {
-        mViewAddManager?.showLoadData()
-    }
-
-
-    override fun onPause() {
-        super.onPause()
-        onMyPause()
-    }
-
-    /**
-     * 隐藏加载框A
-     */
-    override fun hideLoadData() {
-        mViewAddManager?.hideLoadData()
-    }
-
-    override fun onMyPause() {
-        mViewAddManager?.onMyPause()
-    }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         return checkTouch()
-
     }
 
     override fun onTouch(v: View, event: MotionEvent): Boolean {
@@ -265,19 +132,5 @@ abstract class BaseDataActivityKt<VM : BaseViewModel> : BaseActivity<VM>(), View
                 fragmentTransaction.hide(fragments[i])
             }
         }
-    }
-
-    override fun onNetWorkRequestError(errror: NetWorkRequestData) {
-        showLoadError()
-    }
-
-    override fun onNoNetWorkErrror(errror: NetWorkRequestData) {
-        showNewWorkError()
-    }
-
-    override fun onPagerClick() {
-        onReloadData()
-        getData()
-        hidePromptView()
     }
 }

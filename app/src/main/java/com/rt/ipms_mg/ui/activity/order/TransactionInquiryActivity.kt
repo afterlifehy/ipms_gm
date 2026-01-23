@@ -253,7 +253,8 @@ class TransactionInquiryActivity : VbBaseActivity<TransactionInquiryViewModel, A
                     leftTime = it.endTime,
                     remark = it.remark,
                     company = it.businessCname,
-                    oweCount = it.oweCount
+                    oweCount = it.oweCount,
+                    qrcode = "12345"
                 )
                 Thread {
                     BluePrint.instance?.zkblueprint(JSONObject.toJSONString(printInfo))
@@ -293,9 +294,6 @@ class TransactionInquiryActivity : VbBaseActivity<TransactionInquiryViewModel, A
 
     override fun getVbBindingView(): ViewBinding {
         return ActivityTransactionInquiryBinding.inflate(layoutInflater)
-    }
-
-    override fun onReloadData() {
     }
 
     override val isFullScreen: Boolean

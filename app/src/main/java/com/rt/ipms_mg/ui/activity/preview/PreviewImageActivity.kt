@@ -84,9 +84,6 @@ class PreviewImageActivity : VbBaseActivity<PreviewImageViewModel, ActivityPrevi
         return ActivityPreviewImageBinding.inflate(layoutInflater)
     }
 
-    override fun onReloadData() {
-    }
-
     override val isFullScreen: Boolean
         get() = true
 

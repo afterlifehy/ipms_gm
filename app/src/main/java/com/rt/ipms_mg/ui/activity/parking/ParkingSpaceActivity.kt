@@ -462,7 +462,8 @@ class ParkingSpaceActivity : VbBaseActivity<ParkingSpaceViewModel, ActivityParki
             leftTime = it.endTime,
             remark = it.remark,
             company = it.businessCname,
-            oweCount = 0
+            oweCount = 0,
+            qrcode = "12345"
         )
         Thread {
             BluePrint.instance?.zkblueprint(JSONObject.toJSONString(printInfo))
@@ -481,9 +482,6 @@ class ParkingSpaceActivity : VbBaseActivity<ParkingSpaceViewModel, ActivityParki
 
     override fun isRegEventBus(): Boolean {
         return true
-    }
-
-    override fun onReloadData() {
     }
 
     override val isFullScreen: Boolean

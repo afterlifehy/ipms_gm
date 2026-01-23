@@ -1,51 +1,39 @@
-package com.rt.base.http.interceptor;
+package com.rt.base.http.interceptor
 
-import android.util.Log;
+import okhttp3.Interceptor
+import okhttp3.Request
+import okhttp3.Response
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+import java.io.IOException
 
-import java.io.IOException;
+class LogInterceptor(private val isDebug: Boolean) : Interceptor {
+    protected val log: Logger by lazy { LoggerFactory.getLogger(this::class.java) }
 
-import okhttp3.Interceptor;
-import okhttp3.Request;
-import okhttp3.Response;
-
-public class LogInterceptor implements Interceptor {
-    private boolean isDebug;
-    //可以从连几次
-
-    public LogInterceptor(boolean isDebug) {
-        this.isDebug = isDebug;
-    }
-
-    @Override
-    public Response intercept(Chain chain) throws IOException {
-        Request request = chain.request();
-        if (isDebug) {
-            Log.i("HttpRequest:", "okhttp3:" + request.toString());//输出请求前整个url
-            //去执行网络请求
-
-        }
-        Response response = chain.proceed(request);
-
-        if (isDebug) {
-            okhttp3.MediaType mediaType = response.body().contentType();
-
-            String content = response.body().string();
-            if (isDebug) {
-//                String[] url = response.request().url().url().toString().split("/");
-//                String metoh = url[url.length - 1];
-//                if (metoh.contains("?")) {
-//                    metoh = metoh.split("?")[0];
-//                }
-//                Log.i("keey", "url:" + metoh);
-//                Log.i("metoh:", "request:" + request.toString() + "==" + "response body:" + content);//输出返回信息
-
-                Log.i("HttpResponse:", "request:" + request.toString() + "==" + "response body:" + content);//输出返回信息
+    @Throws(IOException::class)
+    override fun intercept(chain: Interceptor.Chain): Response {
+        val request: Request = chain.request()
+        val requestContent = request.toString()
+        val printContent = requestContent.replace(Regex("""photo":"([^&]*)"""")) { matchResult ->
+            val value = matchResult.groupValues[1] // 获取 photo 参数值
+            if (value.isEmpty()) {
+                "photo:空值"
+            } else {
+                "photo:${value.take(50)} 总字节数:${value.toByteArray().size}"
             }
-            return response.newBuilder()
-                    .body(okhttp3.ResponseBody.create(mediaType, content))
-                    .build();
         }
-        return response;
 
+        log.info("okhttp3:$printContent")
+        val response: Response = chain.proceed(request)
+//        if (isDebug) {
+        val mediaType = response.body!!.contentType()
+        val content = response.body!!.string()
+        log.info(response.toString())
+        log.info("=============request:{}\n=============response body:{}\n", printContent, content)
+
+        // 返回一个新的response，并保留原始的响应体内容
+        return response.newBuilder()
+            .body(okhttp3.ResponseBody.create(mediaType, content)) // 使用复制的响应体
+            .build()
     }
 }

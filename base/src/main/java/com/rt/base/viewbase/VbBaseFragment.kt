@@ -5,9 +5,6 @@ import androidx.viewbinding.ViewBinding
 import com.rt.base.R
 import com.rt.base.base.mvvm.BaseViewModel
 
-/**
- * Created by zj on 2021/3/12.
- */
 abstract class VbBaseFragment<VM : BaseViewModel, vb : ViewBinding> : BaseDataFragmentKt<VM>() {
     lateinit var binding: vb
 

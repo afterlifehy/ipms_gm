@@ -245,9 +245,6 @@ class OrderInquiryActivity : VbBaseActivity<OrderInquiryViewModel, ActivityOrder
         return ActivityOrderInquiryBinding.inflate(layoutInflater)
     }
 
-    override fun onReloadData() {
-    }
-
     override val isFullScreen: Boolean
         get() = true
 

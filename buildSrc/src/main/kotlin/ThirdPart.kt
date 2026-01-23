@@ -162,4 +162,7 @@ object ThirdPart {
     const val umeng_apm = "com.umeng.umsdk:apm:1.5.2"
 
     const val luban = "top.zibin:Luban:1.1.8"
+
+    const val slf4j = "org.slf4j:slf4j-api:2.0.7"
+    const val logback = "com.github.tony19:logback-android:3.0.0"
 }
