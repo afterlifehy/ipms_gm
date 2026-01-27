@@ -25,11 +25,14 @@ import com.rt.base.util.ToastUtil
 import com.rt.base.viewbase.VbBaseActivity
 import com.tbruyelle.rxpermissions3.RxPermissions
 import com.rt.base.bean.UpdateBean
+import com.rt.base.ds.PreferencesDataStore
+import com.rt.base.ds.PreferencesKeys
 import com.rt.base.ext.startAct
 import com.rt.ipms_mg.R
 import com.rt.ipms_mg.databinding.ActivityLoginBinding
 import com.rt.ipms_mg.mvvm.viewmodel.LoginViewModel
 import com.rt.ipms_mg.util.UpdateUtil
+import kotlinx.coroutines.runBlocking
 
 @Route(path = ARouterMap.LOGIN)
 class LoginActivity : VbBaseActivity<LoginViewModel, ActivityLoginBinding>(), OnClickListener {
@@ -180,6 +183,9 @@ class LoginActivity : VbBaseActivity<LoginViewModel, ActivityLoginBinding>(), On
                         }
                         if (locationEnable != -1) {
                             showProgressDialog(20000)
+                            runBlocking {
+                                PreferencesDataStore(BaseApplication.instance()).putString(PreferencesKeys.password, binding.etPw.text.toString())
+                            }
                             val param = HashMap<String, Any>()
                             val jsonobject = JSONObject()
                             jsonobject["loginName"] = binding.etAccount.text.toString()

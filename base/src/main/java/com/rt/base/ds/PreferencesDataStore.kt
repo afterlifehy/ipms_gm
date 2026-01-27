@@ -107,6 +107,8 @@ object PreferencesKeys {
 
     val loginName by stringPreferencesKey()
 
+    val password by stringPreferencesKey()
+
     val lastCheckUpdateTime by longPreferencesKey()
 
     fun booleanPreferencesKey() =
