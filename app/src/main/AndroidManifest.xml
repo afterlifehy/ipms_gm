@@ -201,8 +201,7 @@
         <activity
             android:name="com.rt.ipms_mg.ui.activity.income.IncomeCountingActivity"
             android:exported="false"
-            android:launchMode="singleTask"
-            android:theme="@style/AppTheme" />
+            android:launchMode="singleTask" />
 
         <activity
             android:name="com.rt.ipms_mg.ui.activity.order.OrderMainActivity"
@@ -212,14 +211,12 @@
         <activity
             android:name="com.rt.ipms_mg.ui.activity.order.TransactionInquiryActivity"
             android:exported="false"
-            android:launchMode="singleTask"
-            android:theme="@style/AppTheme" />
+            android:launchMode="singleTask" />
 
         <activity
             android:name="com.rt.ipms_mg.ui.activity.order.DebtCollectionActivity"
             android:exported="false"
-            android:launchMode="singleTask"
-            android:theme="@style/AppTheme" />
+            android:launchMode="singleTask" />
 
         <activity
             android:name="com.rt.ipms_mg.ui.activity.order.DebtOrderDetailActivity"
@@ -231,14 +228,12 @@
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
             android:exported="false"
             android:launchMode="singleTask"
-            android:screenOrientation="fullSensor"
-            android:theme="@style/AppTheme" />
+            android:screenOrientation="fullSensor" />
 
         <activity
             android:name="com.rt.ipms_mg.ui.activity.order.OrderInquiryActivity"
             android:exported="false"
-            android:launchMode="singleTask"
-            android:theme="@style/AppTheme" />
+            android:launchMode="singleTask" />
 
         <activity
             android:name="com.rt.ipms_mg.ui.activity.order.OrderDetailActivity"

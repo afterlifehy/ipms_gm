@@ -49,6 +49,7 @@ class PrepaidActivity : VbBaseActivity<PrepaidViewModel, ActivityPrepaidBinding>
 
     var count = 0
     var tradeNo = ""
+    var handler = Handler(Looper.getMainLooper())
 
     override fun initView() {
         binding.layoutToolbar.tvTitle.text = i18N(com.rt.base.R.string.预支付)
@@ -127,6 +128,31 @@ class PrepaidActivity : VbBaseActivity<PrepaidViewModel, ActivityPrepaidBinding>
                 paymentQrDialog?.setOnDismissListener {}
                 count = 0
             }
+            payResultInquiryLiveData.observe(this@PrepaidActivity) {
+                dismissProgressDialog()
+                if (it != null && it.payMoney != null) {
+                    handler.removeCallbacks(runnable)
+                    ToastUtil.showBottomToast("支付成功")
+                    if (!isDestroyed && !isFinishing) {
+                        if (paymentQrDialog != null) {
+                            paymentQrDialog?.dismiss()
+                        }
+                    }
+                    val payResultBean = it
+                    var rxPermissions = RxPermissions(this@PrepaidActivity)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                        rxPermissions.request(Manifest.permission.BLUETOOTH_CONNECT, Manifest.permission.BLUETOOTH_SCAN).subscribe {
+                            if (it) {
+                                startPrint(payResultBean)
+                            }
+                        }
+                    } else {
+                        startPrint(payResultBean)
+                    }
+                    EventBus.getDefault().post(RefreshParkingSpaceEvent())
+                    onBackPressedSupport()
+                }
+            }
             errMsg.observe(this@PrepaidActivity) {
                 dismissProgressDialog()
                 ToastUtil.showMiddleToast(it.msg)
@@ -135,6 +161,15 @@ class PrepaidActivity : VbBaseActivity<PrepaidViewModel, ActivityPrepaidBinding>
                 dismissProgressDialog()
             }
         }
+    }
+
+    fun checkPayResult() {
+        val param = HashMap<String, Any>()
+        val jsonobject = JSONObject()
+        jsonobject["simId"] = simId
+        jsonobject["tradeNo"] = tradeNo
+        param["attr"] = jsonobject
+        mViewModel.payResultInquiry(param)
     }
 
     fun startPrint(it: PayResultBean) {
@@ -150,12 +185,33 @@ class PrepaidActivity : VbBaseActivity<PrepaidViewModel, ActivityPrepaidBinding>
             remark = it.remark,
             company = it.businessCname,
             oweCount = it.oweCount,
-            qrcode = "12345"
+            qrcode = "1234",
         )
-        ToastUtil.showMiddleToast(i18n(com.rt.base.R.string.开始打印))
-        Thread {
-            BluePrint.instance?.zkblueprint(JSONObject.toJSONString(printInfo))
-        }.start()
+        val printList = BluePrint.instance?.blueToothDevice!!
+        if (printList.size == 1) {
+            Thread {
+                val device = printList[0]
+                var connectResult = BluePrint.instance?.connet(device.address)
+                if (connectResult == 0) {
+                    runOnUiThread {
+                        ToastUtil.showBottomToast("开始打印")
+                    }
+                    BluePrint.instance?.zkblueprint(JSONObject.toJSONString(printInfo))
+                }
+            }.start()
+        }
+    }
+
+    val runnable = object : Runnable {
+        override fun run() {
+            if (count < 60) {
+                if (!isFinishing && !isDestroyed) {
+                    checkPayResult()
+                }
+                count++
+                handler.postDelayed(this, 3000)
+            }
+        }
     }
 
     override fun providerVMClass(): Class<PrepaidViewModel> {

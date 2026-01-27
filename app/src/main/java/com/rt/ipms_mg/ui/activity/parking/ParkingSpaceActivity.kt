@@ -462,18 +462,24 @@ class ParkingSpaceActivity : VbBaseActivity<ParkingSpaceViewModel, ActivityParki
             leftTime = it.endTime,
             remark = it.remark,
             company = it.businessCname,
-            oweCount = 0,
-            qrcode = "12345"
+            oweCount = it.oweCount,
+            qrcode = "1234"
         )
-        Thread {
-            BluePrint.instance?.zkblueprint(JSONObject.toJSONString(printInfo))
-        }.start()
+        val printList = BluePrint.instance?.blueToothDevice!!
+        if (printList.size == 1) {
+            Thread {
+                val device = printList[0]
+                var connectResult = BluePrint.instance?.connet(device.address)
+                if (connectResult == 0) {
+                    BluePrint.instance?.zkblueprint(JSONObject.toJSONString(printInfo))
+                }
+            }.start()
+        }
         GlobalScope.launch {
-            delay(2000)
+            delay(3000)
             // 执行打印完成后的回调
             onComplete()
         }
-
     }
 
     override fun getVbBindingView(): ViewBinding {

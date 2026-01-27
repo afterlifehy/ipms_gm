@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory
 import android.os.Handler
 import android.os.Looper
 import com.alibaba.fastjson.JSONObject
+import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.TimeUtils
 import com.rt.base.BaseApplication
 import com.rt.base.bean.IncomeCountingBean
@@ -257,7 +258,8 @@ class BluePrint() {
                 if (printInfo.qrcode.isEmpty()) {
                     bitmap = BitmapFactory.decodeResource(BaseApplication.instance().resources, com.rt.common.R.mipmap.ic_print_qr)
                 } else {
-                    bitmap = AppUtil.base64ToBitmap(printInfo.qrcode)
+//                    bitmap = AppUtil.base64ToBitmap(printInfo.qrcode)
+                    bitmap = CodeUtils.createImage(printInfo.qrcode, SizeUtils.dp2px(300f), SizeUtils.dp2px(300f), null)
                 }
                 val scaledBitmap = Bitmap.createScaledBitmap(bitmap!!, 300, 300, true)
                 zpSDK!!.drawGraphic(

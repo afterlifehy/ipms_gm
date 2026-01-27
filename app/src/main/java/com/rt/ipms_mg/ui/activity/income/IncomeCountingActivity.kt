@@ -127,17 +127,35 @@ class IncomeCountingActivity : VbBaseActivity<IncomeCountingViewModel, ActivityI
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                     rxPermissions.request(Manifest.permission.BLUETOOTH_CONNECT, Manifest.permission.BLUETOOTH_SCAN).subscribe {
                         if (it) {
-                            ToastUtil.showMiddleToast(i18n(com.rt.base.R.string.开始打印))
-                            Thread {
-                                BluePrint.instance?.zkblueprint(str + JSONObject.toJSONString(incomeCountingBean))
-                            }.start()
+                            val printList = BluePrint.instance?.blueToothDevice!!
+                            if (printList.size == 1) {
+                                Thread {
+                                    val device = printList[0]
+                                    var connectResult = BluePrint.instance?.connet(device.address)
+                                    if (connectResult == 0) {
+                                        runOnUiThread {
+                                            ToastUtil.showBottomToast("开始打印")
+                                        }
+                                        BluePrint.instance?.zkblueprint(str + JSONObject.toJSONString(incomeCountingBean))
+                                    }
+                                }.start()
+                            }
                         }
                     }
                 } else {
-                    ToastUtil.showMiddleToast(i18n(com.rt.base.R.string.开始打印))
-                    Thread {
-                        BluePrint.instance?.zkblueprint(str + JSONObject.toJSONString(incomeCountingBean))
-                    }.start()
+                    val printList = BluePrint.instance?.blueToothDevice!!
+                    if (printList.size == 1) {
+                        Thread {
+                            val device = printList[0]
+                            var connectResult = BluePrint.instance?.connet(device.address)
+                            if (connectResult == 0) {
+                                runOnUiThread {
+                                    ToastUtil.showBottomToast("开始打印")
+                                }
+                                BluePrint.instance?.zkblueprint(str + JSONObject.toJSONString(incomeCountingBean))
+                            }
+                        }.start()
+                    }
                 }
             }
         }

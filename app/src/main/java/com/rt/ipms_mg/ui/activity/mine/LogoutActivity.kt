@@ -113,60 +113,64 @@ class LogoutActivity : VbBaseActivity<LogoutViewModel, ActivityLogOutBinding>(),
             }
 
             R.id.tv_logout -> {
-                var rxPermissions = RxPermissions(this@LogoutActivity)
-                rxPermissions.request(Manifest.permission.ACCESS_FINE_LOCATION).subscribe {
-                    if (it) {
-                        DialogHelp.Builder().setTitle(i18N(com.rt.base.R.string.确认签退))
-                            .setLeftMsg(i18N(com.rt.base.R.string.取消))
-                            .setRightMsg(i18N(com.rt.base.R.string.确定)).setCancelable(true)
-                            .setOnButtonClickLinsener(object : DialogHelp.OnButtonClickLinsener {
-                                override fun onLeftClickLinsener(msg: String) {
-                                }
-
-                                override fun onRightClickLinsener(msg: String) {
-                                    if (locationManager == null) {
-                                        locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
-                                        val provider = LocationManager.NETWORK_PROVIDER
-                                        locationManager?.requestLocationUpdates(provider, 1000, 1f, object : LocationListener {
-                                            override fun onLocationChanged(location: Location) {
-                                                lat = location.latitude
-                                                lon = location.longitude
-                                                locationEnable = 1
-                                            }
-
-                                            override fun onProviderDisabled(provider: String) {
-                                                locationEnable = -1
-                                                ToastUtil.showMiddleToast(i18N(com.rt.base.R.string.请打开位置信息))
-                                            }
-
-                                            override fun onProviderEnabled(provider: String) {
-                                                locationEnable = 1
-                                            }
-                                        })
+                if (binding.etPw.text.toString().isNotEmpty()) {
+                    var rxPermissions = RxPermissions(this@LogoutActivity)
+                    rxPermissions.request(Manifest.permission.ACCESS_FINE_LOCATION).subscribe {
+                        if (it) {
+                            DialogHelp.Builder().setTitle(i18N(com.rt.base.R.string.确认签退))
+                                .setLeftMsg(i18N(com.rt.base.R.string.取消))
+                                .setRightMsg(i18N(com.rt.base.R.string.确定)).setCancelable(true)
+                                .setOnButtonClickLinsener(object : DialogHelp.OnButtonClickLinsener {
+                                    override fun onLeftClickLinsener(msg: String) {
                                     }
-                                    if (locationEnable != -1) {
-                                        showProgressDialog(20000)
-                                        runBlocking {
-                                            val simId =
-                                                PreferencesDataStore(BaseApplication.baseApplication).getString(PreferencesKeys.simId)
-                                            val loginName =
-                                                PreferencesDataStore(BaseApplication.baseApplication).getString(PreferencesKeys.loginName)
-                                            val param = HashMap<String, Any>()
-                                            val jsonobject = JSONObject()
-                                            jsonobject["simId"] = simId
+
+                                    override fun onRightClickLinsener(msg: String) {
+                                        if (locationManager == null) {
+                                            locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+                                            val provider = LocationManager.NETWORK_PROVIDER
+                                            locationManager?.requestLocationUpdates(provider, 1000, 1f, object : LocationListener {
+                                                override fun onLocationChanged(location: Location) {
+                                                    lat = location.latitude
+                                                    lon = location.longitude
+                                                    locationEnable = 1
+                                                }
+
+                                                override fun onProviderDisabled(provider: String) {
+                                                    locationEnable = -1
+                                                    ToastUtil.showMiddleToast(i18N(com.rt.base.R.string.请打开位置信息))
+                                                }
+
+                                                override fun onProviderEnabled(provider: String) {
+                                                    locationEnable = 1
+                                                }
+                                            })
+                                        }
+                                        if (locationEnable != -1) {
+                                            showProgressDialog(20000)
+                                            runBlocking {
+                                                val simId =
+                                                    PreferencesDataStore(BaseApplication.baseApplication).getString(PreferencesKeys.simId)
+                                                val loginName =
+                                                    PreferencesDataStore(BaseApplication.baseApplication).getString(PreferencesKeys.loginName)
+                                                val param = HashMap<String, Any>()
+                                                val jsonobject = JSONObject()
+                                                jsonobject["simId"] = simId
 //                                            jsonobject["loginName"] = loginName
 //                                            jsonobject["longitude"] = lon
 //                                            jsonobject["latitude"] = lat
-                                            param["attr"] = jsonobject
-                                            mViewModel.logout(param)
+                                                param["attr"] = jsonobject
+                                                mViewModel.logout(param)
+                                            }
+                                        } else {
+                                            ToastUtil.showMiddleToast(i18N(com.rt.base.R.string.请打开位置信息))
                                         }
-                                    } else {
-                                        ToastUtil.showMiddleToast(i18N(com.rt.base.R.string.请打开位置信息))
                                     }
-                                }
 
-                            }).build(this@LogoutActivity).showDailog()
+                                }).build(this@LogoutActivity).showDailog()
+                        }
                     }
+                } else {
+                    ToastUtil.showBottomToast("请输入密码")
                 }
             }
         }

@@ -35,6 +35,7 @@ import com.rt.ipms_mg.R
 import com.rt.ipms_mg.pop.DatePop
 import com.tbruyelle.rxpermissions3.RxPermissions
 import com.rt.base.bean.PrintInfoBean
+import com.rt.base.bean.TicketPrintBean
 import com.rt.base.ext.i18n
 import com.rt.ipms_mg.adapter.TransactionInquiryAdapter
 import com.rt.ipms_mg.databinding.ActivityTransactionInquiryBinding
@@ -65,12 +66,12 @@ class TransactionInquiryActivity : VbBaseActivity<TransactionInquiryViewModel, A
         binding.layoutToolbar.tvTitle.setTextColor(ContextCompat.getColor(BaseApplication.instance(), com.rt.base.R.color.white))
         GlideUtils.instance?.loadImage(binding.layoutToolbar.ivRight, com.rt.common.R.mipmap.ic_calendar)
         binding.layoutToolbar.ivRight.show()
-
+//
         binding.rvTransaction.setHasFixedSize(true)
         binding.rvTransaction.layoutManager = LinearLayoutManager(this)
         transactionInquiryAdapter = TransactionInquiryAdapter(transactionInquiryList, this)
         binding.rvTransaction.adapter = transactionInquiryAdapter
-
+//
         initKeyboard()
     }
 
@@ -241,7 +242,6 @@ class TransactionInquiryActivity : VbBaseActivity<TransactionInquiryViewModel, A
             }
             ticketPrintLiveData.observe(this@TransactionInquiryActivity) {
                 dismissProgressDialog()
-                ToastUtil.showMiddleToast(i18n(com.rt.base.R.string.开始打印))
                 val payMoney = it.payMoney
                 val printInfo = PrintInfoBean(
                     roadId = it.roadName,
@@ -254,11 +254,21 @@ class TransactionInquiryActivity : VbBaseActivity<TransactionInquiryViewModel, A
                     remark = it.remark,
                     company = it.businessCname,
                     oweCount = it.oweCount,
-                    qrcode = "12345"
+                    qrcode = "www.baidu.com"
                 )
-                Thread {
-                    BluePrint.instance?.zkblueprint(JSONObject.toJSONString(printInfo))
-                }.start()
+                val printList = BluePrint.instance?.blueToothDevice!!
+                if (printList.size == 1) {
+                    Thread {
+                        val device = printList[0]
+                        var connectResult = BluePrint.instance?.connet(device.address)
+                        if (connectResult == 0) {
+                            runOnUiThread {
+                                ToastUtil.showBottomToast("开始打印")
+                            }
+                            BluePrint.instance?.zkblueprint(JSONObject.toJSONString(printInfo))
+                        }
+                    }.start()
+                }
             }
             errMsg.observe(this@TransactionInquiryActivity) {
                 dismissProgressDialog()

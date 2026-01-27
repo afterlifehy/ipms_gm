@@ -20,140 +20,176 @@
     <LinearLayout
         android:id="@+id/ll_currentTime"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dp_200"
         android:layout_below="@+id/layout_toolbar"
         android:layout_marginStart="@dimen/dp_20"
         android:layout_marginTop="@dimen/dp_23"
         android:layout_marginEnd="@dimen/dp_20"
         android:background="@mipmap/ic_current_time_bg"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:paddingStart="@dimen/dp_13"
         android:paddingTop="@dimen/dp_20"
         android:paddingEnd="@dimen/dp_13">
 
-        <com.aries.ui.view.radius.RadiusTextView
-            android:id="@+id/rtv_hour1"
-            android:layout_width="@dimen/dp_0"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dp_3"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:paddingTop="@dimen/dp_13"
-            android:paddingBottom="@dimen/dp_13"
-            android:text="0"
-            android:textColor="@color/color_ff04a091"
-            android:textSize="@dimen/sp_23"
-            android:textStyle="bold"
-            app:rv_radius="@dimen/dp_10"
-            app:rv_strokeColor="@color/color_8061faeb"
-            app:rv_strokeWidth="@dimen/dp_2" />
+            android:orientation="horizontal">
 
-        <com.aries.ui.view.radius.RadiusTextView
-            android:id="@+id/rtv_hour2"
-            android:layout_width="@dimen/dp_0"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_3"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:paddingTop="@dimen/dp_13"
-            android:paddingBottom="@dimen/dp_13"
-            android:text="0"
-            android:textColor="@color/color_ff04a091"
-            android:textSize="@dimen/sp_23"
-            android:textStyle="bold"
-            app:rv_radius="@dimen/dp_10"
-            app:rv_strokeColor="@color/color_8061faeb"
-            app:rv_strokeWidth="@dimen/dp_2" />
+            <com.aries.ui.view.radius.RadiusTextView
+                android:id="@+id/rtv_hour1"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_3"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingTop="@dimen/dp_13"
+                android:paddingBottom="@dimen/dp_13"
+                android:text="0"
+                android:textColor="@color/color_ff04a091"
+                android:textSize="@dimen/sp_23"
+                android:textStyle="bold"
+                app:rv_radius="@dimen/dp_10"
+                app:rv_strokeColor="@color/color_8061faeb"
+                app:rv_strokeWidth="@dimen/dp_2" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_8"
-            android:layout_marginEnd="@dimen/dp_8"
-            android:gravity="center"
-            android:text=":"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp_30"
-            android:textStyle="bold" />
+            <com.aries.ui.view.radius.RadiusTextView
+                android:id="@+id/rtv_hour2"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_3"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingTop="@dimen/dp_13"
+                android:paddingBottom="@dimen/dp_13"
+                android:text="0"
+                android:textColor="@color/color_ff04a091"
+                android:textSize="@dimen/sp_23"
+                android:textStyle="bold"
+                app:rv_radius="@dimen/dp_10"
+                app:rv_strokeColor="@color/color_8061faeb"
+                app:rv_strokeWidth="@dimen/dp_2" />
 
-        <com.aries.ui.view.radius.RadiusTextView
-            android:id="@+id/rtv_minute1"
-            android:layout_width="@dimen/dp_0"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dp_3"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:paddingTop="@dimen/dp_13"
-            android:paddingBottom="@dimen/dp_13"
-            android:text="0"
-            android:textColor="@color/color_ff04a091"
-            android:textSize="@dimen/sp_23"
-            android:textStyle="bold"
-            app:rv_radius="@dimen/dp_10"
-            app:rv_strokeColor="@color/color_8061faeb"
-            app:rv_strokeWidth="@dimen/dp_2" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_8"
+                android:layout_marginEnd="@dimen/dp_8"
+                android:gravity="center"
+                android:text=":"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_30"
+                android:textStyle="bold" />
 
-        <com.aries.ui.view.radius.RadiusTextView
-            android:id="@+id/rtv_minute2"
-            android:layout_width="@dimen/dp_0"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_3"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:paddingTop="@dimen/dp_13"
-            android:paddingBottom="@dimen/dp_13"
-            android:text="0"
-            android:textColor="@color/color_ff04a091"
-            android:textSize="@dimen/sp_23"
-            android:textStyle="bold"
-            app:rv_radius="@dimen/dp_10"
-            app:rv_strokeColor="@color/color_8061faeb"
-            app:rv_strokeWidth="@dimen/dp_2" />
+            <com.aries.ui.view.radius.RadiusTextView
+                android:id="@+id/rtv_minute1"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_3"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingTop="@dimen/dp_13"
+                android:paddingBottom="@dimen/dp_13"
+                android:text="0"
+                android:textColor="@color/color_ff04a091"
+                android:textSize="@dimen/sp_23"
+                android:textStyle="bold"
+                app:rv_radius="@dimen/dp_10"
+                app:rv_strokeColor="@color/color_8061faeb"
+                app:rv_strokeWidth="@dimen/dp_2" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_8"
-            android:layout_marginEnd="@dimen/dp_8"
-            android:gravity="center"
-            android:text=":"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp_30"
-            android:textStyle="bold" />
+            <com.aries.ui.view.radius.RadiusTextView
+                android:id="@+id/rtv_minute2"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_3"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingTop="@dimen/dp_13"
+                android:paddingBottom="@dimen/dp_13"
+                android:text="0"
+                android:textColor="@color/color_ff04a091"
+                android:textSize="@dimen/sp_23"
+                android:textStyle="bold"
+                app:rv_radius="@dimen/dp_10"
+                app:rv_strokeColor="@color/color_8061faeb"
+                app:rv_strokeWidth="@dimen/dp_2" />
 
-        <com.aries.ui.view.radius.RadiusTextView
-            android:id="@+id/rtv_sec1"
-            android:layout_width="@dimen/dp_0"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dp_3"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:paddingTop="@dimen/dp_13"
-            android:paddingBottom="@dimen/dp_13"
-            android:text="0"
-            android:textColor="@color/color_ff04a091"
-            android:textSize="@dimen/sp_23"
-            android:textStyle="bold"
-            app:rv_radius="@dimen/dp_10"
-            app:rv_strokeColor="@color/color_8061faeb"
-            app:rv_strokeWidth="@dimen/dp_2" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_8"
+                android:layout_marginEnd="@dimen/dp_8"
+                android:gravity="center"
+                android:text=":"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_30"
+                android:textStyle="bold" />
 
-        <com.aries.ui.view.radius.RadiusTextView
-            android:id="@+id/rtv_sec2"
-            android:layout_width="@dimen/dp_0"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_3"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:paddingTop="@dimen/dp_13"
-            android:paddingBottom="@dimen/dp_13"
-            android:text="0"
-            android:textColor="@color/color_ff04a091"
-            android:textSize="@dimen/sp_23"
-            android:textStyle="bold"
-            app:rv_radius="@dimen/dp_10"
-            app:rv_strokeColor="@color/color_8061faeb"
-            app:rv_strokeWidth="@dimen/dp_2" />
+            <com.aries.ui.view.radius.RadiusTextView
+                android:id="@+id/rtv_sec1"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_3"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingTop="@dimen/dp_13"
+                android:paddingBottom="@dimen/dp_13"
+                android:text="0"
+                android:textColor="@color/color_ff04a091"
+                android:textSize="@dimen/sp_23"
+                android:textStyle="bold"
+                app:rv_radius="@dimen/dp_10"
+                app:rv_strokeColor="@color/color_8061faeb"
+                app:rv_strokeWidth="@dimen/dp_2" />
+
+            <com.aries.ui.view.radius.RadiusTextView
+                android:id="@+id/rtv_sec2"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_3"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingTop="@dimen/dp_13"
+                android:paddingBottom="@dimen/dp_13"
+                android:text="0"
+                android:textColor="@color/color_ff04a091"
+                android:textSize="@dimen/sp_23"
+                android:textStyle="bold"
+                app:rv_radius="@dimen/dp_10"
+                app:rv_strokeColor="@color/color_8061faeb"
+                app:rv_strokeWidth="@dimen/dp_2" />
+        </LinearLayout>
+
+        <com.aries.ui.view.radius.RadiusLinearLayout
+            android:id="@+id/rll_pw"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_60"
+            android:layout_marginTop="@dimen/dp_16"
+            android:padding="@dimen/dp_17"
+            app:rv_radius="@dimen/dp_7"
+            app:rv_strokeColor="@color/color_ff04a091"
+            app:rv_strokeWidth="@dimen/dp_1">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_login_pw_logo" />
+
+            <EditText
+                android:id="@+id/et_pw"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/dp_14"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="@string/请输入密码"
+                android:inputType="textPassword"
+                android:textColor="@color/black"
+                android:textColorHint="@color/color_ff99a7a6"
+                android:textCursorDrawable="@drawable/shape_cursor"
+                android:textSize="@dimen/sp_19" />
+        </com.aries.ui.view.radius.RadiusLinearLayout>
     </LinearLayout>
 
     <TextView
@@ -216,7 +252,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/dp_110"
+        android:layout_marginBottom="@dimen/dp_80"
         android:gravity="center"
         android:text="@string/壬通科技祝您健康幸福"
         android:textColor="@color/color_ff476e6a"
