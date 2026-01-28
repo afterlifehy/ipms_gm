@@ -148,26 +148,55 @@
         </LinearLayout>
     </com.aries.ui.view.radius.RadiusLinearLayout>
 
-    <com.aries.ui.view.radius.RadiusFrameLayout
-        android:id="@+id/rfl_pay"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_47"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="@dimen/dp_13"
         android:layout_marginEnd="@dimen/dp_13"
-        android:layout_marginBottom="@dimen/dp_16"
-        app:rv_backgroundColor="@color/color_ff04a091"
-        app:rv_radius="@dimen/dp_7">
+        android:layout_marginBottom="@dimen/dp_13"
+        android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:drawableStart="@mipmap/ic_scan"
-            android:drawablePadding="@dimen/dp_14"
-            android:text="@string/扫码支付"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp_19"
-            android:textStyle="bold" />
-    </com.aries.ui.view.radius.RadiusFrameLayout>
+        <com.aries.ui.view.radius.RadiusFrameLayout
+            android:id="@+id/rfl_cash"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_47"
+            android:layout_marginEnd="@dimen/dp_6"
+            android:layout_weight="1"
+            app:rv_backgroundColor="@color/color_ff04a091"
+            app:rv_radius="@dimen/dp_7">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:drawableStart="@mipmap/ic_renewal"
+                android:drawablePadding="@dimen/dp_14"
+                android:text="@string/现金支付"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_19"
+                android:textStyle="bold" />
+        </com.aries.ui.view.radius.RadiusFrameLayout>
+
+        <com.aries.ui.view.radius.RadiusFrameLayout
+            android:id="@+id/rfl_pay"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_47"
+            android:layout_marginStart="@dimen/dp_6"
+            android:layout_weight="1"
+            app:rv_backgroundColor="@color/color_ff04a091"
+            app:rv_radius="@dimen/dp_7">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:drawableStart="@mipmap/ic_scan"
+                android:drawablePadding="@dimen/dp_14"
+                android:text="@string/扫码支付"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_19"
+                android:textStyle="bold" />
+        </com.aries.ui.view.radius.RadiusFrameLayout>
+    </LinearLayout>
 </RelativeLayout>

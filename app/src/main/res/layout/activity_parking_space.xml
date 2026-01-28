@@ -286,7 +286,7 @@
             android:id="@+id/rfl_renewal"
             android:layout_width="@dimen/dp_0"
             android:layout_height="match_parent"
-            android:layout_marginEnd="@dimen/dp_6"
+            android:layout_marginEnd="@dimen/dp_5"
             android:layout_weight="1"
             app:rv_backgroundColor="@color/color_ff04a091"
             app:rv_radius="@dimen/dp_7">
@@ -304,10 +304,32 @@
         </com.aries.ui.view.radius.RadiusFrameLayout>
 
         <com.aries.ui.view.radius.RadiusFrameLayout
+            android:id="@+id/rfl_cash"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/dp_5"
+            android:layout_marginEnd="@dimen/dp_5"
+            android:layout_weight="1"
+            app:rv_backgroundColor="@color/color_ff04a091"
+            app:rv_radius="@dimen/dp_7">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:drawableStart="@mipmap/ic_renewal"
+                android:drawablePadding="@dimen/dp_10"
+                android:gravity="center"
+                android:text="@string/现金"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_19" />
+        </com.aries.ui.view.radius.RadiusFrameLayout>
+
+        <com.aries.ui.view.radius.RadiusFrameLayout
             android:id="@+id/rfl_finish"
             android:layout_width="@dimen/dp_0"
             android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/dp_6"
+            android:layout_marginStart="@dimen/dp_5"
             android:layout_weight="1"
             app:rv_backgroundColor="@color/color_ffdb1f1f"
             app:rv_radius="@dimen/dp_7">

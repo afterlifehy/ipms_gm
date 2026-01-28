@@ -36,6 +36,7 @@ import com.rt.base.bean.PrintInfoBean
 import com.rt.base.ext.i18n
 import com.rt.base.ext.startArouter
 import com.rt.common.util.BluePrint
+import com.rt.ipms_mg.dialog.CashPayDialog
 import kotlinx.coroutines.runBlocking
 import org.greenrobot.eventbus.EventBus
 
@@ -53,6 +54,7 @@ class DebtOrderDetailActivity : VbBaseActivity<DebtOrderDetailViewModel, Activit
     var loginName = ""
     var count = 0
     var picList: MutableList<String> = ArrayList()
+    var cashPayDialog: CashPayDialog? = null
 
     @SuppressLint("NewApi")
     override fun initView() {
@@ -87,6 +89,7 @@ class DebtOrderDetailActivity : VbBaseActivity<DebtOrderDetailViewModel, Activit
         binding.rivPic2.setOnClickListener(this)
         binding.rivPic3.setOnClickListener(this)
         binding.rflPay.setOnClickListener(this)
+        binding.rflCash.setOnClickListener(this)
     }
 
     override fun initData() {
@@ -154,6 +157,17 @@ class DebtOrderDetailActivity : VbBaseActivity<DebtOrderDetailViewModel, Activit
                     mViewModel.debtPayQr(param)
                 }
             }
+
+            R.id.rfl_cash -> {
+                cashPayDialog = CashPayDialog(
+                    "${AppUtil.keepNDecimal(debtCollectionBean!!.oweMoney / 100.00, 2)}",
+                    object : CashPayDialog.CashPayCallBack {
+                        override fun ok() {
+
+                        }
+                    })
+                cashPayDialog?.show()
+            }
         }
     }
 
@@ -175,7 +189,7 @@ class DebtOrderDetailActivity : VbBaseActivity<DebtOrderDetailViewModel, Activit
                 tradeNo = it.tradeNo
                 paymentQrDialog = PaymentQrDialog(it.qrCode, AppUtil.keepNDecimals((it.amount / 100).toString(), 2))
                 paymentQrDialog?.show()
-                paymentQrDialog?.setOnDismissListener {  }
+                paymentQrDialog?.setOnDismissListener { }
                 count = 0
             }
             errMsg.observe(this@DebtOrderDetailActivity) {
@@ -203,10 +217,19 @@ class DebtOrderDetailActivity : VbBaseActivity<DebtOrderDetailViewModel, Activit
             oweCount = it.oweCount,
             qrcode = "12345"
         )
-        ToastUtil.showMiddleToast(i18n(com.rt.base.R.string.开始打印))
-        Thread {
-            BluePrint.instance?.zkblueprint(JSONObject.toJSONString(printInfo))
-        }.start()
+        val printList = BluePrint.instance?.blueToothDevice!!
+        if (printList.size == 1) {
+            Thread {
+                val device = printList[0]
+                var connectResult = BluePrint.instance?.connet(device.address)
+                if (connectResult == 0) {
+                    runOnUiThread {
+                        ToastUtil.showBottomToast("开始打印")
+                    }
+                    BluePrint.instance?.zkblueprint(JSONObject.toJSONString(printInfo))
+                }
+            }.start()
+        }
     }
 
     override fun getVbBindingView(): ViewBinding {

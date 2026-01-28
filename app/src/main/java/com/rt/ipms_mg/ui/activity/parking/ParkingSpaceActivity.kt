@@ -55,6 +55,7 @@ import com.rt.common.util.FileUtil
 import com.rt.common.util.GlideUtils
 import com.rt.common.util.ImageCompressor
 import com.rt.common.util.ImageUtil
+import com.rt.ipms_mg.dialog.CashPayDialog
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -92,6 +93,8 @@ class ParkingSpaceActivity : VbBaseActivity<ParkingSpaceViewModel, ActivityParki
     var orderList: MutableList<String> = ArrayList()
     var currentStreet: Street? = null
 
+    var cashPayDialog: CashPayDialog? = null
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEvent(refreshParkingSpaceEvent: RefreshParkingSpaceEvent) {
         parkingSpaceRequest()
@@ -124,6 +127,7 @@ class ParkingSpaceActivity : VbBaseActivity<ParkingSpaceViewModel, ActivityParki
         binding.rflReport.setOnClickListener(this)
         binding.rflRenewal.setOnClickListener(this)
         binding.rflFinish.setOnClickListener(this)
+        binding.rflCash.setOnClickListener(this)
     }
 
     override fun initData() {
@@ -222,6 +226,19 @@ class ParkingSpaceActivity : VbBaseActivity<ParkingSpaceViewModel, ActivityParki
                     putString(ARouterMap.ABNORMAL_PARKING_NO, parkingSpaceBean?.parkingNo)
                     putString(ARouterMap.ABNORMAL_CARLICENSE, parkingSpaceBean?.carLicense)
                 })
+            }
+
+            R.id.rfl_cash -> {
+                if (parkingSpaceBean != null) {
+                    cashPayDialog = CashPayDialog(parkingSpaceBean?.realtimeMoney.toString(), object : CashPayDialog.CashPayCallBack {
+                        override fun ok() {
+
+                        }
+                    })
+                    cashPayDialog?.show()
+                }else{
+                    ToastUtil.showBottomToast("请稍候")
+                }
             }
 
             R.id.rfl_renewal -> {
