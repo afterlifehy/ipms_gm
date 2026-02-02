@@ -17,37 +17,30 @@ import com.rt.base.bean.IncomeCountingBean
 import com.rt.base.ds.PreferencesDataStore
 import com.rt.base.ds.PreferencesKeys
 import com.rt.base.ext.i18N
-import com.rt.base.ext.i18n
 import com.rt.base.util.ToastUtil
 import com.rt.base.viewbase.VbBaseActivity
 import com.rt.common.util.BluePrint
 import com.rt.ipms_mg.R
 import com.rt.ipms_mg.databinding.ActivityIncomeCountingBinding
 import com.rt.ipms_mg.mvvm.viewmodel.IncomeCountingViewModel
-import com.rt.ipms_mg.pop.DatePop
 import com.tbruyelle.rxpermissions3.RxPermissions
-import com.zrq.spanbuilder.TextStyle
 import com.rt.base.ext.show
 import com.rt.ipms_mg.dialog.PromptDialog
-import com.rt.common.util.AppUtil
 import com.rt.common.util.GlideUtils
+import com.rt.ipms_mg.pop.DatePop2
 import kotlinx.coroutines.runBlocking
 import java.text.SimpleDateFormat
 
 @Route(path = ARouterMap.INCOME_COUNTING)
 class IncomeCountingActivity : VbBaseActivity<IncomeCountingViewModel, ActivityIncomeCountingBinding>(), OnClickListener {
-    var datePop: DatePop? = null
+    var datePop: DatePop2? = null
     var startDate = ""
     var endDate = ""
     var incomeCountingBean: IncomeCountingBean? = null
     var loginName = ""
     var searchRange = "0"
     var promptDialog: PromptDialog? = null
-    var colors = intArrayOf(com.rt.base.R.color.color_ff04a091, com.rt.base.R.color.color_ff04a091)
     var sizes = intArrayOf(27, 19)
-    var styles = arrayOf(TextStyle.BOLD, TextStyle.NORMAL)
-    var colors2 = intArrayOf(com.rt.base.R.color.color_ff282828, com.rt.base.R.color.color_ff282828)
-    var sizes2 = intArrayOf(23, 19)
 
     override fun initView() {
         binding.layoutToolbar.tvTitle.text = i18N(com.rt.base.R.string.营收盘点)
@@ -67,7 +60,8 @@ class IncomeCountingActivity : VbBaseActivity<IncomeCountingViewModel, ActivityI
             loginName = PreferencesDataStore(BaseApplication.instance()).getString(PreferencesKeys.loginName)
         }
         endDate = TimeUtils.millis2String(System.currentTimeMillis(), "yyyy-MM-dd")
-        startDate = endDate.substring(0, 8) + "01"
+        startDate = TimeUtils.millis2String(System.currentTimeMillis(), "yyyy-MM-dd")
+        binding.tvIncomeTime.text = startDate
         getIncomeCounting()
     }
 
@@ -80,8 +74,8 @@ class IncomeCountingActivity : VbBaseActivity<IncomeCountingViewModel, ActivityI
 
             R.id.iv_right -> {
                 if (datePop == null) {
-                    datePop = DatePop(BaseApplication.instance(), startDate, endDate, 1, object : DatePop.DateCallBack {
-                        override fun selectDate(startTime: String, endTime: String) {
+                    datePop = DatePop2(BaseApplication.instance(), startDate, endDate, 1, object : DatePop2.DateCallBack {
+                        override fun selectDate(startTime: String, endTime: String, type: Int) {
                             startDate = startTime
                             endDate = endTime
                             val difference = TimeUtils.getTimeSpan(endTime, startTime, SimpleDateFormat("yyyy-MM-dd"), TimeConstants.DAY)
@@ -89,7 +83,13 @@ class IncomeCountingActivity : VbBaseActivity<IncomeCountingViewModel, ActivityI
                                 ToastUtil.showMiddleToast(i18N(com.rt.base.R.string.查询时间间隔不得超过90天))
                                 return
                             }
-                            binding.rtvDateRange.text = "统计时间：${startDate}~${endDate}"
+                            if (type == 0 || type == 1) {
+                                binding.tvIncomeTime.text = "${startDate}"
+                                incomeCountingBean!!.range = startDate
+                            } else {
+                                binding.tvIncomeTime.text = "${startDate}~${endDate}"
+                                incomeCountingBean!!.range = "${startDate}~${endDate}"
+                            }
                             getIncomeCounting()
                         }
 
@@ -178,28 +178,23 @@ class IncomeCountingActivity : VbBaseActivity<IncomeCountingViewModel, ActivityI
             incomeCountingLiveData.observe(this@IncomeCountingActivity) {
                 dismissProgressDialog()
                 incomeCountingBean = it
-                if (incomeCountingBean?.list1 != null && incomeCountingBean?.list1!!.isNotEmpty()) {
-                    val todayIncomeBean = incomeCountingBean?.list1!![0]
-                    val strings = arrayOf(todayIncomeBean.payMoney, "元")
-                    binding.tvTotalIncome.text = AppUtil.getSpan(strings, sizes, colors, styles)
-                }
-                if (searchRange == "1") {
-                    binding.rllMonth.show()
-                    if (incomeCountingBean?.list1 != null && incomeCountingBean?.list1!!.isNotEmpty()) {
-                        val rangeIncomeBean = incomeCountingBean?.list2!![0]
-                        val strings8 = arrayOf(rangeIncomeBean.payMoney, "元")
-                        binding.tvMonthTotalIncome.text = AppUtil.getSpan(strings8, sizes2, colors2)
-                        val strings9 = arrayOf(rangeIncomeBean.orderCount.toString(), "笔")
-                        binding.tvMonthOrderPlacedNum.text = AppUtil.getSpan(strings9, sizes2, colors2)
-                    }
-                }
-                searchRange = "1"
+                incomeCountingBean!!.payMoney = "200"
+                incomeCountingBean!!.qrMoney = "100.00"
+                incomeCountingBean!!.qrCount = "10"
+                incomeCountingBean!!.cashMoney = "100.00"
+                incomeCountingBean!!.cashCount = "99"
+                incomeCountingBean!!.refundMoney = "10.00"
+                incomeCountingBean!!.refundCount = "88"
+                binding.tvTotalIncome.text = "${incomeCountingBean!!.payMoney}元"
+                binding.tvQrPay.text = "${incomeCountingBean!!.qrMoney}元(${incomeCountingBean!!.qrCount}笔)"
+                binding.tvCashPay.text = "${incomeCountingBean!!.cashMoney}(元${incomeCountingBean!!.cashCount}笔)"
+                binding.tvRefund.text = "${incomeCountingBean!!.refundMoney}(元${incomeCountingBean!!.refundCount}笔)"
             }
             errMsg.observe(this@IncomeCountingActivity) {
                 dismissProgressDialog()
                 ToastUtil.showMiddleToast(it.msg)
             }
-            mException.observe(this@IncomeCountingActivity){
+            mException.observe(this@IncomeCountingActivity) {
                 dismissProgressDialog()
             }
         }

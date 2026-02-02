@@ -187,4 +187,8 @@
     <string name="告知书">告知书</string>
     <string name="现金">现金</string>
     <string name="现金支付">现金支付</string>
+    <string name="今日">今日</string>
+    <string name="昨日">昨日</string>
+    <string name="本周">本周</string>
+    <string name="账单汇总">账单汇总</string>
 </resources>

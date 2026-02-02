@@ -135,9 +135,6 @@ class BluePrint() {
             if (receipt) {
                 val incomeCountingBean = JSONObject.parseObject(printText, IncomeCountingBean::class.java)
                 var height = 600
-                if (incomeCountingBean.list2 != null && incomeCountingBean.list2.size > 0) {
-                    height += 200
-                }
                 zpSDK!!.pageSetup(800, height)
                 zpSDK!!.DrawSpecialText(230, 10, PrinterInterface.Textfont.siyuanheiti, 30, "数据打印", 0, 1, 0) //3
                 zpSDK!!.DrawSpecialText(
@@ -152,51 +149,22 @@ class BluePrint() {
                 )
                 printDrawText("登录账号:", incomeCountingBean.loginName, ystart, 9)
                 ystart += 40
-                if (incomeCountingBean.list1 != null && incomeCountingBean.list1.size > 0) {
-                    val todayIncomeBean = incomeCountingBean.list1[0]
-                    printDrawText("今日时间:", TimeUtils.millis2String(System.currentTimeMillis(), "yyyy-MM-dd"), ystart, 9)
+                printDrawText("收费时间:", TimeUtils.millis2String(System.currentTimeMillis(), "yyyy-MM-dd"), ystart, 9)
+                ystart += 40
+                if (incomeCountingBean.payMoney.isNotEmpty()) {
+                    printDrawText("收费总额：", incomeCountingBean.payMoney + " 元", ystart, 11)
                     ystart += 40
-                    if (todayIncomeBean.payMoney.isNotEmpty()) {
-                        printDrawText("总收费：", todayIncomeBean.payMoney + " 元", ystart, 9)
-                        ystart += 40
-                    }
-                    if (todayIncomeBean.orderCount != -1) {
-                        printDrawText("已下单：", todayIncomeBean.orderCount.toString() + " 笔", ystart, 9)
-                        ystart += 40
-                    }
-                    if (todayIncomeBean.refusePayCount != -1) {
-                        printDrawText("拒付费：", todayIncomeBean.refusePayCount.toString() + " 笔", ystart, 9)
-                        ystart += 40
-                    }
-                    if (todayIncomeBean.partPayCount != -1) {
-                        printDrawText("部分付费：", todayIncomeBean.partPayCount.toString() + " 笔", ystart, 11)
-                        ystart += 40
-                    }
-                    if (todayIncomeBean.oweCount != -1) {
-                        printDrawText("已追缴：", todayIncomeBean.oweCount.toString() + " 笔", ystart, 9)
-                        ystart += 40
-                    }
-                    if (todayIncomeBean.passMoney.isNotEmpty()) {
-                        printDrawText("被追缴：", todayIncomeBean.passMoney + " 元", ystart, 9)
-                        ystart += 40
-                    }
-                    if (todayIncomeBean.oweMoney.isNotEmpty()) {
-                        printDrawText("追缴他人：", todayIncomeBean.oweMoney + " 元", ystart, 11)
-                        ystart += 40
-                    }
-                    if (todayIncomeBean.onlineMoney.isNotEmpty()) {
-                        printDrawText("自主追缴：", todayIncomeBean.onlineMoney + " 元", ystart, 11)
-                        ystart += 40
-                    }
                 }
-                if (incomeCountingBean.list2 != null && incomeCountingBean.list2.size > 0) {
+                if (incomeCountingBean.qrMoney.isNotEmpty()) {
+                    printDrawText("二维码支付：", "${incomeCountingBean.qrMoney}(${incomeCountingBean.qrCount}笔)", ystart, 13)
                     ystart += 40
-                    val rangeIncomeBean = incomeCountingBean.list2[0]
-                    printDrawText("统计时间：", incomeCountingBean.range, ystart, 9)
+                }
+                if (incomeCountingBean.cashMoney.isNotEmpty()) {
+                    printDrawText("现金支付：", "${incomeCountingBean.qrMoney}(${incomeCountingBean.qrCount}笔)", ystart, 11)
                     ystart += 40
-                    printDrawText("总收入：", rangeIncomeBean.payMoney + " 元", ystart, 9)
-                    ystart += 40
-                    printDrawText("已下单：", rangeIncomeBean.orderCount.toString() + " 笔", ystart, 9)
+                }
+                if (incomeCountingBean.refundMoney.isNotEmpty()) {
+                    printDrawText("退款信息：", "${incomeCountingBean.refundMoney}(${incomeCountingBean.refundCount}笔)", ystart, 11)
                     ystart += 40
                 }
                 zpSDK!!.DrawSpecialText(

@@ -13,6 +13,14 @@
         <item name="android:splitMotionEvents">false</item>
     </style>
 
+    <style name="ColorTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/color_ff04a091</item>
+        <item name="colorPrimaryDark">@color/color_ff04a091</item>
+        <item name="colorAccent">@color/color_ff04a091</item>
+        <item name="android:navigationBarColor">@color/color_ff04a091</item>
+        <item name="android:statusBarColor">@color/color_ff04a091</item>
+    </style>
+
     <style name="startTheme" parent="AppTheme">
         <item name="android:windowBackground">@drawable/layerlist_splash_bg</item>
         <item name="android:windowIsTranslucent">false</item>

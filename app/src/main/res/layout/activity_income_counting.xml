@@ -21,127 +21,153 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/layout_toolbar">
 
-        <LinearLayout
+        <com.aries.ui.view.radius.RadiusLinearLayout
+            android:id="@+id/rll_todaySummary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_13"
+            android:layout_marginTop="@dimen/dp_6"
+            android:layout_marginEnd="@dimen/dp_13"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/dp_90">
+            android:paddingBottom="@dimen/dp_90"
+            app:rv_backgroundColor="@color/white"
+            app:rv_radius="@dimen/dp_10">
 
-            <com.aries.ui.view.radius.RadiusLinearLayout
-                android:id="@+id/rll_todaySummary"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_47"
+                android:background="@mipmap/ic_income_bg_1"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/dp_13"
+                android:text="@string/账单汇总"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_19" />
+
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_13"
-                android:layout_marginTop="@dimen/dp_6"
-                android:layout_marginEnd="@dimen/dp_13"
-                android:orientation="vertical"
-                app:rv_backgroundColor="@color/white"
-                app:rv_radius="@dimen/dp_10">
+                android:paddingStart="@dimen/dp_13"
+                android:paddingTop="@dimen/dp_16"
+                android:paddingEnd="@dimen/dp_13"
+                android:paddingBottom="@dimen/dp_16">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_47"
-                    android:background="@mipmap/ic_income_bg_1"
-                    android:gravity="center_vertical"
-                    android:paddingStart="@dimen/dp_13"
-                    android:text="@string/今日汇总"
-                    android:textColor="@color/white"
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_incomeTimeTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="收费时间"
+                    android:textColor="@color/color_ff04a091"
                     android:textSize="@dimen/sp_19" />
 
-                <FrameLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/tv_incomeTime"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/dp_13"
-                    android:paddingTop="@dimen/dp_16"
-                    android:paddingEnd="@dimen/dp_13"
-                    android:paddingBottom="@dimen/dp_16">
+                    android:layout_gravity="end"
+                    tools:text="555.00元" />
+            </FrameLayout>
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_totalIncomeTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:drawableEnd="@mipmap/ic_question"
-                        android:drawablePadding="@dimen/dp_11"
-                        android:text="总收费"
-                        android:textColor="@color/color_ff04a091"
-                        android:textSize="@dimen/sp_19" />
-
-                    <TextView
-                        android:id="@+id/tv_totalIncome"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        tools:text="555.00元" />
-                </FrameLayout>
-            </com.aries.ui.view.radius.RadiusLinearLayout>
-
-            <com.aries.ui.view.radius.RadiusLinearLayout
-                android:id="@+id/rll_month"
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_13"
-                android:layout_marginTop="@dimen/dp_20"
-                android:layout_marginEnd="@dimen/dp_13"
-                android:orientation="vertical"
-                android:visibility="gone"
-                app:rv_backgroundColor="@color/white"
-                app:rv_radius="@dimen/dp_10">
+                android:paddingStart="@dimen/dp_13"
+                android:paddingTop="@dimen/dp_16"
+                android:paddingEnd="@dimen/dp_13"
+                android:paddingBottom="@dimen/dp_16">
 
-                <TextView
-                    android:id="@+id/rtv_dateRange"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_47"
-                    android:background="@mipmap/ic_income_bg_2"
-                    android:gravity="center_vertical"
-                    android:paddingStart="@dimen/dp_13"
-                    android:text="@string/本月累计"
-                    android:textColor="@color/white"
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_totalIncomeTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="收费总额"
+                    android:textColor="@color/color_ff04a091"
                     android:textSize="@dimen/sp_19" />
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/tv_totalIncome"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/dp_13"
-                    android:paddingTop="@dimen/dp_16"
-                    android:paddingEnd="@dimen/dp_13"
-                    android:paddingBottom="@dimen/dp_11">
+                    android:layout_gravity="end"
+                    tools:text="555.00元" />
+            </FrameLayout>
 
-                    <TextView
-                        android:id="@+id/tv_monthTotalIncomeTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/总收入"
-                        android:textColor="@color/color_ff1a1a1a"
-                        android:textSize="@dimen/sp_19" />
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/dp_13"
+                android:paddingTop="@dimen/dp_16"
+                android:paddingEnd="@dimen/dp_13"
+                android:paddingBottom="@dimen/dp_16">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:text="@string/已下单"
-                        android:textColor="@color/color_ff1a1a1a"
-                        android:textSize="@dimen/sp_19" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_qrPayTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="二维码支付"
+                    android:textColor="@color/color_ff04a091"
+                    android:textSize="@dimen/sp_19" />
 
-                    <TextView
-                        android:id="@+id/tv_monthTotalIncome"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/tv_monthTotalIncomeTitle"
-                        android:layout_marginTop="@dimen/dp_5"
-                        tools:text="21,560.00元" />
+                <TextView
+                    android:id="@+id/tv_qrPay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    tools:text="555.00元" />
+            </FrameLayout>
 
-                    <TextView
-                        android:id="@+id/tv_monthOrderPlacedNum"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/tv_monthTotalIncomeTitle"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginTop="@dimen/dp_5"
-                        tools:text="21,560.00元" />
-                </RelativeLayout>
-            </com.aries.ui.view.radius.RadiusLinearLayout>
-        </LinearLayout>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/dp_13"
+                android:paddingTop="@dimen/dp_16"
+                android:paddingEnd="@dimen/dp_13"
+                android:paddingBottom="@dimen/dp_16">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_cashPayTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="现金支付"
+                    android:textColor="@color/color_ff04a091"
+                    android:textSize="@dimen/sp_19" />
+
+                <TextView
+                    android:id="@+id/tv_cashPay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    tools:text="555.00元" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/dp_13"
+                android:paddingTop="@dimen/dp_16"
+                android:paddingEnd="@dimen/dp_13"
+                android:paddingBottom="@dimen/dp_16">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_refundTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="退款信息"
+                    android:textColor="@color/color_ff04a091"
+                    android:textSize="@dimen/sp_19" />
+
+                <TextView
+                    android:id="@+id/tv_refund"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    tools:text="555.00元" />
+            </FrameLayout>
+        </com.aries.ui.view.radius.RadiusLinearLayout>
     </androidx.core.widget.NestedScrollView>
 
     <com.aries.ui.view.radius.RadiusTextView
