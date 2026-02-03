@@ -187,8 +187,8 @@ class IncomeCountingActivity : VbBaseActivity<IncomeCountingViewModel, ActivityI
                 incomeCountingBean!!.refundCount = "88"
                 binding.tvTotalIncome.text = "${incomeCountingBean!!.payMoney}元"
                 binding.tvQrPay.text = "${incomeCountingBean!!.qrMoney}元(${incomeCountingBean!!.qrCount}笔)"
-                binding.tvCashPay.text = "${incomeCountingBean!!.cashMoney}(元${incomeCountingBean!!.cashCount}笔)"
-                binding.tvRefund.text = "${incomeCountingBean!!.refundMoney}(元${incomeCountingBean!!.refundCount}笔)"
+                binding.tvCashPay.text = "${incomeCountingBean!!.cashMoney}元(${incomeCountingBean!!.cashCount}笔)"
+                binding.tvRefund.text = "${incomeCountingBean!!.refundMoney}元(${incomeCountingBean!!.refundCount}笔)"
             }
             errMsg.observe(this@IncomeCountingActivity) {
                 dismissProgressDialog()
