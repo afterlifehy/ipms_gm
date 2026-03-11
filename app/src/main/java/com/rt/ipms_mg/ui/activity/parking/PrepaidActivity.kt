@@ -30,6 +30,7 @@ import com.rt.common.event.RefreshParkingSpaceEvent
 import com.rt.common.util.AppUtil
 import com.rt.common.util.BluePrint
 import com.rt.common.util.GlideUtils
+import com.rt.ipms_mg.dialog.CashPayDialog
 import kotlinx.coroutines.runBlocking
 import org.greenrobot.eventbus.EventBus
 
@@ -50,6 +51,8 @@ class PrepaidActivity : VbBaseActivity<PrepaidViewModel, ActivityPrepaidBinding>
     var count = 0
     var tradeNo = ""
     var handler = Handler(Looper.getMainLooper())
+    var cashPayDialog: CashPayDialog? = null
+    var payMethod = 0
 
     override fun initView() {
         binding.layoutToolbar.tvTitle.text = i18N(com.rt.base.R.string.预支付)
@@ -70,6 +73,7 @@ class PrepaidActivity : VbBaseActivity<PrepaidViewModel, ActivityPrepaidBinding>
         binding.rflAdd.setOnClickListener(this)
         binding.rflMinus.setOnClickListener(this)
         binding.rflScanPay.setOnClickListener(this)
+        binding.rflCashPay.setOnClickListener(this)
     }
 
     override fun initData() {
@@ -102,18 +106,28 @@ class PrepaidActivity : VbBaseActivity<PrepaidViewModel, ActivityPrepaidBinding>
             }
 
             R.id.rfl_scanPay -> {
-                val param = HashMap<String, Any>()
-                val jsonobject = JSONObject()
-                jsonobject["parkingNo"] = parkingNo
-                jsonobject["orderNo"] = orderNo
-                jsonobject["loginName"] = loginName
-                jsonobject["simId"] = simId
-                jsonobject["parkingHours"] = timeDuration.toString()
-                jsonobject["orderType"] = "1"
-                param["attr"] = jsonobject
-                mViewModel.prePayFeeInquiry(param)
+                payMethod = 0
+                prePayFeeInquiry()
+            }
+
+            R.id.rfl_cashPay -> {
+                payMethod = 1
+                prePayFeeInquiry()
             }
         }
+    }
+
+    fun prePayFeeInquiry() {
+        val param = HashMap<String, Any>()
+        val jsonobject = JSONObject()
+        jsonobject["parkingNo"] = parkingNo
+        jsonobject["orderNo"] = orderNo
+        jsonobject["loginName"] = loginName
+        jsonobject["simId"] = simId
+        jsonobject["parkingHours"] = timeDuration.toString()
+        jsonobject["orderType"] = "1"
+        param["attr"] = jsonobject
+        mViewModel.prePayFeeInquiry(param)
     }
 
     @SuppressLint("CheckResult")
@@ -122,11 +136,21 @@ class PrepaidActivity : VbBaseActivity<PrepaidViewModel, ActivityPrepaidBinding>
         mViewModel.apply {
             prePayFeeInquiryLiveData.observe(this@PrepaidActivity) {
                 dismissProgressDialog()
-                tradeNo = it.tradeNo
-                paymentQrDialog = PaymentQrDialog(it.qrCode, AppUtil.keepNDecimals(it.totalAmount.toString(), 2))
-                paymentQrDialog?.show()
-                paymentQrDialog?.setOnDismissListener {}
-                count = 0
+                if (payMethod == 0) {
+                    tradeNo = it.tradeNo
+                    paymentQrDialog = PaymentQrDialog(it.qrCode, AppUtil.keepNDecimals(it.totalAmount.toString(), 2))
+                    paymentQrDialog?.show()
+                    paymentQrDialog?.setOnDismissListener {}
+                    count = 0
+                } else {
+                    cashPayDialog =
+                        CashPayDialog(it.totalAmount.toString(), object : CashPayDialog.CashPayCallBack {
+                            override fun ok() {
+
+                            }
+                        })
+                    cashPayDialog?.show()
+                }
             }
             payResultInquiryLiveData.observe(this@PrepaidActivity) {
                 dismissProgressDialog()
