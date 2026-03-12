@@ -158,7 +158,7 @@
                 android:orientation="horizontal">
 
                 <FrameLayout
-                    android:id="@+id/fl_stayTuned"
+                    android:id="@+id/fl_monthlyPrepayMent"
                     android:layout_width="@dimen/dp_0"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="@dimen/dp_6"
@@ -172,7 +172,7 @@
                         android:drawableTop="@mipmap/ic_stay_tuned_logo"
                         android:drawablePadding="@dimen/dp_15"
                         android:gravity="center"
-                        android:text="@string/敬请期待"
+                        android:text="@string/包月预付"
                         android:textColor="@color/color_ff1a1a1a"
                         android:textSize="@dimen/sp_20"
                         android:textStyle="bold" />

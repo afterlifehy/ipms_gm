@@ -2,7 +2,10 @@ package com.rt.ipms_mg.mvvm.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import com.rt.base.base.mvvm.BaseViewModel
+import com.rt.base.base.mvvm.ErrorMessage
 import com.rt.ipms_mg.mvvm.repository.LogoutRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class LogoutViewModel : BaseViewModel() {
     val mLogoutRepository by lazy {
@@ -13,15 +16,15 @@ class LogoutViewModel : BaseViewModel() {
 
     fun logout(param: Map<String, Any?>) {
         logoutLiveData.value = true
-//        launch {
-//            val response = withContext(Dispatchers.IO) {
-//                mLogoutRepository.logout(param)
-//            }
-//            executeResponse(response, {
-//                logoutLiveData.value = response.attr
-//            }, {
-//                traverseErrorMsg(ErrorMessage(msg = response.msg, code = response.status))
-//            })
-//        }
+        launch {
+            val response = withContext(Dispatchers.IO) {
+                mLogoutRepository.logout(param)
+            }
+            executeResponse(response, {
+                logoutLiveData.value = response.attr
+            }, {
+                traverseErrorMsg(ErrorMessage(msg = response.msg, code = response.status))
+            })
+        }
     }
 }

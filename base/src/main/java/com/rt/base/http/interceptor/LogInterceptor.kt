@@ -14,18 +14,17 @@ class LogInterceptor(private val isDebug: Boolean) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request: Request = chain.request()
         val requestContent = request.toString()
-        val printContent = requestContent.replace(Regex("""photo":"([^&]*)"""")) { matchResult ->
+        val printContent = requestContent.replace(Regex("photo=([^&]*)")) { matchResult ->
             val value = matchResult.groupValues[1] // 获取 photo 参数值
             if (value.isEmpty()) {
-                "photo:空值"
+                "photo=空值"
             } else {
-                "photo:${value.take(50)} 总字节数:${value.toByteArray().size}"
+                "photo=${value.take(50)} 总字节数:${value.toByteArray().size}"
             }
         }
 
         log.info("okhttp3:$printContent")
         val response: Response = chain.proceed(request)
-//        if (isDebug) {
         val mediaType = response.body!!.contentType()
         val content = response.body!!.string()
         log.info(response.toString())

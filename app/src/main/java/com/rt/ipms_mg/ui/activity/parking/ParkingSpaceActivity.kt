@@ -37,6 +37,7 @@ import com.rt.base.bean.TicketPrintBean
 import com.rt.base.dialog.DialogHelp
 import com.rt.base.ds.PreferencesDataStore
 import com.rt.base.ds.PreferencesKeys
+import com.rt.base.ext.hide
 import com.rt.base.ext.i18N
 import com.rt.base.ext.show
 import com.rt.base.ext.startArouter
@@ -401,6 +402,12 @@ class ParkingSpaceActivity : VbBaseActivity<ParkingSpaceViewModel, ActivityParki
 
                 val strings = arrayOf(i18N(com.rt.base.R.string.开始时间), parkingSpaceBean?.startTime.toString())
                 binding.tvStartTime.text = AppUtil.getSpan(strings, sizes, colors)
+
+//                if (it.monthPay != null && it.monthPay > 0L) {
+//                    binding.rtvMonthlyPayment.show()
+//                } else {
+//                    binding.rtvMonthlyPayment.hide()
+//                }
 
                 val strings2 =
                     arrayOf(

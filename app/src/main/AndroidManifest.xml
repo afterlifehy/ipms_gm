@@ -247,5 +247,10 @@
             android:name="com.rt.ipms_mg.ui.activity.order.TransactionRecordActivity"
             android:exported="false"
             android:launchMode="singleTask" />
+
+        <activity
+            android:name="com.rt.ipms_mg.ui.activity.monthlypay.MonthlyPrepaymentActivity"
+            android:exported="false"
+            android:launchMode="singleTask" />
     </application>
 </manifest>

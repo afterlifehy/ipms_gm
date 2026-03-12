@@ -14,7 +14,6 @@ abstract class VbBaseActivity<VM : BaseViewModel, vb : ViewBinding> : BaseDataAc
         return mBindind.root
     }
 
-
     abstract fun getVbBindingView(): ViewBinding
 
     override fun getLayoutResId(): Int {

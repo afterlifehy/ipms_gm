@@ -38,6 +38,7 @@ import com.rt.ipms_mg.ui.activity.income.IncomeCountingActivity
 import com.rt.ipms_mg.ui.activity.login.LoginActivity
 import com.rt.ipms_mg.ui.activity.login.StreetChooseActivity
 import com.rt.ipms_mg.ui.activity.mine.LogoutActivity
+import com.rt.ipms_mg.ui.activity.monthlypay.MonthlyPrepaymentActivity
 import com.rt.ipms_mg.ui.activity.order.OrderMainActivity
 import com.rt.ipms_mg.ui.activity.parking.ParkingLotActivity
 
@@ -78,7 +79,8 @@ class MainActivity : VbBaseActivity<MainViewModel, ActivityMainBinding>(), OnCli
             binding.flOrder,
             binding.flBerthAbnormal,
             binding.flLogout,
-            binding.ivG2
+            binding.ivG2,
+            binding.flMonthlyPrepayMent
         )
         ClickUtils.applySingleDebouncing(views, 1000, this)
     }
@@ -224,6 +226,10 @@ class MainActivity : VbBaseActivity<MainViewModel, ActivityMainBinding>(), OnCli
 
             R.id.fl_berthAbnormal -> {
                 startAct<AbnormalReportActivity>()
+            }
+
+            R.id.fl_monthlyPrepayMent -> {
+                startAct<MonthlyPrepaymentActivity>()
             }
 
             R.id.fl_logout -> {

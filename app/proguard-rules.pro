@@ -45,6 +45,10 @@ public void *(android.webkit.WebView, java.lang.String);
 #-------------------------------------------------------------------------
 
 #---------------------------------2.第三方包-------------------------------
+#logback
+# 保留 Logback 核心类
+-keep class ch.qos.logback.** { *; }
+-dontwarn ch.qos.logback.**
 # gsyvideoplayer
 -keep class tv.danmaku.ijk.** { *; }
 -dontwarn tv.danmaku.ijk.**

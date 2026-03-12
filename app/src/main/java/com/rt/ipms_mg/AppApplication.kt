@@ -58,12 +58,12 @@ class AppApplication : BaseApplication() {
 //        list.add(TokenInterceptor())
         list.add(ExceptionInterceptor())
         list.add(RetryInterceptor())
-        if (BuildConfig.is_debug) {
-            list.add(LogInterceptor(BuildConfig.is_debug))
+//        if (BuildConfig.is_debug) {
+        list.add(LogInterceptor(true))
 //            val mHttpLoggingInterceptor = HttpLoggingInterceptor("ipms_mg_http")
 //            mHttpLoggingInterceptor.setPrintLevel(HttpLoggingInterceptor.Level.BODY)
 //            list.add(mHttpLoggingInterceptor)
-        }
+//        }
         return list
     }
 

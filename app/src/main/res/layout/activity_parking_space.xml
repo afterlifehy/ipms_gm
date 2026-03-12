@@ -41,6 +41,23 @@
             android:textSize="@dimen/sp_24"
             android:textStyle="bold"
             tools:text="沪A36N81" />
+
+        <com.aries.ui.view.radius.RadiusTextView
+            android:id="@+id/rtv_monthlyPayment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|end"
+            android:layout_marginEnd="@dimen/dp_13"
+            android:paddingStart="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_2"
+            android:paddingEnd="@dimen/dp_10"
+            android:paddingBottom="@dimen/dp_2"
+            android:text="@string/错峰包月"
+            android:textColor="@color/color_ff04a091"
+            android:textSize="@dimen/sp_16"
+            android:visibility="invisible"
+            app:rv_backgroundColor="@color/color_ffe5f6f7"
+            app:rv_radius="@dimen/dp_14" />
     </com.aries.ui.view.radius.RadiusFrameLayout>
 
     <com.aries.ui.view.radius.RadiusLinearLayout

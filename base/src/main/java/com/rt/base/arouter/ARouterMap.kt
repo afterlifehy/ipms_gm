@@ -73,6 +73,8 @@ object ARouterMap {
     const val TRANSACTION_RECORD = "/ipms_mg_app/transactionRecord"
     const val TRANSACTION_RECORD_ORDER_NO = "orderNo"
 
+    const val MONTHLY_PREPAYMENT = "/ipms_mg_app/monthlyPrepayment"
+
     class common {
         companion object {
 

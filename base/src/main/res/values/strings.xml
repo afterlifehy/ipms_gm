@@ -193,4 +193,9 @@
     <string name="本周">本周</string>
     <string name="账单汇总">账单汇总</string>
     <string name="二维码支付">二维码支付</string>
+    <string name="错峰包月">错峰包月</string>
+    <string name="包月预付">包月预付</string>
+    <string name="请输入姓名">请输入姓名</string>
+    <string name="请输入手机号码">请输入手机号码</string>
+    <string name="提交">提交</string>
 </resources>

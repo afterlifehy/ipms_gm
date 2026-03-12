@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--    debug="true" scan="true" scanPeriod="30 seconds"-->
+<configuration
+    xmlns="https://tony19.github.io/logback-android/xml"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="https://tony19.github.io/logback-android/xml https://cdn.jsdelivr.net/gh/tony19/logback-android/logback.xsd">
+
+    <!-- 定义日志文件的存储目录 -->
+    <property name="LOG_DIR" value="/storage/emulated/0/Android/data/com.rt.ipms_mg/files/logs" />
+
+    <!-- Logcat Appender：输出到 Android Logcat -->
+    <appender name="LogcatAppender" class="ch.qos.logback.classic.android.LogcatAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <!-- File Appender：按日期滚动日志文件 -->
+
+    <appender name="RollingFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 日志文件路径 -->
+<!--        <file>${LOG_DIR}/trace.log</file>,-->
+
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+
+        <!-- 过滤器：设置日志级别为TRACE -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>TRACE</level>
+        </filter>
+
+        <!-- 滚动策略：按天滚动，保留30天的日志 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/mg_%d{yyyy-MM-dd}.txt</fileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <!-- Logger配置 -->
+    <root level="TRACE">
+        <!-- 输出到 Logcat -->
+        <appender-ref ref="LogcatAppender" />
+        <!-- 输出到滚动日志文件 -->
+        <appender-ref ref="RollingFileAppender" />
+    </root>
+</configuration>
