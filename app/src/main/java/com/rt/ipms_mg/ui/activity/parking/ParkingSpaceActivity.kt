@@ -4,9 +4,6 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -20,10 +17,7 @@ import androidx.core.content.FileProvider
 import androidx.viewbinding.ViewBinding
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.fastjson.JSONObject
-import com.blankj.utilcode.util.ConvertUtils
-import com.blankj.utilcode.util.EncodeUtils
 import com.blankj.utilcode.util.FileUtils
-import com.blankj.utilcode.util.ImageUtils
 import com.blankj.utilcode.util.TimeUtils
 import com.tbruyelle.rxpermissions3.RxPermissions
 import com.zrq.spanbuilder.TextStyle
@@ -37,7 +31,6 @@ import com.rt.base.bean.TicketPrintBean
 import com.rt.base.dialog.DialogHelp
 import com.rt.base.ds.PreferencesDataStore
 import com.rt.base.ds.PreferencesKeys
-import com.rt.base.ext.hide
 import com.rt.base.ext.i18N
 import com.rt.base.ext.show
 import com.rt.base.ext.startArouter
@@ -56,8 +49,6 @@ import com.rt.common.util.FileUtil
 import com.rt.common.util.GlideUtils
 import com.rt.common.util.ImageCompressor
 import com.rt.common.util.ImageUtil
-import com.rt.ipms_mg.dialog.CashPayDialog
-import com.rt.ipms_mg.dialog.PaymentMethodDialog
 import com.rt.ipms_mg.dialog.PaymentQrDialog
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -96,8 +87,6 @@ class ParkingSpaceActivity : VbBaseActivity<ParkingSpaceViewModel, ActivityParki
     var orderList: MutableList<String> = ArrayList()
     var currentStreet: Street? = null
 
-    var cashPayDialog: CashPayDialog? = null
-    var paymentMethodDialog: PaymentMethodDialog? = null
     var paymentQrDialog: PaymentQrDialog? = null
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -132,7 +121,6 @@ class ParkingSpaceActivity : VbBaseActivity<ParkingSpaceViewModel, ActivityParki
         binding.rflReport.setOnClickListener(this)
         binding.rflRenewal.setOnClickListener(this)
         binding.rflFinish.setOnClickListener(this)
-        binding.rflPay.setOnClickListener(this)
     }
 
     override fun initData() {
@@ -231,32 +219,6 @@ class ParkingSpaceActivity : VbBaseActivity<ParkingSpaceViewModel, ActivityParki
                     putString(ARouterMap.ABNORMAL_PARKING_NO, parkingSpaceBean?.parkingNo)
                     putString(ARouterMap.ABNORMAL_CARLICENSE, parkingSpaceBean?.carLicense)
                 })
-            }
-
-            R.id.rfl_pay -> {
-                paymentMethodDialog = PaymentMethodDialog(object : PaymentMethodDialog.CashPayCallBack {
-                    override fun cash() {
-                        if (parkingSpaceBean != null) {
-                            cashPayDialog =
-                                CashPayDialog(parkingSpaceBean?.realtimeMoney.toString(), object : CashPayDialog.CashPayCallBack {
-                                    override fun ok() {
-
-                                    }
-                                })
-                            cashPayDialog?.show()
-                        } else {
-                            ToastUtil.showBottomToast("请稍候")
-                        }
-                    }
-
-                    override fun qrCode() {
-                        paymentQrDialog = PaymentQrDialog("123", AppUtil.keepNDecimals(parkingSpaceBean?.realtimeMoney.toString(), 2))
-                        paymentQrDialog?.show()
-                        paymentQrDialog?.setOnDismissListener {}
-                    }
-
-                })
-                paymentMethodDialog?.show()
             }
 
             R.id.rfl_renewal -> {

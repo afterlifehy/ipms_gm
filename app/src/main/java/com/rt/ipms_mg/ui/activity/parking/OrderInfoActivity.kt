@@ -1,8 +1,6 @@
 package com.rt.ipms_mg.ui.activity.parking
 
-import android.Manifest
 import android.annotation.SuppressLint
-import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.view.View
@@ -11,7 +9,6 @@ import androidx.core.content.ContextCompat
 import androidx.viewbinding.ViewBinding
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.fastjson.JSONObject
-import com.tbruyelle.rxpermissions3.RxPermissions
 import com.zrq.spanbuilder.TextStyle
 import com.rt.base.BaseApplication
 import com.rt.base.arouter.ARouterMap
@@ -28,12 +25,11 @@ import com.rt.ipms_mg.R
 import com.rt.ipms_mg.databinding.ActivityOrderInfoBinding
 import com.rt.ipms_mg.dialog.PaymentQrDialog
 import com.rt.ipms_mg.mvvm.viewmodel.OrderInfoViewModel
-import com.rt.common.event.RefreshParkingSpaceEvent
 import com.rt.common.util.AppUtil
 import com.rt.common.util.BluePrint
 import com.rt.common.util.GlideUtils
+import com.rt.ipms_mg.dialog.CashPayDialog
 import kotlinx.coroutines.runBlocking
-import org.greenrobot.eventbus.EventBus
 
 @Route(path = ARouterMap.ORDER_INFO)
 class OrderInfoActivity : VbBaseActivity<OrderInfoViewModel, ActivityOrderInfoBinding>(), OnClickListener {
@@ -51,11 +47,11 @@ class OrderInfoActivity : VbBaseActivity<OrderInfoViewModel, ActivityOrderInfoBi
     var totalAmount = ""
 
     var count = 0
-    var handler = Handler(Looper.getMainLooper())
     var tradeNo = ""
     var orderList: MutableList<String> = ArrayList()
 
     var isOrderCreate = false
+    var cashPayDialog: CashPayDialog? = null
 
     override fun initView() {
         binding.layoutToolbar.tvTitle.text = i18N(com.rt.base.R.string.订单信息)
@@ -69,6 +65,7 @@ class OrderInfoActivity : VbBaseActivity<OrderInfoViewModel, ActivityOrderInfoBi
     override fun initListener() {
         binding.layoutToolbar.flBack.setOnClickListener(this)
         binding.rflScanPay.setOnClickListener(this)
+        binding.rflCashPay.setOnClickListener(this)
     }
 
     override fun initData() {
@@ -103,6 +100,15 @@ class OrderInfoActivity : VbBaseActivity<OrderInfoViewModel, ActivityOrderInfoBi
                 } else {
                     ToastUtil.showMiddleToast(i18N(com.rt.base.R.string.正在支付中))
                 }
+            }
+            R.id.rfl_cashPay -> {
+                cashPayDialog =
+                    CashPayDialog(totalAmount, object : CashPayDialog.CashPayCallBack {
+                        override fun ok() {
+
+                        }
+                    })
+                cashPayDialog?.show()
             }
         }
     }

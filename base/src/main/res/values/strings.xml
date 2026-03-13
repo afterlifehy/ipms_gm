@@ -198,4 +198,5 @@
     <string name="请输入姓名">请输入姓名</string>
     <string name="请输入手机号码">请输入手机号码</string>
     <string name="提交">提交</string>
+    <string name="预付续费">预付/续费</string>
 </resources>
