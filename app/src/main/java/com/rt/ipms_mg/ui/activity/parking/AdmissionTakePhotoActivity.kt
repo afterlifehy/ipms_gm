@@ -25,6 +25,7 @@ import com.blankj.utilcode.util.EncodeUtils
 import com.blankj.utilcode.util.FileUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.TimeUtils
+import com.hyperai.hyperlpr3.settings.TypeDefine
 import com.rt.base.BaseApplication
 import com.rt.base.arouter.ARouterMap
 import com.rt.base.bean.Street
@@ -53,6 +54,7 @@ import com.rt.common.util.GlideUtils
 import com.rt.common.view.keyboard.KeyboardUtil
 import com.rt.common.util.ImageCompressor
 import com.rt.common.util.ImageUtil
+import com.rt.common.view.PlateView
 import kotlinx.coroutines.runBlocking
 import java.io.File
 import java.text.SimpleDateFormat
@@ -142,35 +144,42 @@ class AdmissionTakePhotoActivity : VbBaseActivity<AdmissionTakePhotoViewModel, A
             keyboardUtil.changeKeyboard(true)
         }
 
-        binding.pvPlate.setOnTouchListener { v, p1 ->
-            v.requestFocus()
-            keyboardUtil.showKeyboard(show = {
-                val location = IntArray(2)
-                v.getLocationOnScreen(location)
-                val editTextPosY = location[1]
+        binding.pvPlate.setNumClickCallback(object : PlateView.NumClickCallback {
+            override fun numberClick() {
+                binding.pvPlate.requestFocus()
+                keyboardUtil.showKeyboard(show = {
+                    val location = IntArray(2)
+                    binding.pvPlate.getLocationOnScreen(location)
+                    val editTextPosY = location[1]
 
-                val screenHeight = window!!.windowManager.defaultDisplay.height
-                val distanceToBottom: Int = screenHeight - editTextPosY - v.getHeight()
+                    val screenHeight = window!!.windowManager.defaultDisplay.height
+                    val distanceToBottom: Int = screenHeight - editTextPosY - binding.pvPlate.getHeight()
 
-                if (binding.kvKeyBoard.height > distanceToBottom) {
-                    // 当键盘高度超过输入框到屏幕底部的距离时，向上移动布局
-                    binding.flPlate.translationY = (-(binding.kvKeyBoard.height - distanceToBottom)).toFloat()
-                }
-            }, hide = {
-                binding.flPlate.translationY = 0f
-            })
-            keyboardUtil.changeKeyboard(true)
-            keyboardUtil.setCallBack(object : KeyboardUtil.KeyInputCallBack {
-                override fun keyInput(value: String) {
-                    binding.pvPlate.setOnePlate(value)
-                }
+                    if (binding.kvKeyBoard.height > distanceToBottom) {
+                        // 当键盘高度超过输入框到屏幕底部的距离时，向上移动布局
+                        binding.flPlate.translationY = (-(binding.kvKeyBoard.height - distanceToBottom)).toFloat()
+                    }
+                }, hide = {
+                    binding.flPlate.translationY = 0f
+                    binding.pvPlate.stopAnimation()
+                })
+                keyboardUtil.changeKeyboard(true)
+                keyboardUtil.setCallBack(object : KeyboardUtil.KeyInputCallBack {
+                    override fun keyInput(value: String) {
+                        binding.pvPlate.setOnePlate(value)
+                        changePlateColor(binding.pvPlate.getPvTxt())
+                    }
 
-                override fun keyDelete() {
-                    binding.pvPlate.keyDelete()
-                }
-            })
-            true
-        }
+                    override fun keyDelete() {
+                        binding.pvPlate.keyDelete()
+                        changePlateColor(binding.pvPlate.getPvTxt())
+                    }
+
+                    override fun enterKey() {
+                    }
+                })
+            }
+        })
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
@@ -497,41 +506,76 @@ class AdmissionTakePhotoActivity : VbBaseActivity<AdmissionTakePhotoViewModel, A
         if (resultCode == RESULT_OK) {
             if (requestCode == 1) {
                 val plate = data?.getStringExtra("plate")
+                val plateColor = data?.getIntExtra("plateColor", TypeDefine.PLATE_TYPE_BLUE)
                 if (!plate.isNullOrEmpty()) {
-                    val plateId = if (plate.contains("新能源")) {
-                        plate.substring(plate.length - 8, plate.length)
-                    } else {
-                        plate.substring(plate.length.minus(7) ?: 0, plate.length)
-                    }
-                    binding.pvPlate.setAllPlate(plateId)
-                    if (plate.startsWith("蓝")) {
-                        checkedColor = Constant.BLUE
-                        collectionPlateColorAdapter?.updateColor(checkedColor, 0)
-                        binding.pvPlate.setPlateBgAndTxtColor(checkedColor)
-                    } else if (plate.startsWith("绿")) {
-                        checkedColor = Constant.GREEN
-                        collectionPlateColorAdapter?.updateColor(checkedColor, 1)
-                        binding.pvPlate.setPlateBgAndTxtColor(checkedColor)
-                    } else if (plate.startsWith("黄")) {
-                        checkedColor = Constant.YELLOW
-                        collectionPlateColorAdapter?.updateColor(checkedColor, 2)
-                        binding.pvPlate.setPlateBgAndTxtColor(checkedColor)
-                    } else if (plate.startsWith("黄绿")) {
-                        checkedColor = Constant.YELLOW_GREEN
-                        collectionPlateColorAdapter?.updateColor(checkedColor, 3)
-                        binding.pvPlate.setPlateBgAndTxtColor(checkedColor)
-                    } else if (plate.startsWith("白")) {
-                        checkedColor = Constant.WHITE
-                        collectionPlateColorAdapter?.updateColor(checkedColor, 4)
-                        binding.pvPlate.setPlateBgAndTxtColor(checkedColor)
-                    } else if (plate.startsWith("黑")) {
-                        checkedColor = Constant.BLACK
-                        collectionPlateColorAdapter?.updateColor(Constant.BLACK, 5)
-                        binding.pvPlate.setPlateBgAndTxtColor(Constant.BLACK)
-                    } else {
-                        checkedColor = Constant.OTHERS
-                        collectionPlateColorAdapter?.updateColor(checkedColor, 6)
-                        binding.pvPlate.setPlateBgAndTxtColor(checkedColor)
+                    binding.pvPlate.setAllPlate(plate)
+                    when (plateColor) {
+                        TypeDefine.PLATE_TYPE_UNKNOWN -> {
+                            checkedColor = Constant.OTHERS
+                            collectionPlateColorAdapter?.updateColor(checkedColor, 6)
+                            binding.pvPlate.setPlateBgAndTxtColor(checkedColor)
+                            if (plate.length == 8) {
+                                changePlateColor(plate)
+                            }
+                        }
+
+                        TypeDefine.PLATE_TYPE_BLUE -> {
+                            checkedColor = Constant.BLUE
+                            collectionPlateColorAdapter?.updateColor(checkedColor, 0)
+                            binding.pvPlate.setPlateBgAndTxtColor(checkedColor)
+                            if (plate.length == 8) {
+                                changePlateColor(plate)
+                            }
+                        }
+
+                        TypeDefine.PLATE_TYPE_YELLOW_SINGLE,
+                        TypeDefine.PLATE_TYPE_YELLOW_DOUBLE -> {
+                            checkedColor = Constant.YELLOW
+                            collectionPlateColorAdapter?.updateColor(checkedColor, 2)
+                            binding.pvPlate.setPlateBgAndTxtColor(checkedColor)
+                            if (plate.length == 8) {
+                                changePlateColor(plate)
+                            }
+                        }
+
+                        TypeDefine.PLATE_TYPE_WHILE_SINGLE -> {
+                            checkedColor = Constant.WHITE
+                            collectionPlateColorAdapter?.updateColor(checkedColor, 4)
+                            binding.pvPlate.setPlateBgAndTxtColor(checkedColor)
+                            if (plate.length == 8) {
+                                changePlateColor(plate)
+                            }
+                        }
+
+                        TypeDefine.PLATE_TYPE_GREEN -> {
+                            checkedColor = Constant.GREEN
+                            collectionPlateColorAdapter?.updateColor(checkedColor, 1)
+                            binding.pvPlate.setPlateBgAndTxtColor(checkedColor)
+                            if (plate.length < 8) {
+                                changePlateColor(plate)
+                            }
+                        }
+
+                        TypeDefine.PLATE_TYPE_BLACK_HK_MACAO -> {
+                            checkedColor = Constant.BLACK
+                            collectionPlateColorAdapter?.updateColor(Constant.BLACK, 5)
+                            binding.pvPlate.setPlateBgAndTxtColor(Constant.BLACK)
+                            if (plate.length == 8) {
+                                changePlateColor(plate)
+                            }
+                        }
+
+                        TypeDefine.PLATE_TYPE_HK_SINGLE,
+                        TypeDefine.PLATE_TYPE_HK_DOUBLE,
+                        TypeDefine.PLATE_TYPE_MACAO_SINGLE,
+                        TypeDefine.PLATE_TYPE_MACAO_DOUBLE -> {
+                            checkedColor = Constant.WHITE
+                            collectionPlateColorAdapter?.updateColor(checkedColor, 4)
+                            binding.pvPlate.setPlateBgAndTxtColor(checkedColor)
+                            if (plate.length == 8) {
+                                changePlateColor(plate)
+                            }
+                        }
                     }
                     binding.rflTakePhoto.show()
                     binding.rflPlateImg.gone()
@@ -544,6 +588,16 @@ class AdmissionTakePhotoActivity : VbBaseActivity<AdmissionTakePhotoViewModel, A
                 }
             }
         }
+    }
+
+    fun changePlateColor(plateId: String) {
+        if (plateId.length < 8) {
+            checkedColor = Constant.BLUE
+        } else {
+            checkedColor = Constant.GREEN
+        }
+        collectionPlateColorAdapter?.updateColor(checkedColor, collectioPlateColorList.indexOf(checkedColor))
+        binding.pvPlate.setPlateBgAndTxtColor(checkedColor)
     }
 
     override fun providerVMClass(): Class<AdmissionTakePhotoViewModel>? {

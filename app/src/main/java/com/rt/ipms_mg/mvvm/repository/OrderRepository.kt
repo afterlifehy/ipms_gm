@@ -91,4 +91,11 @@ class OrderRepository : BaseRepository() {
     suspend fun debtPayQr(param: @JvmSuppressWildcards Map<String, Any?>): HttpWrapper<PayQRBean> {
         return mServer.debtPayQr(param)
     }
+
+    /**
+     * 月预付列表查询
+     */
+    suspend fun monthlyPrepaymentList(param: @JvmSuppressWildcards Map<String, Any?>): HttpWrapper<OrderResultBean> {
+        return mServer.monthlyPrepaymentList(param)
+    }
 }

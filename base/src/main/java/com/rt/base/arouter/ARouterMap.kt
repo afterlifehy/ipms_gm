@@ -75,6 +75,7 @@ object ARouterMap {
 
     const val MONTHLY_PREPAYMENT = "/ipms_mg_app/monthlyPrepayment"
 
+    const val MONTHLY_PREPAYMENT_LIST = "/ipms_mg_app/monthlyPrepaymentList"
     class common {
         companion object {
 

@@ -199,4 +199,10 @@
     <string name="请输入手机号码">请输入手机号码</string>
     <string name="提交">提交</string>
     <string name="预付续费">预付/续费</string>
+    <string name="白牌">白牌</string>
+    <string name="蓝牌">蓝牌</string>
+    <string name="黄牌">黄牌</string>
+    <string name="绿牌">绿牌</string>
+    <string name="黑牌">黑牌</string>
+    <string name="车牌">车牌</string>
 </resources>

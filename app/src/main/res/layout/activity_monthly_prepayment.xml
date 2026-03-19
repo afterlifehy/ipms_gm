@@ -35,23 +35,12 @@
             app:rv_radius="@dimen/dp_10">
 
             <TextView
-                android:id="@+id/tv_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp_13"
-                android:textColor="@color/black"
-                android:textSize="@dimen/sp_19"
-                android:textStyle="bold"
-                tools:text="日期：2024-01-01~2024-01-09" />
-
-            <TextView
                 android:id="@+id/tv_streetNo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/dp_13"
                 android:textColor="@color/black"
                 android:textSize="@dimen/sp_19"
-                android:textStyle="bold"
                 tools:text="凯旋路CN008" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -79,9 +68,10 @@
             <com.aries.ui.view.radius.RadiusLinearLayout
                 android:id="@+id/rll_name"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_60"
+                android:layout_height="@dimen/dp_50"
                 android:layout_marginTop="@dimen/dp_16"
-                android:padding="@dimen/dp_17"
+                android:paddingStart="@dimen/dp_17"
+                android:paddingEnd="@dimen/dp_17"
                 app:rv_radius="@dimen/dp_7"
                 app:rv_strokeColor="@color/color_ff04a091"
                 app:rv_strokeWidth="@dimen/dp_1">
@@ -110,9 +100,10 @@
             <com.aries.ui.view.radius.RadiusLinearLayout
                 android:id="@+id/rll_phone"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_60"
+                android:layout_height="@dimen/dp_50"
                 android:layout_marginTop="@dimen/dp_16"
-                android:padding="@dimen/dp_17"
+                android:paddingStart="@dimen/dp_17"
+                android:paddingEnd="@dimen/dp_17"
                 app:rv_radius="@dimen/dp_7"
                 app:rv_strokeColor="@color/color_ff04a091"
                 app:rv_strokeWidth="@dimen/dp_1">
@@ -139,14 +130,24 @@
 
             </com.aries.ui.view.radius.RadiusLinearLayout>
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_13"
+                android:drawableEnd="@mipmap/ic_edit"
+                android:drawablePadding="@dimen/dp_5"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_19"
+                tools:text="日期：2024-01-01~2024-01-09" />
+
             <TextView
                 android:id="@+id/tv_amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
                 android:layout_marginTop="@dimen/dp_13"
+                android:textColor="@color/black"
                 android:textSize="@dimen/sp_19"
-                android:textStyle="bold"
                 tools:text="金额：100元" />
         </com.aries.ui.view.radius.RadiusLinearLayout>
 

@@ -84,6 +84,9 @@ class KeyboardUtil(val keyboardView: MyKeyboardView, var requestEditAct: (() -> 
 
                         -4 -> {
                             hideKeyboard()
+                            if (callback != null) {
+                                callback?.enterKey()
+                            }
                         }
 
                         else -> {
@@ -188,5 +191,7 @@ class KeyboardUtil(val keyboardView: MyKeyboardView, var requestEditAct: (() -> 
     interface KeyInputCallBack {
         fun keyInput(value: String)
         fun keyDelete()
+
+        fun enterKey()
     }
 }

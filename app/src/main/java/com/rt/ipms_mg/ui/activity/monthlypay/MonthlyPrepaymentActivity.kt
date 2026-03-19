@@ -14,14 +14,14 @@ import com.blankj.utilcode.util.TimeUtils
 import com.rt.base.BaseApplication
 import com.rt.base.arouter.ARouterMap
 import com.rt.base.bean.Street
-import com.rt.base.ext.i18N
-import com.rt.base.ext.i18n
 import com.rt.base.ext.show
+import com.rt.base.ext.startArouter
 import com.rt.base.util.ToastUtil
 import com.rt.base.viewbase.VbBaseActivity
 import com.rt.common.realm.RealmUtil
 import com.rt.common.util.Constant
 import com.rt.common.util.GlideUtils
+import com.rt.common.view.PlateView
 import com.rt.common.view.keyboard.KeyboardUtil
 import com.rt.ipms_mg.R
 import com.rt.ipms_mg.adapter.CollectionPlateColorAdapter
@@ -77,11 +77,13 @@ class MonthlyPrepaymentActivity : VbBaseActivity<MonthlyPrepayMentViewModel, Act
         binding.rvPlateColor.adapter = collectionPlateColorAdapter
 
         binding.tvAmount.text = "金额：0元"
+        binding.pvPlate.setPlateBgAndTxtColor(Constant.BLUE)
         initKeyboard()
     }
 
     override fun initListener() {
         binding.layoutToolbar.flBack.setOnClickListener(this)
+        binding.layoutToolbar.ivRight.setOnClickListener(this)
         binding.tvDate.setOnClickListener(this)
         binding.rvPlateColor.setOnClickListener(this)
         binding.rtvSubmit.setOnClickListener(this)
@@ -108,6 +110,10 @@ class MonthlyPrepaymentActivity : VbBaseActivity<MonthlyPrepayMentViewModel, Act
         when (v?.id) {
             R.id.fl_back -> {
                 onBackPressedSupport()
+            }
+
+            R.id.iv_right -> {
+                startArouter(ARouterMap.MONTHLY_PREPAYMENT_LIST)
             }
 
             R.id.tv_date -> {
@@ -219,35 +225,52 @@ class MonthlyPrepaymentActivity : VbBaseActivity<MonthlyPrepayMentViewModel, Act
             keyboardUtil.changeKeyboard(true)
         }
 
-        binding.pvPlate.setOnTouchListener { v, p1 ->
-            v.requestFocus()
-            keyboardUtil.showKeyboard(show = {
-                val location = IntArray(2)
-                v.getLocationOnScreen(location)
-                val editTextPosY = location[1]
+        binding.pvPlate.setNumClickCallback(object : PlateView.NumClickCallback {
+            override fun numberClick() {
+                binding.pvPlate.requestFocus()
+                keyboardUtil.showKeyboard(show = {
+                    val location = IntArray(2)
+                    binding.pvPlate.getLocationOnScreen(location)
+                    val editTextPosY = location[1]
 
-                val screenHeight = window!!.windowManager.defaultDisplay.height
-                val distanceToBottom: Int = screenHeight - editTextPosY - v.getHeight()
+                    val screenHeight = window!!.windowManager.defaultDisplay.height
+                    val distanceToBottom: Int = screenHeight - editTextPosY - binding.pvPlate.getHeight()
 
-                if (binding.kvKeyBoard.height > distanceToBottom) {
-                    // 当键盘高度超过输入框到屏幕底部的距离时，向上移动布局
-                    binding.flPlate.translationY = (-(binding.kvKeyBoard.height - distanceToBottom)).toFloat()
-                }
-            }, hide = {
-                binding.flPlate.translationY = 0f
-            })
-            keyboardUtil.changeKeyboard(true)
-            keyboardUtil.setCallBack(object : KeyboardUtil.KeyInputCallBack {
-                override fun keyInput(value: String) {
-                    binding.pvPlate.setOnePlate(value)
-                }
+                    if (binding.kvKeyBoard.height > distanceToBottom) {
+                        // 当键盘高度超过输入框到屏幕底部的距离时，向上移动布局
+                        binding.flPlate.translationY = (-(binding.kvKeyBoard.height - distanceToBottom)).toFloat()
+                    }
+                }, hide = {
+                    binding.flPlate.translationY = 0f
+                    binding.pvPlate.stopAnimation()
+                })
+                keyboardUtil.changeKeyboard(true)
+                keyboardUtil.setCallBack(object : KeyboardUtil.KeyInputCallBack {
+                    override fun keyInput(value: String) {
+                        binding.pvPlate.setOnePlate(value)
+                        changePlateColor(binding.pvPlate.getPvTxt())
+                    }
 
-                override fun keyDelete() {
-                    binding.pvPlate.keyDelete()
-                }
-            })
-            true
+                    override fun keyDelete() {
+                        binding.pvPlate.keyDelete()
+                        changePlateColor(binding.pvPlate.getPvTxt())
+                    }
+
+                    override fun enterKey() {
+                    }
+                })
+            }
+        })
+    }
+
+    fun changePlateColor(plateId: String) {
+        if (plateId.length < 8) {
+            checkedColor = Constant.BLUE
+        } else {
+            checkedColor = Constant.GREEN
         }
+        collectionPlateColorAdapter?.updateColor(checkedColor, collectioPlateColorList.indexOf(checkedColor))
+        binding.pvPlate.setPlateBgAndTxtColor(checkedColor)
     }
 
     override fun getVbBindingView(): ViewBinding {

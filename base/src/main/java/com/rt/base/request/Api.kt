@@ -148,4 +148,10 @@ interface Api {
      */
     @POST("S_MG_30")
     suspend fun debtPayQr(@Body param: @JvmSuppressWildcards Map<String, Any?>): HttpWrapper<PayQRBean>
+
+    /**
+     * 月预付列表查询
+     */
+    @POST("S_MG_31")
+    suspend fun monthlyPrepaymentList(@Body param: @JvmSuppressWildcards Map<String, Any?>): HttpWrapper<OrderResultBean>
 }

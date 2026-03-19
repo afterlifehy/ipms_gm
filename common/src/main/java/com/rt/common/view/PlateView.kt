@@ -4,6 +4,8 @@ import android.content.Context
 import android.util.ArrayMap
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.View
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import com.rt.base.BaseApplication
@@ -13,11 +15,12 @@ import com.rt.common.util.Constant
 
 class PlateView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
-) : LinearLayout(context, attrs) {
+) : LinearLayout(context, attrs), View.OnClickListener {
     var binding: ViewPlateBinding? = null
-    var emptyPosition = 0
+    var inputPosition = 0
     var plateTxtColorMap: MutableMap<String, Int> = ArrayMap()
     var plateBgColor = Constant.BLUE
+    var callbakc: NumClickCallback? = null
 
     init {
         initView()
@@ -40,138 +43,270 @@ class PlateView @JvmOverloads constructor(
 
     private fun initView() {
         binding = ViewPlateBinding.inflate(LayoutInflater.from(context), this, true)
+        binding!!.tvPlate1.setOnClickListener(this)
+        binding!!.tvPlate2.setOnClickListener(this)
+        binding!!.tvPlate3.setOnClickListener(this)
+        binding!!.tvPlate4.setOnClickListener(this)
+        binding!!.tvPlate5.setOnClickListener(this)
+        binding!!.tvPlate6.setOnClickListener(this)
+        binding!!.tvPlate7.setOnClickListener(this)
+        binding!!.tvPlate8.setOnClickListener(this)
+    }
+
+    override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
+        return false
+    }
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        if (event?.action == MotionEvent.ACTION_DOWN) {
+            performClick()
+        }
+        return false
+    }
+
+    override fun performClick(): Boolean {
+        super.performClick()
+        return true
+    }
+
+    override fun onClick(v: View?) {
+        callbakc?.numberClick()
+        stopAnimation()
+        var view: View? = null
+        if (getPvTxt().isEmpty()) {
+            view = binding!!.tvPlate1
+        } else {
+            view = v
+        }
+        when (view?.id) {
+            R.id.tv_plate1 -> {
+                inputPosition = 0
+                binding!!.tvPlate1.performSelectAnimation()
+            }
+
+            R.id.tv_plate2 -> {
+                inputPosition = 1
+                binding!!.tvPlate2.performSelectAnimation()
+            }
+
+            R.id.tv_plate3 -> {
+                inputPosition = 2
+                binding!!.tvPlate3.performSelectAnimation()
+            }
+
+            R.id.tv_plate4 -> {
+                inputPosition = 3
+                binding!!.tvPlate4.performSelectAnimation()
+            }
+
+            R.id.tv_plate5 -> {
+                inputPosition = 4
+                binding!!.tvPlate5.performSelectAnimation()
+            }
+
+            R.id.tv_plate6 -> {
+                inputPosition = 5
+                binding!!.tvPlate6.performSelectAnimation()
+            }
+
+            R.id.tv_plate7 -> {
+                inputPosition = 6
+                binding!!.tvPlate7.performSelectAnimation()
+            }
+
+            R.id.tv_plate8 -> {
+                inputPosition = 7
+                binding!!.tvPlate8.performSelectAnimation()
+            }
+        }
+    }
+
+    fun stopAnimation() {
+        binding!!.tvPlate1.stopSelectAnimation()
+        binding!!.tvPlate2.stopSelectAnimation()
+        binding!!.tvPlate3.stopSelectAnimation()
+        binding!!.tvPlate4.stopSelectAnimation()
+        binding!!.tvPlate5.stopSelectAnimation()
+        binding!!.tvPlate6.stopSelectAnimation()
+        binding!!.tvPlate7.stopSelectAnimation()
+        binding!!.tvPlate8.stopSelectAnimation()
     }
 
     fun setOnePlate(value: String) {
-        when (emptyPosition) {
+        if (getPvTxt().isEmpty()) {
+            inputPosition = 0
+        }
+        stopAnimation()
+        when (inputPosition) {
             0 -> {
-                binding!!.tvPlate1.text = value
-                emptyPosition = 1
+                binding!!.tvPlate1.getPlateView().text = value
+                inputPosition = 1
+                binding!!.tvPlate2.performSelectAnimation()
             }
 
             1 -> {
-                binding!!.tvPlate2.text = value
-                emptyPosition = 2
+                binding!!.tvPlate2.getPlateView().text = value
+                inputPosition = 2
                 if (plateBgColor == Constant.WHITE) {
                     whiteWJTxtColor()
                 }
+                binding!!.tvPlate3.performSelectAnimation()
             }
 
             2 -> {
-                binding!!.tvPlate3.text = value
-                emptyPosition = 3
+                binding!!.tvPlate3.getPlateView().text = value
+                inputPosition = 3
+                binding!!.tvPlate4.performSelectAnimation()
             }
 
             3 -> {
-                binding!!.tvPlate4.text = value
-                emptyPosition = 4
+                binding!!.tvPlate4.getPlateView().text = value
+                inputPosition = 4
+                binding!!.tvPlate5.performSelectAnimation()
             }
 
             4 -> {
-                binding!!.tvPlate5.text = value
-                emptyPosition = 5
+                binding!!.tvPlate5.getPlateView().text = value
+                inputPosition = 5
+                binding!!.tvPlate6.performSelectAnimation()
             }
 
             5 -> {
-                binding!!.tvPlate6.text = value
-                emptyPosition = 6
+                binding!!.tvPlate6.getPlateView().text = value
+                inputPosition = 6
+                binding!!.tvPlate7.performSelectAnimation()
             }
 
             6 -> {
-                binding!!.tvPlate7.text = value
-                emptyPosition = 7
+                binding!!.tvPlate7.getPlateView().text = value
+                inputPosition = 7
                 if (plateBgColor == Constant.WHITE) {
                     whiteWJTxtColor()
                 }
+                binding!!.tvPlate8.performSelectAnimation()
             }
 
             7 -> {
-                if (binding!!.tvPlate7.text == "警" && value == "警") {
+                if (binding!!.tvPlate7.getPlateView().text == "警" && value == "警") {
                     return
                 } else {
-                    binding!!.tvPlate8.text = value
-                    emptyPosition = -1
+                    binding!!.tvPlate8.getPlateView().text = value
+                    inputPosition = 7
                 }
                 if (plateBgColor == Constant.WHITE) {
                     whiteWJTxtColor()
                 }
-            }
-
-            -1 -> {
-
+                binding!!.tvPlate8.performSelectAnimation()
             }
         }
     }
 
     fun setAllPlate(value: String) {
         val plateArray = value.toCharArray()
-        binding!!.tvPlate1.text = plateArray[0].toString()
-        binding!!.tvPlate2.text = plateArray[1].toString()
-        binding!!.tvPlate3.text = plateArray[2].toString()
-        binding!!.tvPlate4.text = plateArray[3].toString()
-        binding!!.tvPlate5.text = plateArray[4].toString()
-        binding!!.tvPlate6.text = plateArray[5].toString()
-        binding!!.tvPlate7.text = plateArray[6].toString()
-        if (plateArray.size == 8) {
-            binding!!.tvPlate8.text = plateArray[7].toString()
-        }else{
-            binding!!.tvPlate8.text = ""
+        binding?.let {
+            it.tvPlate1.getPlateView().text = plateArray.getOrNull(0)?.toString() ?: ""
         }
-        emptyPosition = -1
+        binding?.let {
+            it.tvPlate2.getPlateView().text = plateArray.getOrNull(1)?.toString() ?: ""
+        }
+        binding?.let {
+            it.tvPlate3.getPlateView().text = plateArray.getOrNull(2)?.toString() ?: ""
+        }
+        binding?.let {
+            it.tvPlate4.getPlateView().text = plateArray.getOrNull(3)?.toString() ?: ""
+        }
+        binding?.let {
+            it.tvPlate5.getPlateView().text = plateArray.getOrNull(4)?.toString() ?: ""
+        }
+        binding?.let {
+            it.tvPlate6.getPlateView().text = plateArray.getOrNull(5)?.toString() ?: ""
+        }
+        binding?.let {
+            it.tvPlate7.getPlateView().text = plateArray.getOrNull(6)?.toString() ?: ""
+        }
+        binding?.let {
+            it.tvPlate8.getPlateView().text = plateArray.getOrNull(7)?.toString() ?: ""
+        }
+        inputPosition = 7
         if (plateBgColor == Constant.WHITE) {
             whiteWJTxtColor()
         }
     }
 
     fun getPvTxt(): String {
-        return "${binding!!.tvPlate1.text}${binding!!.tvPlate2.text}${binding!!.tvPlate3.text}${binding!!.tvPlate4.text}${binding!!.tvPlate5.text}${binding!!.tvPlate6.text}${binding!!.tvPlate7.text}${binding!!.tvPlate8.text}"
+        return "${binding!!.tvPlate1.getPlateView().text}${binding!!.tvPlate2.getPlateView().text}${binding!!.tvPlate3.getPlateView().text}${binding!!.tvPlate4.getPlateView().text}${binding!!.tvPlate5.getPlateView().text}${binding!!.tvPlate6.getPlateView().text}${binding!!.tvPlate7.getPlateView().text}${binding!!.tvPlate8.getPlateView().text}"
+    }
+
+    fun isCompliant(): Boolean {
+        val plates = listOf(
+            binding!!.tvPlate1.getPlateView().text,
+            binding!!.tvPlate2.getPlateView().text,
+            binding!!.tvPlate3.getPlateView().text,
+            binding!!.tvPlate4.getPlateView().text,
+            binding!!.tvPlate5.getPlateView().text,
+            binding!!.tvPlate6.getPlateView().text,
+            binding!!.tvPlate7.getPlateView().text,
+            binding!!.tvPlate8.getPlateView().text
+        )
+        for (i in 0 until plates.size - 1) {
+            if (plates[i].isEmpty() && plates[i + 1].isNotEmpty()) {
+                return false
+            }
+        }
+        return true
     }
 
     fun keyDelete() {
-        when (emptyPosition) {
+        stopAnimation()
+        when (inputPosition) {
             0 -> {
-
+                binding!!.tvPlate1.getPlateView().text = ""
+                inputPosition = 0
+                binding!!.tvPlate1.performSelectAnimation()
             }
 
             1 -> {
-                binding!!.tvPlate1.text = ""
-                emptyPosition = 0
+                binding!!.tvPlate2.getPlateView().text = ""
+                inputPosition = 0
+                binding!!.tvPlate1.performSelectAnimation()
             }
 
             2 -> {
-                binding!!.tvPlate2.text = ""
-                emptyPosition = 1
+                binding!!.tvPlate3.getPlateView().text = ""
+                inputPosition = 1
+                binding!!.tvPlate2.performSelectAnimation()
             }
 
             3 -> {
-                binding!!.tvPlate3.text = ""
-                emptyPosition = 2
+                binding!!.tvPlate4.getPlateView().text = ""
+                inputPosition = 2
+                binding!!.tvPlate3.performSelectAnimation()
             }
 
             4 -> {
-                binding!!.tvPlate4.text = ""
-                emptyPosition = 3
+                binding!!.tvPlate5.getPlateView().text = ""
+                inputPosition = 3
+                binding!!.tvPlate4.performSelectAnimation()
             }
 
             5 -> {
-                binding!!.tvPlate5.text = ""
-                emptyPosition = 4
+                binding!!.tvPlate6.getPlateView().text = ""
+                inputPosition = 4
+                binding!!.tvPlate5.performSelectAnimation()
             }
 
             6 -> {
-                binding!!.tvPlate6.text = ""
-                emptyPosition = 5
+                binding!!.tvPlate7.getPlateView().text = ""
+                inputPosition = 5
+                binding!!.tvPlate6.performSelectAnimation()
             }
 
             7 -> {
-                binding!!.tvPlate7.text = ""
-                emptyPosition = 6
+                binding!!.tvPlate8.getPlateView().text = ""
+                inputPosition = 6
+                binding!!.tvPlate7.performSelectAnimation()
             }
 
-            -1 -> {
-                binding!!.tvPlate8.text = ""
-                emptyPosition = 7
-            }
         }
     }
 
@@ -216,51 +351,51 @@ class PlateView @JvmOverloads constructor(
     }
 
     fun whiteWJTxtColor() {
-        if (binding!!.tvPlate1.text == "W" && binding!!.tvPlate2.text == "J") {
-            binding!!.tvPlate1.setTextColor(
+        if (binding!!.tvPlate1.getPlateView().text == "W" && binding!!.tvPlate2.getPlateView().text == "J") {
+            binding!!.tvPlate1.getPlateView().setTextColor(
                 ContextCompat.getColor(
                     BaseApplication.instance(), com.rt.base.R.color.color_ffeb0000
                 )
             )
-            binding!!.tvPlate2.setTextColor(
+            binding!!.tvPlate2.getPlateView().setTextColor(
                 ContextCompat.getColor(
                     BaseApplication.instance(), com.rt.base.R.color.color_ffeb0000
                 )
             )
         } else {
-            binding!!.tvPlate1.setTextColor(
+            binding!!.tvPlate1.getPlateView().setTextColor(
                 ContextCompat.getColor(
                     BaseApplication.instance(), com.rt.base.R.color.black
                 )
             )
-            binding!!.tvPlate2.setTextColor(
+            binding!!.tvPlate2.getPlateView().setTextColor(
                 ContextCompat.getColor(
                     BaseApplication.instance(), com.rt.base.R.color.black
                 )
             )
         }
-        if (binding!!.tvPlate7.text == "警") {
-            binding!!.tvPlate7.setTextColor(
+        if (binding!!.tvPlate7.getPlateView().text == "警") {
+            binding!!.tvPlate7.getPlateView().setTextColor(
                 ContextCompat.getColor(
                     BaseApplication.instance(), com.rt.base.R.color.color_ffeb0000
                 )
             )
         } else {
-            binding!!.tvPlate7.setTextColor(
+            binding!!.tvPlate7.getPlateView().setTextColor(
                 ContextCompat.getColor(
                     BaseApplication.instance(), com.rt.base.R.color.black
                 )
             )
         }
 
-        if (binding!!.tvPlate8.text == "警") {
-            binding!!.tvPlate8.setTextColor(
+        if (binding!!.tvPlate8.getPlateView().text == "警") {
+            binding!!.tvPlate8.getPlateView().setTextColor(
                 ContextCompat.getColor(
                     BaseApplication.instance(), com.rt.base.R.color.color_ffeb0000
                 )
             )
         } else {
-            binding!!.tvPlate8.setTextColor(
+            binding!!.tvPlate8.getPlateView().setTextColor(
                 ContextCompat.getColor(
                     BaseApplication.instance(), com.rt.base.R.color.black
                 )
@@ -269,35 +404,44 @@ class PlateView @JvmOverloads constructor(
     }
 
     fun setTxtColor(color: String) {
-        binding!!.tvPlate1.setTextColor(ContextCompat.getColor(BaseApplication.instance(), plateTxtColorMap[color]!!))
-        binding!!.tvPlate2.setTextColor(ContextCompat.getColor(BaseApplication.instance(), plateTxtColorMap[color]!!))
-        binding!!.tvPlate3.setTextColor(ContextCompat.getColor(BaseApplication.instance(), plateTxtColorMap[color]!!))
-        binding!!.tvPlate4.setTextColor(ContextCompat.getColor(BaseApplication.instance(), plateTxtColorMap[color]!!))
-        binding!!.tvPlate5.setTextColor(ContextCompat.getColor(BaseApplication.instance(), plateTxtColorMap[color]!!))
-        binding!!.tvPlate6.setTextColor(ContextCompat.getColor(BaseApplication.instance(), plateTxtColorMap[color]!!))
-        binding!!.tvPlate7.setTextColor(ContextCompat.getColor(BaseApplication.instance(), plateTxtColorMap[color]!!))
-        binding!!.tvPlate8.setTextColor(ContextCompat.getColor(BaseApplication.instance(), plateTxtColorMap[color]!!))
+        binding!!.tvPlate1.getPlateView().setTextColor(ContextCompat.getColor(BaseApplication.instance(), plateTxtColorMap[color]!!))
+        binding!!.tvPlate2.getPlateView().setTextColor(ContextCompat.getColor(BaseApplication.instance(), plateTxtColorMap[color]!!))
+        binding!!.tvPlate3.getPlateView().setTextColor(ContextCompat.getColor(BaseApplication.instance(), plateTxtColorMap[color]!!))
+        binding!!.tvPlate4.getPlateView().setTextColor(ContextCompat.getColor(BaseApplication.instance(), plateTxtColorMap[color]!!))
+        binding!!.tvPlate5.getPlateView().setTextColor(ContextCompat.getColor(BaseApplication.instance(), plateTxtColorMap[color]!!))
+        binding!!.tvPlate6.getPlateView().setTextColor(ContextCompat.getColor(BaseApplication.instance(), plateTxtColorMap[color]!!))
+        binding!!.tvPlate7.getPlateView().setTextColor(ContextCompat.getColor(BaseApplication.instance(), plateTxtColorMap[color]!!))
+        binding!!.tvPlate8.getPlateView().setTextColor(ContextCompat.getColor(BaseApplication.instance(), plateTxtColorMap[color]!!))
     }
 
     fun setPlateImgBg(startImg: Int, middleImg: Int, endImg: Int) {
-        binding!!.tvPlate1.background = ContextCompat.getDrawable(BaseApplication.instance(), startImg)
-        binding!!.tvPlate2.background = ContextCompat.getDrawable(BaseApplication.instance(), middleImg)
-        binding!!.tvPlate3.background = ContextCompat.getDrawable(BaseApplication.instance(), middleImg)
-        binding!!.tvPlate4.background = ContextCompat.getDrawable(BaseApplication.instance(), middleImg)
-        binding!!.tvPlate5.background = ContextCompat.getDrawable(BaseApplication.instance(), middleImg)
-        binding!!.tvPlate6.background = ContextCompat.getDrawable(BaseApplication.instance(), middleImg)
-        binding!!.tvPlate7.background = ContextCompat.getDrawable(BaseApplication.instance(), middleImg)
-        binding!!.tvPlate8.background = ContextCompat.getDrawable(BaseApplication.instance(), endImg)
+        binding!!.tvPlate1.getPlateView().background = ContextCompat.getDrawable(BaseApplication.instance(), startImg)
+        binding!!.tvPlate2.getPlateView().background = ContextCompat.getDrawable(BaseApplication.instance(), middleImg)
+        binding!!.tvPlate3.getPlateView().background = ContextCompat.getDrawable(BaseApplication.instance(), middleImg)
+        binding!!.tvPlate4.getPlateView().background = ContextCompat.getDrawable(BaseApplication.instance(), middleImg)
+        binding!!.tvPlate5.getPlateView().background = ContextCompat.getDrawable(BaseApplication.instance(), middleImg)
+        binding!!.tvPlate6.getPlateView().background = ContextCompat.getDrawable(BaseApplication.instance(), middleImg)
+        binding!!.tvPlate7.getPlateView().background = ContextCompat.getDrawable(BaseApplication.instance(), middleImg)
+        binding!!.tvPlate8.getPlateView().background = ContextCompat.getDrawable(BaseApplication.instance(), endImg)
     }
 
     fun setPlateImgBg2(startImg: Int, middleImg: Int, middleImg2: Int, endImg: Int) {
-        binding!!.tvPlate1.background = ContextCompat.getDrawable(BaseApplication.instance(), startImg)
-        binding!!.tvPlate2.background = ContextCompat.getDrawable(BaseApplication.instance(), middleImg)
-        binding!!.tvPlate3.background = ContextCompat.getDrawable(BaseApplication.instance(), middleImg2)
-        binding!!.tvPlate4.background = ContextCompat.getDrawable(BaseApplication.instance(), middleImg2)
-        binding!!.tvPlate5.background = ContextCompat.getDrawable(BaseApplication.instance(), middleImg2)
-        binding!!.tvPlate6.background = ContextCompat.getDrawable(BaseApplication.instance(), middleImg2)
-        binding!!.tvPlate7.background = ContextCompat.getDrawable(BaseApplication.instance(), middleImg2)
-        binding!!.tvPlate8.background = ContextCompat.getDrawable(BaseApplication.instance(), endImg)
+        binding!!.tvPlate1.getPlateView().background = ContextCompat.getDrawable(BaseApplication.instance(), startImg)
+        binding!!.tvPlate2.getPlateView().background = ContextCompat.getDrawable(BaseApplication.instance(), middleImg)
+        binding!!.tvPlate3.getPlateView().background = ContextCompat.getDrawable(BaseApplication.instance(), middleImg2)
+        binding!!.tvPlate4.getPlateView().background = ContextCompat.getDrawable(BaseApplication.instance(), middleImg2)
+        binding!!.tvPlate5.getPlateView().background = ContextCompat.getDrawable(BaseApplication.instance(), middleImg2)
+        binding!!.tvPlate6.getPlateView().background = ContextCompat.getDrawable(BaseApplication.instance(), middleImg2)
+        binding!!.tvPlate7.getPlateView().background = ContextCompat.getDrawable(BaseApplication.instance(), middleImg2)
+        binding!!.tvPlate8.getPlateView().background = ContextCompat.getDrawable(BaseApplication.instance(), endImg)
     }
+
+    fun setNumClickCallback(callback: NumClickCallback) {
+        this.callbakc = callback
+    }
+
+    interface NumClickCallback {
+        fun numberClick()
+    }
+
 }
