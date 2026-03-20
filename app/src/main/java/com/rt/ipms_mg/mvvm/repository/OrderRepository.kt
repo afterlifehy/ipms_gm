@@ -5,6 +5,7 @@ import com.rt.base.bean.DebtCollectionResultBean
 import com.rt.base.bean.DebtUploadBean
 import com.rt.base.bean.EndOrderInfoBean
 import com.rt.base.bean.HttpWrapper
+import com.rt.base.bean.MonthlyOrderResultBean
 import com.rt.base.bean.OrderResultBean
 import com.rt.base.bean.PayResultBean
 import com.rt.base.bean.PicInquiryBean
@@ -95,7 +96,7 @@ class OrderRepository : BaseRepository() {
     /**
      * 月预付列表查询
      */
-    suspend fun monthlyPrepaymentList(param: @JvmSuppressWildcards Map<String, Any?>): HttpWrapper<OrderResultBean> {
+    suspend fun monthlyPrepaymentList(param: @JvmSuppressWildcards Map<String, Any?>): HttpWrapper<MonthlyOrderResultBean> {
         return mServer.monthlyPrepaymentList(param)
     }
 }

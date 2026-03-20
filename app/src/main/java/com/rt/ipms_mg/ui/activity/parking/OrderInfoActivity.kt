@@ -66,6 +66,7 @@ class OrderInfoActivity : VbBaseActivity<OrderInfoViewModel, ActivityOrderInfoBi
         binding.layoutToolbar.flBack.setOnClickListener(this)
         binding.rflScanPay.setOnClickListener(this)
         binding.rflCashPay.setOnClickListener(this)
+        binding.rflReceipt.setOnClickListener(this)
     }
 
     override fun initData() {
@@ -101,6 +102,7 @@ class OrderInfoActivity : VbBaseActivity<OrderInfoViewModel, ActivityOrderInfoBi
                     ToastUtil.showMiddleToast(i18N(com.rt.base.R.string.正在支付中))
                 }
             }
+
             R.id.rfl_cashPay -> {
                 cashPayDialog =
                     CashPayDialog(totalAmount, object : CashPayDialog.CashPayCallBack {
@@ -109,6 +111,10 @@ class OrderInfoActivity : VbBaseActivity<OrderInfoViewModel, ActivityOrderInfoBi
                         }
                     })
                 cashPayDialog?.show()
+            }
+
+            R.id.rfl_receipt -> {
+
             }
         }
     }

@@ -210,8 +210,28 @@
                         android:textStyle="bold" />
                 </com.aries.ui.view.radius.RadiusFrameLayout>
 
-            </LinearLayout>
 
+            </LinearLayout>
+            <com.aries.ui.view.radius.RadiusFrameLayout
+                android:id="@+id/rfl_receipt"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_47"
+                android:layout_marginTop="@dimen/dp_20"
+                app:rv_backgroundColor="@color/color_ff04a091"
+                app:rv_radius="@dimen/dp_7">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:drawableStart="@mipmap/ic_renewal"
+                    android:drawablePadding="@dimen/dp_14"
+                    android:gravity="center"
+                    android:text="@string/小票收据支付"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_19"
+                    android:textStyle="bold" />
+            </com.aries.ui.view.radius.RadiusFrameLayout>
         </com.aries.ui.view.radius.RadiusLinearLayout>
     </LinearLayout>
 </RelativeLayout>

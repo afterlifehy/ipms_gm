@@ -3,6 +3,7 @@ package com.rt.ipms_mg.mvvm.viewmodel
 import androidx.lifecycle.MutableLiveData
 import com.rt.base.base.mvvm.BaseViewModel
 import com.rt.base.base.mvvm.ErrorMessage
+import com.rt.base.bean.MonthlyOrderResultBean
 import com.rt.base.bean.OrderResultBean
 import com.rt.ipms_mg.mvvm.repository.OrderRepository
 import kotlinx.coroutines.Dispatchers
@@ -14,7 +15,7 @@ class MonthlyPrepayMentViewModel: BaseViewModel() {
         OrderRepository()
     }
 
-    val monthlyPrepaymentListLiveData = MutableLiveData<OrderResultBean>()
+    val monthlyPrepaymentListLiveData = MutableLiveData<MonthlyOrderResultBean>()
 
     fun monthlyPrepaymentList(param: Map<String, Any?>) {
         launch {

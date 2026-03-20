@@ -226,13 +226,6 @@
             android:launchMode="singleTask" />
 
         <activity
-            android:name="com.rt.ipms_mg.ui.activity.order.VideoPicActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
-            android:exported="false"
-            android:launchMode="singleTask"
-            android:screenOrientation="fullSensor" />
-
-        <activity
             android:name="com.rt.ipms_mg.ui.activity.order.OrderInquiryActivity"
             android:exported="false"
             android:launchMode="singleTask"
@@ -257,6 +250,11 @@
 
         <activity
             android:name="com.rt.ipms_mg.ui.activity.monthlypay.MonthlyPrepaymentListActivity"
+            android:exported="false"
+            android:launchMode="singleTask" />
+
+        <activity
+            android:name="com.rt.ipms_mg.ui.activity.monthlypay.MonthlyPrepaymentDetailActivity"
             android:exported="false"
             android:launchMode="singleTask" />
     </application>

@@ -153,5 +153,5 @@ interface Api {
      * 月预付列表查询
      */
     @POST("S_MG_31")
-    suspend fun monthlyPrepaymentList(@Body param: @JvmSuppressWildcards Map<String, Any?>): HttpWrapper<OrderResultBean>
+    suspend fun monthlyPrepaymentList(@Body param: @JvmSuppressWildcards Map<String, Any?>): HttpWrapper<MonthlyOrderResultBean>
 }

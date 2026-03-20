@@ -1,6 +1,7 @@
 package com.rt.ipms_mg.ui.activity.monthlypay
 
 import android.content.Intent
+import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
 import android.view.View.OnClickListener
@@ -12,12 +13,12 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.rt.base.BaseApplication
 import com.rt.base.arouter.ARouterMap
-import com.rt.base.bean.OrderBean
+import com.rt.base.bean.MonthlyOrderBean
 import com.rt.base.ds.PreferencesDataStore
 import com.rt.base.ds.PreferencesKeys
 import com.rt.base.ext.gone
-import com.rt.base.ext.i18N
 import com.rt.base.ext.show
+import com.rt.base.ext.startArouter
 import com.rt.base.util.ToastUtil
 import com.rt.base.viewbase.VbBaseActivity
 import com.rt.common.util.GlideUtils
@@ -33,7 +34,7 @@ import kotlinx.coroutines.runBlocking
 @Route(path = ARouterMap.MONTHLY_PREPAYMENT_LIST)
 class MonthlyPrepaymentListActivity : VbBaseActivity<MonthlyPrepayMentViewModel, ActivityMonthlyPrepaymentListBinding>(), OnClickListener {
     private lateinit var keyboardUtil: KeyboardUtil
-    var monthlyPrepaymentList: MutableList<OrderBean> = ArrayList()
+    var monthlyPrepaymentList: MutableList<MonthlyOrderBean> = ArrayList()
     var monthlyPrepaymentAdapter: MonthlyPrepaymentAdapter? = null
     var pageIndex = 1
     var pageSize = 10
@@ -48,11 +49,9 @@ class MonthlyPrepaymentListActivity : VbBaseActivity<MonthlyPrepayMentViewModel,
         binding.rvMonthlyPrepayment.setHasFixedSize(true)
         binding.rvMonthlyPrepayment.layoutManager = LinearLayoutManager(this)
         monthlyPrepaymentAdapter = MonthlyPrepaymentAdapter(monthlyPrepaymentList) { orderBean ->
-            // 处理 item 点击事件
-            // TODO: 跳转到详情页或执行其他操作
-            // val intent = Intent(this, MonthlyPrepaymentDetailActivity::class.java)
-            // intent.putExtra("orderBean", orderBean)
-            // startActivity(intent)
+            startArouter(ARouterMap.MONTHLY_PREPAYMENT_DETAIL, Bundle().apply {
+                putString(ARouterMap.ORDER_ID, orderBean.orderNo)
+            })
         }
         binding.rvMonthlyPrepayment.adapter = monthlyPrepaymentAdapter
 
@@ -104,18 +103,22 @@ class MonthlyPrepaymentListActivity : VbBaseActivity<MonthlyPrepayMentViewModel,
     private fun generateFakeData() {
         monthlyPrepaymentList.clear()
         for (i in 1..15) {
-            val orderBean = OrderBean(
+            // 不同状态循环：1-待审核，2-审核通过，3-审核拒绝，4-已完成
+            val status = when (i % 4) {
+                0 -> "1"  // 待审核
+                1 -> "2"  // 审核通过
+                2 -> "3"  // 审核拒绝
+                else -> "4"  // 已完成
+            }
+
+            val orderBean = MonthlyOrderBean(
                 amount = "${(100 + i * 10)}.00",
                 carLicense = "京 A${String.format("%05d", i)}",
-                duration = "${i}个月",
                 startTime = "2026-03-${String.format("%02d", i % 28 + 1)} 08:00:00",
                 endTime = "2026-${String.format("%02d", (i % 12) + 1)}-${String.format("%02d", i % 28 + 1)} 23:59:59",
                 streetName = "xxxxxx${i}号路",
                 orderNo = "NO${System.currentTimeMillis()}${i}",
-                parkingNo = "P${String.format("%04d", i)}",
-                hasPayed = "1",
-                paidAmount = "${(100 + i * 10)}.00",
-                isPrinted = "1"
+                status = status
             )
             monthlyPrepaymentList.add(orderBean)
         }
